@@ -1,0 +1,20 @@
+{
+    "name": "pulse_generator_GUI",
+    "version": "1.0.0",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "install": "electron-rebuild",
+        "build": "browserify ./src/pageSettings.js > ./js/index.js &&electron ."
+    },
+    "author": "zigridar",
+    "devDependencies": {
+        "browserify": "^16.5.0",
+        "electron": "^5.0.5",
+        "electron-rebuild": "^1.8.5"
+    },
+    "dependencies": {
+        "jquery": "^3.4.1",
+        "serialport": "^7.1.5"
+    }
+}
