@@ -1,0 +1,7 @@
+# Node Modules
+GUI/node_modules
+GUI/node_modules/
+
+# compiled source
+atmega16_project/Debug
+atmega16_project/Debug/
