@@ -1,5 +1,5 @@
-const serialport = require('serialport')
+const SerialPort = require('serialport');
 
-serialport.list((err, ports) => {
+SerialPort.list((err, ports) => {
   console.log('ports', ports);
 });
