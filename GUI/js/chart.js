@@ -28,8 +28,8 @@ const data = {
     layout: {
       padding: {
         left: 0,
-        right: 0,
-        top: 0,
+        right: 10,
+        top: 10,
         bottom: 0
       }
     },
@@ -38,7 +38,7 @@ const data = {
     },
 		responsive: true,
 		title: {
-			display: true,
+			display: false,
 			text: 'Показания вакууметра',
       fontSize: 16
 		},

@@ -10,9 +10,9 @@ let window;
 //Window options
 function createWindow() {
   window = new BrowserWindow({
-    width: 800,
-    height: 800,
-    resizable: true,
+    width: 1010,
+    height: 750,
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true

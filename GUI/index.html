@@ -1,29 +1,300 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <!-- <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script> -->
+<!doctype html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulse generator</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha256-arMsf+3JJK2LoTGqxfnuJPFTU4hAK57MtIPdFpiHXOU=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-</head>
+  </head>
+  <body>
 
-<body>
-  <h3 id="voltage"></h3>
-  <br>
-  <h3 id="current"></h3>
-  <br>
-  <h3 id="vacuum"></h3>
-  <br>
-  <h3 id="state"></h3>
-  <canvas id="canvas">
-</body>
+    <!-- Навбар -->
+<nav class="teal lighten-2">
+  <div class="row">
+    <!-- Зеленые карточки под микроконтроллеры -->
+    <!-- <div class="col m2">
+      <div class="card teal accent-3 waves-effect waves-light">
+        <div class="card-content white-text">
+          <p><h6 style="width: 135px;">Error</h6></p>
+        </div>
+      </div>
+    </div>
+    <div class="col m2">
+      <div class="card teal accent-3 waves-effect waves-light">
+        <div class="card-content white-text">
+          <p><h6 style="width: 135px;">Error</h6></p>
+        </div>
+      </div>
+    </div> -->
+      <!-- Зеленые карточки под микроконтроллеры -->
+      <!-- Красные карточки под микроконтроллеры -->
+      <div class="col m2">
+        <div class="card red waves-effect waves-light">
+          <div class="card-content white-text">
+            <p><h6 style="width: 135px;">Error</h6></p>
+          </div>
+        </div>
+      </div>
+      <div class="col m2">
+        <div class="card red waves-effect waves-light">
+          <div class="card-content white-text">
+            <p><h6 style="width: 135px;">Error</h6></p>
+          </div>
+        </div>
+      </div>
+      <!-- Красные карточки под микроконтроллеры -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="./js/index.js"></script>
-<script src="./js/chart.js"></script>
-<script src="./js/serial.js"></script>
+      <!-- Карточка для вывода ошибок -->
+    <div class="col m6">
+      <div class="card blue-grey darken-1 waves-effect waves-light">
+        <div class="card-content white-text">
+          <p><h6 style="width: 470px;">Тексcghfjljxbchklcvchт ошибки</h6></p>
+        </div>
+      </div>
+    </div>
+    <!-- Карточка для вывода ошибок -->
+
+    <div class="col m2">
+      <div class="nav-wrapper">
+        <ul class="right hide-on-med-and-down">
+          <!-- Dropdown Trigger -->
+          <li id="drop"><a class="dropdown-trigger" href="#!" data-target="dropdown1" style="padding-left: 0px; padding-right: 0px;"><i class="large material-icons waves-effect waves-light">menu</i></a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</nav>
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="#!"><span id="menu-nav">Перезагрузка</span></a></li>
+  <li class="divider"></li>
+  <li><a href="#!"><span id="menu-nav">Выключение</span></a></li>
+  <li class="divider"></li>
+  <li><a href="#!"><span class="waves-effect waves-light" id="menu-nav">Еще кнопка</span></a></li>
+</ul>
+    <!-- Навбар -->
+
+<div id="phone-card" class="card grey lighten-4 z-depth-0">
+  <div class="card-content">
+
+  </div>
+  <div class="row">
+    <div class="col s7 m7 l7">
+      <ul class="collapsible popout z-depth-2">
+
+        <!--Отображение данных-->
+        <li class="active">
+          <div class="collapsible-header blue-green lighten-4"><i class="material-icons">equalizer</i>Отображение данных</div>
+          <div class="collapsible-body">
+            <div class="row">
+              <div class="col m6">
+                <div class="card">
+                  <div class="card-content">
+                    <span>Реальное напряжение</span>
+                    <span class="badge">kV</span>
+                    <span class="badge">1</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col m6">
+                <div class="card">
+                  <div class="card-content">
+                    <span>Ток</span>
+                    <span class="badge">mA</span>
+                    <span class="badge">1</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col m6">
+                <div class="card">
+                  <div class="card-content">
+                    <span>Реальное напряжение</span>
+                    <span class="badge">kV</span>
+                    <span class="badge">1</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col m6">
+                <div class="card">
+                  <div class="card-content">
+                    <span>Ток</span>
+                    <span class="badge">mA</span>
+                    <span class="badge">1</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!--Отображение данных-->
+
+        <!--Вакуумметр-->
+        <li class="active">
+          <div class="collapsible-header"><i class="material-icons">grain</i>Вакуумметр
+            <span class="badge">1 kV</span>
+
+          </div>
+          <div class="collapsible-body"><span></span>
+
+            <canvas id="canvas"></canvas>
+            <br>
+            <div class="row">
+              <div class="col m6">
+                <a class='dropdown-trigger btn waves-effect waves-light teal lighten-2' href='#' data-target='dropdown2'>Скорость обновления графика</a>
+                  <ul id='dropdown2' class='dropdown-content z-depth-4'>
+                       <li><a href="#!">час</a></li>
+                       <li class="divider"></li>
+                       <li><a href="#!">год</a></li>
+                       <li class="divider"></li>
+                       <li><a href="#!">e^τ лет</a></li>
+                       <li class="divider"></li>
+                       <li><a href="#!"><span class="brown-text">Быстрее, чем понос</span></a></li>
+                       <li class="divider"></li>
+                       <li><a href="#!">Быстрее, чем Кравченко доказывает теоремы</a></li>
+                   </ul>
+              </div>
+
+              <div class="col m6">
+                <a class='dropdown-trigger btn waves-effect waves-light teal lighten-2' href='#' data-target='dropdown3'>Скорость обновления графика</a>
+                  <ul id='dropdown3' class='dropdown-content z-depth-4'>
+                       <li><a href="#!">час</a></li>
+                       <li class="divider"></li>
+                       <li><a href="#!">год</a></li>
+                       <li class="divider"></li>
+                       <li><a href="#!">e^τ лет</a></li>
+                       <li class="divider"></li>
+                       <li><a href="#!"><span class="brown-text">Быстрее, чем понос</span></a></li>
+                       <li class="divider"></li>
+                       <li><a href="#!">Быстрее, чем Кравченко доказывает теоремы</a></li>
+                   </ul>
+               </div>
+
+            </div>
+
+
+          </div>
+        </li>
+        <!--Вакуумметр-->
+
+      </ul>
+
+    </div>
+
+
+
+    <div class="col s5 m6 l5">
+      <ul class="collapsible popout z-depth-2">
+
+        <!-- Регулировка напряжения и частоты -->
+        <li class="active">
+          <div class="collapsible-header"><i class="material-icons">settings</i>Установка частоты и напряжения</div>
+          <div class="collapsible-body">
+            <div class="row">
+
+              <!-- Напряжение карточка -->
+              <div class="col m6">
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-title">
+                      <i class="material-icons">flash_on</i>
+                      <span>Напряжение</span>
+                    </div>
+                    <!-- Переключатель -->
+                    <div class="switch">
+                      <label>
+                        Off
+                        <input type="checkbox">
+                        <span class="lever"></span>
+                        On
+                      </label>
+                    </div>
+                    <!-- Переключатель -->
+                    <!-- Слайдер -->
+                    <form action="#">
+                      <p class="range-field">
+                        <input type="range" id="test5" value="0" min="0" max="40" />
+                      </p>
+                    </form>
+                    <div class="row">
+                      <div class="col m6">
+                        <input type="number" min="0" max="40">
+                      </div>
+                      <div class="col m6">
+                        <a class="waves-effect waves-light btn teal lighten-2">SET</a>
+                      </div>
+                    </div>
+                    <!-- Слайдер -->
+                  </div>
+                </div>
+              </div>
+              <!-- Напряжение карточка -->
+
+              <!-- Частота карточка -->
+              <div class="col m6">
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-title">
+                      <i class="material-icons">timer</i>
+                      <span>Частота</span>
+                    </div>
+                    <!-- Переключатель -->
+                    <div class="switch">
+                      <label>
+                        Off
+                        <input type="checkbox">
+                        <span class="lever"></span>
+                        On
+                      </label>
+                    </div>
+                    <!-- Переключатель -->
+                    <!-- Слайдер -->
+                    <form action="#">
+                      <p class="range-field">
+                        <input class="teal lighten-2" type="range" id="test6" value="0" min="0" max="200" />
+                      </p>
+                    </form>
+                    <div class="row">
+                      <div class="col m6">
+                        <input type="number" min="0" max="200">
+                      </div>
+                      <div class="col m6">
+                        <a class="waves-effect waves-light btn teal lighten-2">SET</a>
+                      </div>
+                    </div>
+                    <!-- Слайдер -->
+                  </div>
+                </div>
+              </div>
+              <!-- Частота карточка -->
+            </div>
+
+          </div>
+        </li>
+        <!-- Регулировка напряжения и частоты -->
+
+      </ul>
+    </div>
+    </div>
+
+  </div>
+
+
+
+
+
+    <!-- Don't remove -->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+    <script src="./js/chart.js"></script>
+    <script src="./js/serial.js"></script>
+  </body>
 
 </html>
