@@ -4,13 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <!-- <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha256-arMsf+3JJK2LoTGqxfnuJPFTU4hAK57MtIPdFpiHXOU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h1></h1>
+  <h3 id="voltage"></h3>
+  <br>
+  <h3 id="current"></h3>
+  <br>
+  <h3 id="vacuum"></h3>
+  <br>
+  <h3 id="state"></h3>
+  <canvas id="canvas">
 </body>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script src="./js/index.js"></script>
+<script src="./js/chart.js"></script>
 <script src="./js/serial.js"></script>
 
 </html>
