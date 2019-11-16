@@ -1,5 +1,102 @@
 const SerialPort = require('serialport');
+//const ByteLength = SerialPort.parsers.ByteLength;
 
-SerialPort.list((err, ports) => {
-  console.log('ports', ports);
-});
+// SerialPort.list((err, ports) => {
+//   console.log('ports', ports);
+// });
+
+function connect() {
+  return new Promise(ok => {
+    SerialPort.list((err, ports) => {
+      if(ports.length == 0) {
+        ok(console.log('error'));
+      }
+      else {
+        ports.forEach(item => {
+          if(item.productId == '7523') {
+            const port = new SerialPort(item.comName, {baudRate: 9600});
+            port.on('open', () => {
+              console.log('port has been opened');
+              connectionStatus = true;
+            });
+            console.log('connected');
+            ok(port);
+          }
+        });
+      }
+    });
+  });
+}
+
+let globalPort;
+let connectionStatus = false;
+
+//write data
+function serialWrite(dataArr) {
+  globalPort.write(Buffer.from(dataArr));
+}
+
+//data had been received from MC_1
+let count = 0;
+function updateMC_1(dataArr){
+
+  //data parsing
+  const vacuum = '' + dataArr[1] + dataArr[2] + dataArr[3];
+  const anyByte = '' + dataArr[5] + dataArr[6] + dataArr[7];
+  const controlSum = '' + dataArr[9] + dataArr[10] + dataArr[11];
+
+    //data showing
+    $('#vacuum').html('Vacuum: ' + vacuum);
+
+    // console.log(vacuum);
+    addData(myChart, count++, +vacuum);
+
+    setTimeout(function () {
+      serialWrite([255, 1, 44, 1, 5, 6, 44, 1, 5, 7]);
+    }, 200);
+}
+
+//data had been received from MC_2
+function updateMC_2(dataArr) {
+  //console.log(dataArr);
+  const state_voltage = '' + dataArr[3];
+  const voltage = '' + dataArr[5] + dataArr[6] + dataArr[7];
+  const current = '' + dataArr[9] + dataArr[10] + dataArr[11];
+  const state = '' + dataArr[13];
+  const controlSum = '' + dataArr[15] + dataArr[16] + dataArr[17];
+
+  $('#voltage').html('Voltage: ' + voltage);
+  $('#current').html('Current: ' + current);
+  $('#state').html('Error: ' + state);
+
+  setTimeout(function () {
+    serialWrite([58, 1, 44, 1, 44, 3, 5, 7, 44, 3, 5, 9]);
+  }, 200);
+}
+
+//debugging
+setTimeout(function () {
+  serialWrite([58, 1, 44, 1, 44, 3, 5, 7, 44, 3, 5, 9]);
+  setTimeout(function () {
+    serialWrite([255, 1, 44, 1, 5, 6, 44, 1, 5, 7]);
+  }, 50);
+}, 3000);
+
+(async() => {
+  const port = await connect();
+  globalPort = port;
+
+  let count = 0;
+  //listening to data
+  port.on('data', (data) => {
+    // console.log(data);
+    console.log(count++);
+    //do something
+    if(data[0] == 58) {        //MC_2
+      updateMC_2(data)
+    }
+    else if(data[0] == 255) {  //MC_1
+      updateMC_1(data)
+    }
+  });
+})()
