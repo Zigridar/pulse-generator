@@ -1,10 +1,10 @@
 const SerialPort = require('serialport');
-//const ByteLength = SerialPort.parsers.ByteLength;
 
-// SerialPort.list((err, ports) => {
-//   console.log('ports', ports);
-// });
+let globalPort;
+let connectionStatus = false;
 
+
+//initialize connection
 function connect() {
   return new Promise(ok => {
     SerialPort.list((err, ports) => {
@@ -14,13 +14,41 @@ function connect() {
       else {
         ports.forEach(item => {
           if(item.productId == '7523') {
-            const port = new SerialPort(item.comName, {baudRate: 9600});
-            port.on('open', () => {
+            globalPort = new SerialPort(item.comName, {baudRate: 9600});
+            //open event handler
+            globalPort.on('open', () => {
               console.log('port has been opened');
               connectionStatus = true;
+              setTimeout(function () {
+                serialWrite([58, 1, 44, 1, 44, 3, 5, 7, 44, 3, 5, 9]);
+                setTimeout(function () {
+                  serialWrite([255, 1, 44, 1, 5, 6, 44, 1, 5, 7]);
+                }, 50);
+              }, 2000);
             });
-            console.log('connected');
-            ok(port);
+            //error event handler
+            globalPort.on('error', (err) => {
+              console.log('device has been disconnected');
+              connectionStatus = false;
+            });
+            //close event handler
+            globalPort.on('close', () => {
+              console.log('port has been closed');
+              connectionStatus = false;
+            });
+            //data event handler
+            let count = 0;
+            globalPort.on('data', (data) => {
+              console.log(count++);
+              //do something
+              if(data[0] == 58) {        //MC_2
+                updateMC_2(data)
+              }
+              else if(data[0] == 255) {  //MC_1
+                updateMC_1(data)
+              }
+            });
+            ok();
           }
         });
       }
@@ -28,8 +56,6 @@ function connect() {
   });
 }
 
-let globalPort;
-let connectionStatus = false;
 
 //write data
 function serialWrite(dataArr) {
@@ -39,26 +65,21 @@ function serialWrite(dataArr) {
 //data had been received from MC_1
 let count = 0;
 function updateMC_1(dataArr){
-
   //data parsing
   const vacuum = '' + dataArr[1] + dataArr[2] + dataArr[3];
   const anyByte = '' + dataArr[5] + dataArr[6] + dataArr[7];
   const controlSum = '' + dataArr[9] + dataArr[10] + dataArr[11];
 
     //data showing
-    $('#vacuum').html('Vacuum: ' + vacuum);
-
-    // console.log(vacuum);
-    addData(myChart, count++, +vacuum);
-
-    setTimeout(function () {
-      serialWrite([255, 1, 44, 1, 5, 6, 44, 1, 5, 7]);
-    }, 200);
+  $('#vacuum').html('Vacuum: ' + vacuum);
+  addData(myChart, count++, +vacuum);
+  setTimeout(function () {
+    serialWrite([255, 1, 44, 1, 5, 6, 44, 1, 5, 7]);
+  }, 200);
 }
 
 //data had been received from MC_2
 function updateMC_2(dataArr) {
-  //console.log(dataArr);
   const state_voltage = '' + dataArr[3];
   const voltage = '' + dataArr[5] + dataArr[6] + dataArr[7];
   const current = '' + dataArr[9] + dataArr[10] + dataArr[11];
@@ -74,29 +95,7 @@ function updateMC_2(dataArr) {
   }, 200);
 }
 
-//debugging
-setTimeout(function () {
-  serialWrite([58, 1, 44, 1, 44, 3, 5, 7, 44, 3, 5, 9]);
-  setTimeout(function () {
-    serialWrite([255, 1, 44, 1, 5, 6, 44, 1, 5, 7]);
-  }, 50);
-}, 3000);
-
-(async() => {
-  const port = await connect();
-  globalPort = port;
-
-  let count = 0;
-  //listening to data
-  port.on('data', (data) => {
-    // console.log(data);
-    console.log(count++);
-    //do something
-    if(data[0] == 58) {        //MC_2
-      updateMC_2(data)
-    }
-    else if(data[0] == 255) {  //MC_1
-      updateMC_1(data)
-    }
-  });
-})()
+//replace to button
+// (async() => {
+//   await connect();
+// })()
