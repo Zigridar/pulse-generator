@@ -6,17 +6,18 @@ let errorStatus = false;
 
 
 //initialize connection
-function connect() {
+function connect(errorCallBack, successCallBack) {
   return new Promise(ok => {
     SerialPort.list((err, ports) => {
       if(ports.length == 0) {
         //There aren't any available devices
         //do something
+        errorCallBack();
         ok(console.log('error'));
       }
       else {
         ports.forEach(item => {
-          if(item.productId == '7523') {
+          if(item.productId == '7523' && !connectionStatus) {
             globalPort = new SerialPort(item.comName, {baudRate: 9600});
             //open event handler
             globalPort.on('open', () => {
@@ -26,6 +27,7 @@ function connect() {
               setTimeout(function () {
                 serialWrite([58, 1, 44, 1, 44, 3, 5, 7, 44, 3, 5, 9]);
                 setTimeout(function () {
+                  successCallBack();
                   serialWrite([255, 1, 44, 1, 5, 6, 44, 1, 5, 7]);
                 }, 50);
               }, 2000);
@@ -37,6 +39,7 @@ function connect() {
               if (!errorStatus) {
                 errorStatus = true;
                 connectionStatus = false;
+                errorCallBack();
               }
             });
             //close event handler
@@ -47,6 +50,7 @@ function connect() {
                 errorStatus = true;
                 connectionStatus = false;
               }
+              errorCallBack();
             });
             //data event handler
             let count = 0; //debug
@@ -66,6 +70,13 @@ function connect() {
       }
     });
   });
+}
+
+function disconnect(foo) {
+  if (connectionStatus) {
+    globalPort.close();
+    foo();
+  }
 }
 
 
@@ -93,15 +104,15 @@ function updateMC_1(dataArr){
 //data had been received from MC_2
 function updateMC_2(dataArr) {
   const state_voltage = '' + dataArr[3];
-  const voltage = '' + dataArr[5] + dataArr[6] + dataArr[7];
+  const voltage = '' + dataArr[5] + dataArr[6] + ',' + dataArr[7];
   const current = '' + dataArr[9] + dataArr[10] + dataArr[11];
   const state = '' + dataArr[13];
   const controlSum = '' + dataArr[15] + dataArr[16] + dataArr[17];
 
   //change to real names
-  $('#voltage').html('Voltage: ' + voltage);
-  $('#current').html('Current: ' + current);
-  $('#state').html('Error: ' + state);
+  $('#real-voltage').html(voltage);
+  $('#current').html(current);
+  $('#error-text').html(state);
 
   setTimeout(function () {
     serialWrite([58, 1, 44, 1, 44, 3, 5, 7, 44, 3, 5, 9]);
