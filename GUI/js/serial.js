@@ -2,6 +2,7 @@ const SerialPort = require('serialport');
 
 let globalPort;
 let connectionStatus = false;
+let errorStatus = false;
 
 
 //initialize connection
@@ -9,6 +10,8 @@ function connect() {
   return new Promise(ok => {
     SerialPort.list((err, ports) => {
       if(ports.length == 0) {
+        //There aren't any available devices
+        //do something
         ok(console.log('error'));
       }
       else {
@@ -18,6 +21,7 @@ function connect() {
             //open event handler
             globalPort.on('open', () => {
               console.log('port has been opened');
+              errorStatus = false;
               connectionStatus = true;
               setTimeout(function () {
                 serialWrite([58, 1, 44, 1, 44, 3, 5, 7, 44, 3, 5, 9]);
@@ -29,17 +33,25 @@ function connect() {
             //error event handler
             globalPort.on('error', (err) => {
               console.log('device has been disconnected');
-              connectionStatus = false;
+              //do something
+              if (!errorStatus) {
+                errorStatus = true;
+                connectionStatus = false;
+              }
             });
             //close event handler
             globalPort.on('close', () => {
               console.log('port has been closed');
-              connectionStatus = false;
+              //do something
+              if (!errorStatus) {
+                errorStatus = true;
+                connectionStatus = false;
+              }
             });
             //data event handler
-            let count = 0;
+            let count = 0; //debug
             globalPort.on('data', (data) => {
-              console.log(count++);
+              console.log(count++); //debug
               //do something
               if(data[0] == 58) {        //MC_2
                 updateMC_2(data)
@@ -70,7 +82,7 @@ function updateMC_1(dataArr){
   const anyByte = '' + dataArr[5] + dataArr[6] + dataArr[7];
   const controlSum = '' + dataArr[9] + dataArr[10] + dataArr[11];
 
-    //data showing
+  //change to real names
   $('#vacuum').html('Vacuum: ' + vacuum);
   addData(myChart, count++, +vacuum);
   setTimeout(function () {
@@ -86,6 +98,7 @@ function updateMC_2(dataArr) {
   const state = '' + dataArr[13];
   const controlSum = '' + dataArr[15] + dataArr[16] + dataArr[17];
 
+  //change to real names
   $('#voltage').html('Voltage: ' + voltage);
   $('#current').html('Current: ' + current);
   $('#state').html('Error: ' + state);
