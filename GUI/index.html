@@ -14,213 +14,163 @@
   </head>
   <body>
 
-    <!-- Навбар -->
 <nav class="teal lighten-2">
   <div class="row">
-    <!-- Зеленые карточки под микроконтроллеры -->
-    <div class="col m2">
+    <div class="col m5">
       <div id="shkaf-indication" class="card red waves-effect waves-light">
         <div class="card-content white-text">
-          <p><h6 style="width: 135px;">Шкаф</h6></p>
+          <p><h6 id="vip-card" style="width: 200px;">ВИП-40 is disconnected</h6></p>
         </div>
       </div>
-    </div>
-    <div class="col m2">
+
       <div id="generator-indication" class="card red waves-effect waves-light">
         <div class="card-content white-text">
-          <p><h6 style="width: 135px;">Генератор</h6></p>
+          <p><h6 id="generator-card" style="width: 200px;">Generator is disconnected</h6></p>
         </div>
       </div>
     </div>
-      <!-- Зеленые карточки под микроконтроллеры -->
-
-      <!-- Карточка для вывода ошибок -->
     <div style="padding-left: 29px;" class="col m4">
-      <div  class="card blue-grey darken-4 waves-effect waves-light">
-        <div class="card-content white-text">
-          <h6 id="error-text" style="width: 270px;">Текст ошибки</h6>
+      <div id="error-card" class="card red waves-effect waves-light">
+        <div class="card-content white-text tooltipped" data-tooltip="device state">
+          <h6 id="error-text" style="width: 250px;">No device</h6>
         </div>
       </div>
     </div>
-    <!-- Карточка для вывода ошибок -->
 
-    <div style="padding-left: 30px;" class="col m2">
+    <div style="padding-left: 30px;" class="col m3">
       <span id="connect-button" class="blue-grey darken-1 waves-effect waves-light btn" style="
-      margin-bottom: 15px;
-      margin-top: 11px;
-      padding-right: 0px;
-      padding-left: 0px;
-      width: 110px;">
-      connect
-    </span>
-  </div>
-    <div class="col m2">
+        margin-bottom: 15px;
+        margin-top: 11px;
+        padding-right: 0px;
+        padding-left: 0px;
+        width: 110px;">
+        connect
+      </span>
       <span id="disconnect-button" disabled class="blue-grey darken-1 waves-effect waves-light btn" style="
-      margin-bottom: 15px;
-      margin-top: 11px;
-      padding-right: 0px;
-      padding-left: 0px;
-      width: 110px;">
+        margin-bottom: 15px;
+        margin-top: 11px;
+        padding-right: 0px;
+        padding-left: 0px;
+        width: 110px;">
         disconnect
       </span>
     </div>
-
   </div>
 </nav>
-    <!-- Навбар -->
 
 <div id="phone-card" class="card grey lighten-4 z-depth-0">
-  <div class="card-content">
-
-  </div>
   <div class="row">
-    <div class="col s7 m7 l7">
-      <ul class="collapsible Expandable z-depth-2">
-
-        <!--Отображение данных-->
+    <div class="col l7">
+      <ul class="collapsible expandable z-depth-2">
         <li class="active">
-          <div class="collapsible-header blue-green lighten-4"><i class="material-icons">equalizer</i>Отображение данных</div>
+          <div class="collapsible-header blue-green lighten-4">
+            <i class="material-icons">flash_on</i>
+            <div style="padding-top:3px;">
+              <h6 style="padding: 0px; margin: 0px;">
+                ВИП-40
+              </h6>
+            </div>
+          </div>
           <div class="collapsible-body">
             <div class="row" style="padding-left: 10px;
                                     padding-right: 10px;">
-              <div class="col m6">
+              <div class="col m8">
                 <div class="card">
                   <div class="card-content">
-                    <span>Реальное напряжение</span>
-                    <span class="badge">kV</span>
-                    <span id="real-voltage" class="badge">1</span>
+                    <div class="card-title">
+                      <span>Voltage</span>
+                    </div>
+                        <div  class="switch">
+                          <label>
+                            Off
+                            <input disabled id="switch-voltage" type="checkbox">
+                            <span class="lever"></span>
+                            On
+                          </label>
+                        </div>
+                    <div class="row">
+                      <div class="col m7">
+                        <form action="#" style="margin-top:20px;">
+                          <p class="range-field">
+                            <input disabled type="range" id="range-voltage" step="0.1" value="0" min="0" max="40" style="margin: 0px; padding: 2px;"/>
+                          </p>
+                        </form>
+                      </div>
+                      <div class="col m2">
+                        <input disabled id="input-voltage" step="0.1" type="number" min="0" max="40">
+                      </div>
+                      <div class="col m3">
+                        <a id="set_voltage" disabled class="waves-effect waves-light btn teal lighten-2">SET</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col m6">
+              <div class="col m4">
                 <div class="card">
-                  <div class="card-content">
-                    <span>Ток</span>
-                    <span class="badge">mA</span>
-                    <span id="current" class="badge">1</span>
+                  <div class="card-content" style="height: 54px">
+                    <h6>
+                      Real Voltage
+                      <span class="badge" id="real-voltage"></span>
+                      <!-- <span class="badge">kV</span> -->
+                    </h6>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-content" style="height: 54px">
+                    <h6>
+                      Current
+                      <span class="badge" id="current"></span>
+                      <!-- <span class="badge">mA</span> -->
+                    </h6>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </li>
-        <!--Отображение данных-->
       </ul>
-      <ul class="collapsible Expandable z-depth-2">
-        <!--Вакуумметр-->
+      <ul class="collapsible expandable z-depth-2">
         <li class="active">
-          <div class="collapsible-header"><i class="material-icons">grain</i>Вакуумметр
-            <span class="badge"><span id="vacuum-gauge-value">1</span> kV</span>
-
+          <div class="collapsible-header">
+             <i class="material-icons">grain</i>Vacuum gauge
+             <span class="badge"><span id="vacuum-gauge-value"></span> Pa</span>
           </div>
-          <div class="collapsible-body"><span></span>
-
-
-
-
-            <!-- Селекторы -->
-            <div class="row">
-                 <!-- Селектор частоты -->
-              <div style="
-              padding-right: 20px;
-              padding-left: 30px;
-              "class="col m6">
-
-                <label>Частота обновления графика</label>
-                  <select>
-                    <option value="hi"selected>Default</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
-                  </select>
-                </div>
-                <!-- Селектор частоты -->
-
-                <!-- Селектор количества точек -->
-              <div style="
-              padding-right: 40px;
-              padding-left: 20px;
-              "class="col m6">
-                <label>Количество точек</label>
-                  <select>
-                    <option value="hi"selected>Default</option>
-                  <option value="1">Option 1</option>
-                  <option value="2">Option 2</option>
-                  <option value="3">Option 3</option>
-                  </select>
-               </div>
-               <!-- Селектор количества точек -->
-            </div>
-            <!-- Селекторы -->
+          <div class="collapsible-body" style="width: 100%; height: 335px">
             <canvas id="canvas"></canvas>
-
-          </div>
         </li>
-        <!--Вакуумметр-->
       </ul>
 
     </div>
 
 
 
-    <div class="col s5 m6 l5">
-      <ul class="collapsible Expandable z-depth-2">
+    <div class="col l5">
+      <ul class="collapsible expandable z-depth-2">
 
-        <!-- Регулировка напряжения и частоты -->
         <li class="active">
-          <div class="collapsible-header"><i class="material-icons">settings</i>Установка частоты и напряжения</div>
+          <div class="collapsible-header" style="padding-top: 11px; padding-bottom: 11px;">
+            <img width="30px" height="30px" style="margin-right: 26px;" src="./css/frequency.svg">
+            <div style="padding-top: 7px;">
+              <h6 style="padding: 0px; margin: 0px;">
+                Pulse generator
+              </h6>
+            </div>
+            <div class="" style="
+              padding-left: 150px;">
+            </div>
+          </div>
           <div class="collapsible-body">
             <div class="row" style="
               padding-left: 10px;
               padding-right: 10px;">
 
-              <!-- Напряжение карточка -->
-              <div class="col m6">
+              <div class="col m12">
                 <div class="card">
                   <div class="card-content">
                     <div class="card-title">
-                      <i class="material-icons">flash_on</i>
-                      <span>Напряжение</span>
+                      <span>Frequency</span>
                     </div>
-                    <!-- Переключатель -->
-                    <div  class="switch">
-                      <label>
-                        Off
-                        <input disabled id="switch-voltage" type="checkbox">
-                        <span class="lever"></span>
-                        On
-                      </label>
-                    </div>
-                    <!-- Переключатель -->
-                    <!-- Слайдер -->
-                    <form action="#">
-                      <p class="range-field">
-                        <input disabled type="range" id="range-voltage" step="0.1" value="0" min="0" max="40" />
-                      </p>
-                    </form>
-                    <div class="row">
-                      <div class="col m6">
-                        <input id="input-voltage" step="0.1" type="number" min="0" max="40">
-                      </div>
-                      <div class="col m6">
-                        <a id="set_voltage" disabled class="waves-effect waves-light btn teal lighten-2">SET</a>
-                      </div>
-                    </div>
-                    <!-- Слайдер -->
-                  </div>
-                </div>
-              </div>
-              <!-- Напряжение карточка -->
-
-              <!-- Частота карточка -->
-              <div class="col m6">
-                <div class="card">
-                  <div class="card-content">
-                    <div class="card-title">
-                      <i class="material-icons">timer</i>
-                      <span>Частота</span>
-                    </div>
-                    <!-- Переключатель -->
                     <div class="switch">
                       <label>
                         Off
@@ -229,22 +179,90 @@
                         On
                       </label>
                     </div>
-                    <!-- Переключатель -->
-                    <!-- Слайдер -->
-                    <form action="#">
-                      <p class="range-field">
-                        <input disabled class="teal lighten-2" type="range" id="range-frequency" value="0" min="0" max="200" />
-                      </p>
-                    </form>
                     <div class="row">
-                      <div class="col m6">
-                        <input id="input-frequency" type="number" min="0" max="200">
+                      <div class="col m7">
+                        <form action="#" style="margin-top:20px;">
+                          <p class="range-field">
+                            <input disabled class="teal lighten-2" type="range" id="range-frequency" value="0" min="1" max="200" />
+                          </p>
+                        </form>
                       </div>
-                      <div class="col m6">
+                      <div class="col m2">
+                        <input disabled id="input-frequency" type="number" min="1" max="200">
+                      </div>
+                      <div class="col m3">
                         <a id="set_frequency"  disabled class="waves-effect waves-light btn teal lighten-2">SET</a>
                       </div>
                     </div>
-                    <!-- Слайдер -->
+                      <h6 style="height:24px; margin:5px; padding:0px">
+                        <i class="material-icons" >timer</i>
+                          <span>Timer</span>
+                      </h6>
+
+                    <div class="row">
+                      <div class="col m1">
+
+                      </div>
+                      <div class="col m5">
+                        <form action="#" style="margin-top: 15px;">
+                          <p>
+                            <label>
+                              <input disabled type="checkbox" id="checkbox-turn-on" class="filled-in"/>
+                              <span class="black-text">Turn on after</span>
+                            </label>
+                          </p>
+                        </form>
+                      </div>
+                      <div class="col m5">
+                        <div class="row">
+                          <div class="col m4">
+                            <input disabled id="hours-on" value="0" type="number" min="0" max="24"><span>h</span>
+                          </div>
+                          <div class="col m4">
+                            <input disabled id="minutes-on" value="0" type="number" min="0" max="60"><span>m</span>
+                          </div>
+                          <div class="col m4">
+                            <input disabled id="seconds-on" value="0" type="number" min="0" max="60"><span>s</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col m1">
+
+                      </div>
+                      <div class="col m5">
+                        <form action="#" style="margin-top: 15px;">
+                          <p>
+                            <label>
+                              <input disabled type="checkbox" id="checkbox-turn-off" class="filled-in"/>
+                              <span class="black-text">Turn off after</span>
+                            </label>
+                          </p>
+                        </form>
+                      </div>
+                      <div class="col m5">
+                        <div class="row">
+                          <div class="col m4">
+                            <input disabled id="hours-off" value="0" type="number" min="0" max="24"><span>h</span>
+                          </div>
+                          <div class="col m4">
+                            <input disabled id="minutes-off" value="0" type="number" min="0" max="60"><span>m</span>
+                          </div>
+                          <div class="col m4">
+                            <input disabled id="seconds-off" value="0" type="number" min="0" max="60"><span>s</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col m12">
+                        <span id="start-timer" disabled class="btn waves-effect waves-light">START</span>
+                        <span id="stop-timer" disabled class="btn waves-effect waves-light red">STOP TIMER</span>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -257,103 +275,64 @@
       </ul>
 
 
-      <!-- Таймеры -->
-      <ul class="collapsible Expandable z-depth-2">
+      <ul class="collapsible expandable z-depth-2">
       <li class="active">
-        <div class="collapsible-header"><i class="material-icons">settings</i>Установка частоты и напряжения</div>
+        <div class="collapsible-header">
+          <i class="material-icons">equalizer</i>
+          <span>Chart options</span>
+          <div class="switch" style="margin-left: 150px">
+            <label>
+              Off
+              <input disabled id="switch-chart" type="checkbox" checked="true">
+              <span class="lever"></span>
+              On
+            </label>
+          </div>
+        </div>
         <div class="collapsible-body">
-          <!-- Карточка для таймера -->
           <div class="row" style="padding-left: 10px;
                                   padding-right: 10px;">
             <div class="col m12">
               <div class="card">
                 <div class="card-content">
-                  <div class="cart-title">
-                    <div class="row">
-                      <div class="col m4">
-                        <p>
-                          <label>
-                            <input disabled type="checkbox" id="checkbox-turn-off" class="filled-in" />
-                            <span><h6>ВЫКЛ. через</h6></span>
-                          </label>
-                        </p>
-                      </div>
-                      <div class="col m8">
-                        <div class="row">
-                          <div class="col m4">
-                            <input disabled id="input-hours-turn-off" value="0" type="number" min="0" max="24"><span>ч.</span>
-                          </div>
-                          <div class="col m4">
-                            <input disabled id="input-minutes-turn-off" value="0" type="number" min="0" max="60"><span>м.</span>
-                          </div>
-                          <div class="col m4">
-                            <input disabled id="input-seconds-turn-off" value="0" type="number" min="0" max="60"><span>с.</span>
-                          </div>
-                        </div>
-                      </div>
+                  <div class="row">
+                    <div class="col m5">
+                      <label>Average</label>
+                      <select id="average-chart">
+                        <option value="1"selected>No average</option>
+                        <option value="2">Average 2 points</option>
+                        <option value="3">Average 3 points</option>
+                        <option value="4">Average 4 points</option>
+                      </select>
+                    </div>
+                    <div class="col m3">
+                      <label>Point count</label>
+                        <select id="dots">
+                        <option value="10">10</option>
+                        <option value="20"selected>20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        </select>
+                    </div>
+                    <div class="col m4">
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Карточка для таймера -->
-          <!-- Карточка для таймера -->
-          <div class="row" style="padding-left: 10px;
-                                  padding-right: 10px;">
-            <div class="col m12">
-              <div class="card">
-                <div class="card-content">
-                  <div class="cart-title">
-                    <div class="row">
-                      <div class="col m4">
-                        <p>
-                          <label>
-                            <input type="checkbox" id="checkbox-turn-on" class="filled-in" disabled />
-                            <span><h6>ВКЛ. через</h6></span>
-                          </label>
-                        </p>
-                      </div>
-                      <div class="col m8">
-                        <div class="row">
-                          <div class="col m4">
-                            <input disabled id="input-hours-turn-on" value="0" type="number" min="0" max="24"><span>ч.</span>
-                          </div>
-                          <div class="col m4">
-                            <input disabled id="input-minutes-turn-on" value="0" type="number" min="0" max="60"><span>м.</span>
-                          </div>
-                          <div class="col m4">
-                            <input disabled id="input-seconds-turn-on" value="0" type="number" min="0" max="60"><span>с.</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Карточка для таймера -->
 
-
+          <!-- Карточка для таймера -->
         </div>
       </li>
       </ul>
-      <!-- Таймеры -->
-      <!-- Кнопка пуск -->
-      <div class="row" style="padding-bottom: 5px;">
-        <div class="col m6">
-          <span id="turn-on-button" disabled class="btn waves-effect waves-light">Пуск</span>
-        </div>
-      <!-- Кнопка пуск -->
-    </div>
     </div>
 
   </div>
 
-
-
-
+</div>
 
     <!-- Don't remove -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

@@ -12,5 +12,12 @@
       outDuration: 500
     });
 
+    // $('.tooltipped');
+     M.Tooltip.init($('.tooltipped'), {
+       position: 'bottom'
+     });
+
+     $('.dropdown-trigger').dropdown();
+
   }); // end of document ready
 })(jQuery); // end of jQuery name space

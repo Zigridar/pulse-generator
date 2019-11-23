@@ -4,18 +4,16 @@
     "main": "main.js",
     "scripts": {
         "start": "electron .",
-        "install": "electron-rebuild",
-        "build": "browserify ./src/pageSettings.js > ./js/index.js &&electron ."
+        "install": "electron-rebuild"
     },
     "author": "zigridar",
     "devDependencies": {
-        "browserify": "^16.5.0",
-        "electron": "^5.0.5",
-        "electron-packager": "^14.1.0",
-        "electron-rebuild": "^1.8.5"
+        "electron": "7.1.2",
+        "electron-packager": "14.1.0",
+        "electron-rebuild": "1.8.8",
+        "node-abi": "2.12.0"
     },
     "dependencies": {
-        "jquery": "^3.4.1",
-        "serialport": "^7.1.5"
+        "serialport": "8.0.5"
     }
 }

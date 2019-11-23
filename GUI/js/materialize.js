@@ -2003,9 +2003,9 @@ $jscomp.polyfill = function (e, r, p, m) {
             var index = $collapsibleLis.index($collapsibleLi);
 
             if (isActive) {
-              this.close(index);
+              // this.close(index);
             } else {
-              this.open(index);
+              // this.open(index);
             }
           }
         }

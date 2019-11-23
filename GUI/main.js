@@ -10,9 +10,15 @@ let window;
 //Window options
 function createWindow() {
   window = new BrowserWindow({
-    width: 1010,
+    width: 1100,
     height: 750,
+    minWidth: 1100,
+    minHeight: 750,
+    maxWidth: 1100,
+    maxHeight: 750,
     resizable: false,
+    minimizable : false,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true
@@ -26,15 +32,21 @@ function createWindow() {
     slashes: true
   }));
 
-  window.webContents.openDevTools();   //after debugging
+  // window.webContents.openDevTools();   //after debugging
 
   //window.setAlwaysOnTop(true);
+  // window.removeMenu();
 
   window.on('closed', () => {
     window = null;
   });
 
   window.once('close', foo);
+
+  window.on('resize', () => {
+    console.log('resize');
+    // window.setSize(1100, 750);
+  });
 }
 
 function foo(event) {

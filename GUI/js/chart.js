@@ -8,7 +8,7 @@ const data = {
   labels: [],
   datasets: [{
     data: [],
-      fill: false,
+    fill: false,
     }]
   },
   options: {
@@ -20,7 +20,6 @@ const data = {
         borderColor: '#d40078'
       },
       line: {
-        // backgroundColor: '#048191',
         borderColor: '#048191',
         borderWidth: 2
       }
@@ -47,11 +46,12 @@ const data = {
 		},
 		scales: {
 			xAxes: [{
+        ticks: {
+          display: false
+        },
 				display: true,
 				scaleLabel: {
-					display: false,
-					labelString: 'Month',
-          fontSize: 14
+					display: false
 				},
 
 			}],
@@ -59,13 +59,11 @@ const data = {
 				display: true,
 				scaleLabel: {
 					display: true,
-					labelString: 'Давление',
+					labelString: 'Pressure',
           fontSize: 14
 				},
 				ticks: {
-					// stepSize: 100,
-          // min:0,
-          // max: 1000
+					stepSize: 2
 				}
 			}]
 		}
@@ -76,17 +74,26 @@ function random() {
   return Math.random();
 }
 
-function addData(chart, label, data) {
-  if (label < 100) {
-    chart.data.labels.push(label);
+let dotCount = 20;
+
+function addData(chart, data, dotCount) {
+  if (chart.data.labels.length < dotCount) {
+    chart.data.labels.push('');
   }
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-        if (label > 100) {
-          dataset.data.shift();
-        }
-    });
-    chart.update();
+
+  while(chart.data.labels.length > dotCount) {
+    chart.data.labels.pop();
+  }
+
+  chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(data);
+
+      while (dataset.data.length > dotCount) {
+        dataset.data.shift();
+      }
+
+  });
+  chart.update();
 }
 
 const myChart = new Chart(ctx, data);
