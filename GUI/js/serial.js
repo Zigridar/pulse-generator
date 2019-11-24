@@ -16,15 +16,6 @@ let globalVoltage = 0;
 let globalStateVoltage = 0;
 let globalDeviceAddress = 1;
 
-//local options variables
-//MC_1
-let localFrequency = 1;
-let localStateGenerator = 0;
-//MC_2
-let localVoltage = 0;
-let localStateVoltage = 0;
-let localDeviceAddress = 1;
-
 //intervals
 let timer_1;
 let timer_2;
@@ -84,7 +75,7 @@ function connect(nodevice, errorCallBack, successCallBack) {
             });
             //data event handler
             globalPort.on('data', async (data) => {
-              console.log(data);
+              // console.log(data);
               //do something
               if(data[0] == 58) {        //MC_2
                 updateMC_2(data)
@@ -126,6 +117,11 @@ function rankPartition(number) {
     rankArr.push(Math.floor(number/100));
     rankArr.push(Math.floor((number - rankArr[0]*100)/10));
     rankArr.push(Math.floor(number - rankArr[0]*100 - rankArr[1]*10));
+
+    //to ASCII
+    rankArr[0] += 48;
+    rankArr[1] += 48;
+    rankArr[2] += 48;
     ok(rankArr);
   });
 }
@@ -146,21 +142,21 @@ async function serialWriteMC_1(state, frequency) {
   //calcute control sum
   const controlSum = (+state) + (+frequency);
   //build data array
-  let data = [100, state, 44];
+  let data = [100, state + 48, 44];
   const rankFrequency = await rankPartition(frequency);
   const rankSum =await rankPartition(controlSum);
   data = data.concat(rankFrequency);
   data.push(44);
   data = data.concat(rankSum);
   globalPort.write(Buffer.from(data));
-  // console.log(data);
+  console.log(Buffer.from(data).toString());
 }
 
 async function serialWriteMC_2(address, state, voltage) {
   //calcute control sum
   const controlSum = (+address) + (+state) + (+voltage);
   //build data array
-  let data = [58, address, 44, state, 44];
+  let data = [58, address + 48, 44, state + 48, 44];
   const rankVoltage = await rankPartition(voltage);
   const rankSum = await rankPartition(controlSum);
   data = data.concat(rankVoltage);
@@ -168,6 +164,7 @@ async function serialWriteMC_2(address, state, voltage) {
   data = data.concat(rankSum);
   //Don't delete
   // data = [58, 49, 44, 48, 44, 49, 53, 48, 44 , 49, 53, 49];
+  console.log(Buffer.from(data).toString());
   globalPort.write(Buffer.from(data));
   // console.log(data);
 }
@@ -179,9 +176,9 @@ let dotStorage = [];
 
 async function updateMC_1(dataArr){
   //data parsing
-  const vacuum = (+dataArr[1])*100 + +(dataArr[2])*10 + (+dataArr[3]);
-  const anyByte = '' + dataArr[5] + dataArr[6] + dataArr[7];
-  const controlSum = '' + dataArr[9] + dataArr[10] + dataArr[11];
+  const vacuum = (+dataArr[1] - 48)*100 + +(dataArr[2] - 48)*10 + (+dataArr[3] - 48);
+  const anyByte = '' + (dataArr[5] - 48) + (dataArr[6] - 48) + (dataArr[7] - 48);
+  const controlSum = '' + (dataArr[9] - 48) + (dataArr[10] - 48) + (dataArr[11] - 48);
 
   if(globalChartState) {
     dotStorage[count] = +vacuum;
@@ -205,11 +202,11 @@ async function updateMC_1(dataArr){
 
 //data had been received from MC_2
 function updateMC_2(dataArr) {
-  const state_voltage = '' + dataArr[3];
-  const voltage = dataArr[5]*10 + dataArr[6] + ',' + dataArr[7];
-  const current = dataArr[9]*100 + dataArr[10]*10 + dataArr[11];
-  const state = +dataArr[13];
-  const controlSum = '' + dataArr[15] + dataArr[16] + dataArr[17];
+  const state_voltage = '' + (dataArr[3] - 48);
+  const voltage = (dataArr[5] - 48)*10 + (dataArr[6] - 48) + ',' + (dataArr[7] - 48);
+  const current = (dataArr[9] - 48)*100 + (dataArr[10] - 48)*10 + (dataArr[11] - 48);
+  const state = +dataArr[13] - 48;
+  const controlSum = '' + (dataArr[15] - 48)*100 + (dataArr[16] - 48)*10 + (dataArr[17] - 48);
 
   let error_text;
   switch (state) {
