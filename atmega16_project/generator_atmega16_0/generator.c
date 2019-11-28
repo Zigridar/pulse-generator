@@ -5,7 +5,7 @@
 //timer overflow counter
 unsigned long counter = 0;
 //lowTime 
-unsigned int lowTime = 125;
+unsigned int lowTime = 125; //lowTime = 10000 / frequency
 //on or off generator
 unsigned int OnOff = 0;
 
@@ -20,9 +20,12 @@ void generatorInit(void)
 	TCCR0 = 0b00000010;
 	TCNT0 = 0;
 	
-	//initialize port
+	//initialize port //PC0
 	DDRC |= (1<<0);
 	PORTC &= ~(1<<0);
+	//initialize port PD2 (indicator)
+	DDRD |= (1<<2);
+	PORTD &= ~(1<<2);
 
 }
 
@@ -43,12 +46,14 @@ void pulse(unsigned int pulseTime)
 void generatorStart()
 {
 	OnOff = 1;
+	PORTD |=(1<<2);
 }
 
 //sta
 void generatorStop(void)
 {
 	OnOff = 0;
+	PORTD &= ~(1<<2);
 }
 
 //interrupt function

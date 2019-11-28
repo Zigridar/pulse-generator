@@ -3,31 +3,31 @@ generator_atmega16_0.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000352  00000000  00000000  00000094  2**1
+  0 .text         00000486  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000002  00800060  00000352  000003e6  2**0
+  1 .data         00000002  00800060  00000486  0000051a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000006  00800062  00800062  000003e8  2**0
+  2 .bss          00000006  00800062  00800062  0000051c  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000003e8  2**0
+  3 .comment      00000030  00000000  00000000  0000051c  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000418  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000054c  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000068  00000000  00000000  00000454  2**0
+  5 .debug_aranges 00000078  00000000  00000000  00000588  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000009a3  00000000  00000000  000004bc  2**0
+  6 .debug_info   00000abc  00000000  00000000  00000600  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000006fd  00000000  00000000  00000e5f  2**0
+  7 .debug_abbrev 0000075b  00000000  00000000  000010bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000004a1  00000000  00000000  0000155c  2**0
+  8 .debug_line   00000515  00000000  00000000  00001817  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  0000010c  00000000  00000000  00001a00  2**2
+  9 .debug_frame  0000012c  00000000  00000000  00001d2c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000439  00000000  00000000  00001b0c  2**0
+ 10 .debug_str    000004a7  00000000  00000000  00001e58  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000384  00000000  00000000  00001f45  2**0
+ 11 .debug_loc    00000578  00000000  00000000  000022ff  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000070  00000000  00000000  000022c9  2**0
+ 12 .debug_ranges 00000068  00000000  00000000  00002877  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -42,7 +42,7 @@ Disassembly of section .text:
   18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
-  24:	0c 94 72 00 	jmp	0xe4	; 0xe4 <__vector_9>
+  24:	0c 94 82 00 	jmp	0x104	; 0x104 <__vector_9>
   28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
   30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
@@ -67,8 +67,8 @@ Disassembly of section .text:
   60:	10 e0       	ldi	r17, 0x00	; 0
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	e2 e5       	ldi	r30, 0x52	; 82
-  68:	f3 e0       	ldi	r31, 0x03	; 3
+  66:	e6 e8       	ldi	r30, 0x86	; 134
+  68:	f4 e0       	ldi	r31, 0x04	; 4
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
   6c:	05 90       	lpm	r0, Z+
   6e:	0d 92       	st	X+, r0
@@ -89,19 +89,19 @@ Disassembly of section .text:
   80:	a8 36       	cpi	r26, 0x68	; 104
   82:	b2 07       	cpc	r27, r18
   84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
-  86:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <main>
-  8a:	0c 94 a7 01 	jmp	0x34e	; 0x34e <_exit>
+  86:	0e 94 f3 00 	call	0x1e6	; 0x1e6 <main>
+  8a:	0c 94 41 02 	jmp	0x482	; 0x482 <_exit>
 
 0000008e <__bad_interrupt>:
   8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000092 <uartInit>:
-}
 
-//sta
-void generatorStop(void)
+unsigned int ADC_Read()
 {
-	OnOff = 0;
+	//any code
+	return 173;
+}
   92:	83 e3       	ldi	r24, 0x33	; 51
   94:	89 b9       	out	0x09, r24	; 9
   96:	8a b1       	in	r24, 0x0a	; 10
@@ -134,457 +134,642 @@ void generatorStop(void)
   c0:	12 be       	out	0x32, r1	; 50
   c2:	a0 9a       	sbi	0x14, 0	; 20
   c4:	a8 98       	cbi	0x15, 0	; 21
-  c6:	08 95       	ret
+  c6:	8a 9a       	sbi	0x11, 2	; 17
+  c8:	92 98       	cbi	0x12, 2	; 18
+  ca:	08 95       	ret
 
-000000c8 <pulse>:
-  c8:	01 96       	adiw	r24, 0x01	; 1
-  ca:	96 95       	lsr	r25
-  cc:	87 95       	ror	r24
-  ce:	a8 9a       	sbi	0x15, 0	; 21
-  d0:	00 97       	sbiw	r24, 0x00	; 0
-  d2:	31 f0       	breq	.+12     	; 0xe0 <pulse+0x18>
-  d4:	22 e0       	ldi	r18, 0x02	; 2
-  d6:	2a 95       	dec	r18
-  d8:	f1 f7       	brne	.-4      	; 0xd6 <pulse+0xe>
-  da:	00 c0       	rjmp	.+0      	; 0xdc <pulse+0x14>
-  dc:	01 97       	sbiw	r24, 0x01	; 1
-  de:	d1 f7       	brne	.-12     	; 0xd4 <pulse+0xc>
-  e0:	a8 98       	cbi	0x15, 0	; 21
-  e2:	08 95       	ret
+000000cc <pulse>:
+  cc:	01 96       	adiw	r24, 0x01	; 1
+  ce:	96 95       	lsr	r25
+  d0:	87 95       	ror	r24
+  d2:	a8 9a       	sbi	0x15, 0	; 21
+  d4:	00 97       	sbiw	r24, 0x00	; 0
+  d6:	31 f0       	breq	.+12     	; 0xe4 <pulse+0x18>
+  d8:	22 e0       	ldi	r18, 0x02	; 2
+  da:	2a 95       	dec	r18
+  dc:	f1 f7       	brne	.-4      	; 0xda <pulse+0xe>
+  de:	00 c0       	rjmp	.+0      	; 0xe0 <pulse+0x14>
+  e0:	01 97       	sbiw	r24, 0x01	; 1
+  e2:	d1 f7       	brne	.-12     	; 0xd8 <pulse+0xc>
+  e4:	a8 98       	cbi	0x15, 0	; 21
+  e6:	08 95       	ret
 
-000000e4 <__vector_9>:
-}
+000000e8 <generatorStart>:
+  e8:	81 e0       	ldi	r24, 0x01	; 1
+  ea:	90 e0       	ldi	r25, 0x00	; 0
+  ec:	90 93 63 00 	sts	0x0063, r25	; 0x800063 <__data_end+0x1>
+  f0:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <__data_end>
+  f4:	92 9a       	sbi	0x12, 2	; 18
+  f6:	08 95       	ret
 
-//interrupt function
-ISR(TIMER0_OVF_vect)
-{
-  e4:	1f 92       	push	r1
-  e6:	0f 92       	push	r0
-  e8:	0f b6       	in	r0, 0x3f	; 63
-  ea:	0f 92       	push	r0
-  ec:	11 24       	eor	r1, r1
-  ee:	2f 93       	push	r18
-  f0:	3f 93       	push	r19
-  f2:	4f 93       	push	r20
-  f4:	5f 93       	push	r21
-  f6:	6f 93       	push	r22
-  f8:	7f 93       	push	r23
-  fa:	8f 93       	push	r24
-  fc:	9f 93       	push	r25
-  fe:	af 93       	push	r26
- 100:	bf 93       	push	r27
- 102:	ef 93       	push	r30
- 104:	ff 93       	push	r31
-	counter++;
- 106:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <counter>
- 10a:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <counter+0x1>
- 10e:	a0 91 66 00 	lds	r26, 0x0066	; 0x800066 <counter+0x2>
- 112:	b0 91 67 00 	lds	r27, 0x0067	; 0x800067 <counter+0x3>
- 116:	01 96       	adiw	r24, 0x01	; 1
- 118:	a1 1d       	adc	r26, r1
- 11a:	b1 1d       	adc	r27, r1
- 11c:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <counter>
- 120:	90 93 65 00 	sts	0x0065, r25	; 0x800065 <counter+0x1>
- 124:	a0 93 66 00 	sts	0x0066, r26	; 0x800066 <counter+0x2>
- 128:	b0 93 67 00 	sts	0x0067, r27	; 0x800067 <counter+0x3>
-	if((counter >= lowTime) && OnOff) {//125 == 80 //500 == 20Hz //50 == 200Hz //204 == 50Hz //102 == 100Hz
- 12c:	40 91 60 00 	lds	r20, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
- 130:	50 91 61 00 	lds	r21, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
- 134:	60 e0       	ldi	r22, 0x00	; 0
- 136:	70 e0       	ldi	r23, 0x00	; 0
- 138:	84 17       	cp	r24, r20
- 13a:	95 07       	cpc	r25, r21
- 13c:	a6 07       	cpc	r26, r22
- 13e:	b7 07       	cpc	r27, r23
- 140:	98 f0       	brcs	.+38     	; 0x168 <__vector_9+0x84>
- 142:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <__data_end>
- 146:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <__data_end+0x1>
- 14a:	89 2b       	or	r24, r25
- 14c:	69 f0       	breq	.+26     	; 0x168 <__vector_9+0x84>
-		if (OnOff)
-		{
-			pulse(5);
- 14e:	85 e0       	ldi	r24, 0x05	; 5
- 150:	90 e0       	ldi	r25, 0x00	; 0
- 152:	0e 94 64 00 	call	0xc8	; 0xc8 <pulse>
-			counter = 0;
- 156:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <counter>
- 15a:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <counter+0x1>
- 15e:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <counter+0x2>
- 162:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <counter+0x3>
- 166:	02 c0       	rjmp	.+4      	; 0x16c <__vector_9+0x88>
-		}
-	}
-	else {
-		TCNT0 = 167;
- 168:	87 ea       	ldi	r24, 0xA7	; 167
- 16a:	82 bf       	out	0x32, r24	; 50
-	}
-}
- 16c:	ff 91       	pop	r31
- 16e:	ef 91       	pop	r30
- 170:	bf 91       	pop	r27
- 172:	af 91       	pop	r26
- 174:	9f 91       	pop	r25
- 176:	8f 91       	pop	r24
- 178:	7f 91       	pop	r23
- 17a:	6f 91       	pop	r22
- 17c:	5f 91       	pop	r21
- 17e:	4f 91       	pop	r20
- 180:	3f 91       	pop	r19
- 182:	2f 91       	pop	r18
- 184:	0f 90       	pop	r0
- 186:	0f be       	out	0x3f, r0	; 63
- 188:	0f 90       	pop	r0
- 18a:	1f 90       	pop	r1
- 18c:	18 95       	reti
+000000f8 <generatorStop>:
+  f8:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <__data_end+0x1>
+  fc:	10 92 62 00 	sts	0x0062, r1	; 0x800062 <__data_end>
+ 100:	92 98       	cbi	0x12, 2	; 18
+ 102:	08 95       	ret
 
-0000018e <HexToInt>:
+00000104 <__vector_9>:
+ 104:	1f 92       	push	r1
+ 106:	0f 92       	push	r0
+ 108:	0f b6       	in	r0, 0x3f	; 63
+ 10a:	0f 92       	push	r0
+ 10c:	11 24       	eor	r1, r1
+ 10e:	2f 93       	push	r18
+ 110:	3f 93       	push	r19
+ 112:	4f 93       	push	r20
+ 114:	5f 93       	push	r21
+ 116:	6f 93       	push	r22
+ 118:	7f 93       	push	r23
+ 11a:	8f 93       	push	r24
+ 11c:	9f 93       	push	r25
+ 11e:	af 93       	push	r26
+ 120:	bf 93       	push	r27
+ 122:	ef 93       	push	r30
+ 124:	ff 93       	push	r31
+ 126:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <counter>
+ 12a:	90 91 65 00 	lds	r25, 0x0065	; 0x800065 <counter+0x1>
+ 12e:	a0 91 66 00 	lds	r26, 0x0066	; 0x800066 <counter+0x2>
+ 132:	b0 91 67 00 	lds	r27, 0x0067	; 0x800067 <counter+0x3>
+ 136:	01 96       	adiw	r24, 0x01	; 1
+ 138:	a1 1d       	adc	r26, r1
+ 13a:	b1 1d       	adc	r27, r1
+ 13c:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <counter>
+ 140:	90 93 65 00 	sts	0x0065, r25	; 0x800065 <counter+0x1>
+ 144:	a0 93 66 00 	sts	0x0066, r26	; 0x800066 <counter+0x2>
+ 148:	b0 93 67 00 	sts	0x0067, r27	; 0x800067 <counter+0x3>
+ 14c:	40 91 60 00 	lds	r20, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 150:	50 91 61 00 	lds	r21, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 154:	60 e0       	ldi	r22, 0x00	; 0
+ 156:	70 e0       	ldi	r23, 0x00	; 0
+ 158:	84 17       	cp	r24, r20
+ 15a:	95 07       	cpc	r25, r21
+ 15c:	a6 07       	cpc	r26, r22
+ 15e:	b7 07       	cpc	r27, r23
+ 160:	98 f0       	brcs	.+38     	; 0x188 <__vector_9+0x84>
+ 162:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <__data_end>
+ 166:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <__data_end+0x1>
+ 16a:	89 2b       	or	r24, r25
+ 16c:	69 f0       	breq	.+26     	; 0x188 <__vector_9+0x84>
+ 16e:	85 e0       	ldi	r24, 0x05	; 5
+ 170:	90 e0       	ldi	r25, 0x00	; 0
+ 172:	0e 94 66 00 	call	0xcc	; 0xcc <pulse>
+ 176:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <counter>
+ 17a:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <counter+0x1>
+ 17e:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <counter+0x2>
+ 182:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <counter+0x3>
+ 186:	02 c0       	rjmp	.+4      	; 0x18c <__vector_9+0x88>
+ 188:	87 ea       	ldi	r24, 0xA7	; 167
+ 18a:	82 bf       	out	0x32, r24	; 50
+ 18c:	ff 91       	pop	r31
+ 18e:	ef 91       	pop	r30
+ 190:	bf 91       	pop	r27
+ 192:	af 91       	pop	r26
+ 194:	9f 91       	pop	r25
+ 196:	8f 91       	pop	r24
+ 198:	7f 91       	pop	r23
+ 19a:	6f 91       	pop	r22
+ 19c:	5f 91       	pop	r21
+ 19e:	4f 91       	pop	r20
+ 1a0:	3f 91       	pop	r19
+ 1a2:	2f 91       	pop	r18
+ 1a4:	0f 90       	pop	r0
+ 1a6:	0f be       	out	0x3f, r0	; 63
+ 1a8:	0f 90       	pop	r0
+ 1aa:	1f 90       	pop	r1
+ 1ac:	18 95       	reti
+
+000001ae <HexToInt>:
 
 //convert hex code to int
 int HexToInt(char c)
 {
 	int num;
 	if       (c >= 48 && c <= 57 ) {   num = c - 48;        }
- 18e:	90 ed       	ldi	r25, 0xD0	; 208
- 190:	98 0f       	add	r25, r24
- 192:	9a 30       	cpi	r25, 0x0A	; 10
- 194:	28 f4       	brcc	.+10     	; 0x1a0 <HexToInt+0x12>
- 196:	90 e0       	ldi	r25, 0x00	; 0
- 198:	9c 01       	movw	r18, r24
- 19a:	20 53       	subi	r18, 0x30	; 48
- 19c:	31 09       	sbc	r19, r1
- 19e:	11 c0       	rjmp	.+34     	; 0x1c2 <HexToInt+0x34>
+ 1ae:	90 ed       	ldi	r25, 0xD0	; 208
+ 1b0:	98 0f       	add	r25, r24
+ 1b2:	9a 30       	cpi	r25, 0x0A	; 10
+ 1b4:	28 f4       	brcc	.+10     	; 0x1c0 <HexToInt+0x12>
+ 1b6:	90 e0       	ldi	r25, 0x00	; 0
+ 1b8:	9c 01       	movw	r18, r24
+ 1ba:	20 53       	subi	r18, 0x30	; 48
+ 1bc:	31 09       	sbc	r19, r1
+ 1be:	11 c0       	rjmp	.+34     	; 0x1e2 <HexToInt+0x34>
 	else  if (c >= 97 && c <= 102) {   num = c - 97 + 10;   }
- 1a0:	9f e9       	ldi	r25, 0x9F	; 159
- 1a2:	98 0f       	add	r25, r24
- 1a4:	96 30       	cpi	r25, 0x06	; 6
- 1a6:	28 f4       	brcc	.+10     	; 0x1b2 <HexToInt+0x24>
- 1a8:	90 e0       	ldi	r25, 0x00	; 0
- 1aa:	9c 01       	movw	r18, r24
- 1ac:	27 55       	subi	r18, 0x57	; 87
- 1ae:	31 09       	sbc	r19, r1
- 1b0:	08 c0       	rjmp	.+16     	; 0x1c2 <HexToInt+0x34>
+ 1c0:	9f e9       	ldi	r25, 0x9F	; 159
+ 1c2:	98 0f       	add	r25, r24
+ 1c4:	96 30       	cpi	r25, 0x06	; 6
+ 1c6:	28 f4       	brcc	.+10     	; 0x1d2 <HexToInt+0x24>
+ 1c8:	90 e0       	ldi	r25, 0x00	; 0
+ 1ca:	9c 01       	movw	r18, r24
+ 1cc:	27 55       	subi	r18, 0x57	; 87
+ 1ce:	31 09       	sbc	r19, r1
+ 1d0:	08 c0       	rjmp	.+16     	; 0x1e2 <HexToInt+0x34>
 	else  if (c >= 65 && c <= 70 ) {   num = c - 65 + 10;   }
- 1b2:	9f eb       	ldi	r25, 0xBF	; 191
- 1b4:	98 0f       	add	r25, r24
- 1b6:	96 30       	cpi	r25, 0x06	; 6
- 1b8:	20 f4       	brcc	.+8      	; 0x1c2 <HexToInt+0x34>
- 1ba:	90 e0       	ldi	r25, 0x00	; 0
- 1bc:	9c 01       	movw	r18, r24
- 1be:	27 53       	subi	r18, 0x37	; 55
- 1c0:	31 09       	sbc	r19, r1
+ 1d2:	9f eb       	ldi	r25, 0xBF	; 191
+ 1d4:	98 0f       	add	r25, r24
+ 1d6:	96 30       	cpi	r25, 0x06	; 6
+ 1d8:	20 f4       	brcc	.+8      	; 0x1e2 <HexToInt+0x34>
+ 1da:	90 e0       	ldi	r25, 0x00	; 0
+ 1dc:	9c 01       	movw	r18, r24
+ 1de:	27 53       	subi	r18, 0x37	; 55
+ 1e0:	31 09       	sbc	r19, r1
 	return num;
 }
- 1c2:	c9 01       	movw	r24, r18
- 1c4:	08 95       	ret
+ 1e2:	c9 01       	movw	r24, r18
+ 1e4:	08 95       	ret
 
-000001c6 <main>:
+000001e6 <main>:
 
 int main(void)
-{
- 1c6:	cf 93       	push	r28
- 1c8:	df 93       	push	r29
- 1ca:	cd b7       	in	r28, 0x3d	; 61
- 1cc:	de b7       	in	r29, 0x3e	; 62
- 1ce:	65 97       	sbiw	r28, 0x15	; 21
- 1d0:	0f b6       	in	r0, 0x3f	; 63
- 1d2:	f8 94       	cli
- 1d4:	de bf       	out	0x3e, r29	; 62
- 1d6:	0f be       	out	0x3f, r0	; 63
- 1d8:	cd bf       	out	0x3d, r28	; 61
-	
+{	
+ 1e6:	cf 93       	push	r28
+ 1e8:	df 93       	push	r29
+ 1ea:	cd b7       	in	r28, 0x3d	; 61
+ 1ec:	de b7       	in	r29, 0x3e	; 62
+ 1ee:	aa 97       	sbiw	r28, 0x2a	; 42
+ 1f0:	0f b6       	in	r0, 0x3f	; 63
+ 1f2:	f8 94       	cli
+ 1f4:	de bf       	out	0x3e, r29	; 62
+ 1f6:	0f be       	out	0x3f, r0	; 63
+ 1f8:	cd bf       	out	0x3d, r28	; 61
 	//initialize UART
 	uartInit();
- 1da:	0e 94 49 00 	call	0x92	; 0x92 <uartInit>
+ 1fa:	0e 94 49 00 	call	0x92	; 0x92 <uartInit>
 	
 	//initialize generator
 	generatorInit();
- 1de:	0e 94 5a 00 	call	0xb4	; 0xb4 <generatorInit>
+ 1fe:	0e 94 5a 00 	call	0xb4	; 0xb4 <generatorInit>
 	//data variable
-	char data;
+	unsigned char data;
 	//address variable
-	int title = 0;
+	unsigned int title = 0;
 	//data counter
-	int count = 0;
- 1e2:	e1 2c       	mov	r14, r1
- 1e4:	f1 2c       	mov	r15, r1
+	unsigned int count = 0;
+ 202:	81 2c       	mov	r8, r1
+ 204:	91 2c       	mov	r9, r1
 	//data buffer
-	char receive_arr[9];
+	unsigned char receive_arr[9];
 	//data variable
-	char data;
+	unsigned char data;
 	//address variable
-	int title = 0;
- 1e6:	00 e0       	ldi	r16, 0x00	; 0
- 1e8:	10 e0       	ldi	r17, 0x00	; 0
- 1ea:	5e 01       	movw	r10, r28
- 1ec:	86 e1       	ldi	r24, 0x16	; 22
- 1ee:	a8 0e       	add	r10, r24
- 1f0:	b1 1c       	adc	r11, r1
+	unsigned int title = 0;
+ 206:	00 e0       	ldi	r16, 0x00	; 0
+ 208:	10 e0       	ldi	r17, 0x00	; 0
+ 20a:	5e 01       	movw	r10, r28
+ 20c:	8c e1       	ldi	r24, 0x1C	; 28
+ 20e:	a8 0e       	add	r10, r24
+ 210:	b1 1c       	adc	r11, r1
+				{
+					freq_arr[i - 2] = HexToInt(receive_arr[i]);
 				}
-				//space
-				uartSendChar(32);
 				
 				//calculate frequency
 				frequency = freq_arr[0] * 100 + freq_arr[1] * 10 + freq_arr[2];
- 1f2:	0f 2e       	mov	r0, r31
- 1f4:	f4 e6       	ldi	r31, 0x64	; 100
- 1f6:	3f 2e       	mov	r3, r31
- 1f8:	f0 2d       	mov	r31, r0
- 1fa:	6e 01       	movw	r12, r28
- 1fc:	e0 e1       	ldi	r30, 0x10	; 16
- 1fe:	ce 0e       	add	r12, r30
- 200:	d1 1c       	adc	r13, r1
+ 212:	0f 2e       	mov	r0, r31
+ 214:	f4 e6       	ldi	r31, 0x64	; 100
+ 216:	3f 2e       	mov	r3, r31
+ 218:	f0 2d       	mov	r31, r0
+ 21a:	6e 01       	movw	r12, r28
+ 21c:	e2 e2       	ldi	r30, 0x22	; 34
+ 21e:	ce 0e       	add	r12, r30
+ 220:	d1 1c       	adc	r13, r1
+ 222:	7e 01       	movw	r14, r28
+ 224:	f6 e1       	ldi	r31, 0x16	; 22
+ 226:	ef 0e       	add	r14, r31
+ 228:	f1 1c       	adc	r15, r1
 	{
 		//waiting for data
 		data = uartReceiveChar();
-		//if address == 255 //replace q to 255
-		if(data == 'q') {
+		//if address == 100 //replace q to 100
+		if(data == 100) {
 			title = 1;
- 202:	55 24       	eor	r5, r5
- 204:	53 94       	inc	r5
- 206:	41 2c       	mov	r4, r1
- 208:	02 c0       	rjmp	.+4      	; 0x20e <main+0x48>
- 20a:	05 2d       	mov	r16, r5
- 20c:	14 2d       	mov	r17, r4
-	int local_sum;
-	//loop
-	while(1)
-	{
-		//waiting for data
-		data = uartReceiveChar();
- 20e:	0e 94 56 00 	call	0xac	; 0xac <uartReceiveChar>
-		//if address == 255 //replace q to 255
-		if(data == 'q') {
- 212:	81 37       	cpi	r24, 0x71	; 113
- 214:	d1 f3       	breq	.-12     	; 0x20a <main+0x44>
-			title = 1;
-		}
-		else if(title) {
- 216:	01 15       	cp	r16, r1
- 218:	11 05       	cpc	r17, r1
- 21a:	c9 f3       	breq	.-14     	; 0x20e <main+0x48>
-			//saving data to array
-			receive_arr[count] = data;
- 21c:	e1 e0       	ldi	r30, 0x01	; 1
- 21e:	f0 e0       	ldi	r31, 0x00	; 0
- 220:	ec 0f       	add	r30, r28
- 222:	fd 1f       	adc	r31, r29
- 224:	ee 0d       	add	r30, r14
- 226:	ff 1d       	adc	r31, r15
- 228:	80 83       	st	Z, r24
-			count++;
- 22a:	ff ef       	ldi	r31, 0xFF	; 255
- 22c:	ef 1a       	sub	r14, r31
- 22e:	ff 0a       	sbc	r15, r31
-			//if data count == 9 stop receiving data
-			if (count == 9)
- 230:	89 e0       	ldi	r24, 0x09	; 9
- 232:	e8 16       	cp	r14, r24
- 234:	f1 04       	cpc	r15, r1
- 236:	59 f7       	brne	.-42     	; 0x20e <main+0x48>
-				//reset count and title
-				count = 0;
-				title = 0;
-				
-				//generator state (1|0) == (on|off)
-				generatorState = HexToInt(receive_arr[0]);
- 238:	19 81       	ldd	r17, Y+1	; 0x01
- 23a:	81 2f       	mov	r24, r17
- 23c:	0e 94 c7 00 	call	0x18e	; 0x18e <HexToInt>
- 240:	4c 01       	movw	r8, r24
-				uartSendChar(receive_arr[0]);
- 242:	81 2f       	mov	r24, r17
- 244:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
-				//space
-				uartSendChar(32);
- 248:	80 e2       	ldi	r24, 0x20	; 32
- 24a:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
- 24e:	7e 01       	movw	r14, r28
- 250:	e3 e0       	ldi	r30, 0x03	; 3
- 252:	ee 0e       	add	r14, r30
- 254:	f1 1c       	adc	r15, r1
- 256:	8e 01       	movw	r16, r28
- 258:	00 5f       	subi	r16, 0xF0	; 240
- 25a:	1f 4f       	sbci	r17, 0xFF	; 255
-				
-				//getting frequency
-				int freq_arr[3];
-				for (int i = 2; i < 5; i++)
-				{
-					freq_arr[i - 2] = HexToInt(receive_arr[i]);
- 25c:	f7 01       	movw	r30, r14
- 25e:	71 90       	ld	r7, Z+
- 260:	7f 01       	movw	r14, r30
- 262:	87 2d       	mov	r24, r7
- 264:	0e 94 c7 00 	call	0x18e	; 0x18e <HexToInt>
- 268:	f8 01       	movw	r30, r16
- 26a:	81 93       	st	Z+, r24
- 26c:	91 93       	st	Z+, r25
- 26e:	8f 01       	movw	r16, r30
-					uartSendChar(receive_arr[i]);
- 270:	87 2d       	mov	r24, r7
- 272:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
-				//space
-				uartSendChar(32);
-				
-				//getting frequency
-				int freq_arr[3];
-				for (int i = 2; i < 5; i++)
- 276:	0a 15       	cp	r16, r10
- 278:	1b 05       	cpc	r17, r11
- 27a:	81 f7       	brne	.-32     	; 0x25c <main+0x96>
-				{
-					freq_arr[i - 2] = HexToInt(receive_arr[i]);
-					uartSendChar(receive_arr[i]);
-				}
-				//space
-				uartSendChar(32);
- 27c:	80 e2       	ldi	r24, 0x20	; 32
- 27e:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
-				
-				//calculate frequency
-				frequency = freq_arr[0] * 100 + freq_arr[1] * 10 + freq_arr[2];
- 282:	88 89       	ldd	r24, Y+16	; 0x10
- 284:	99 89       	ldd	r25, Y+17	; 0x11
- 286:	38 9e       	mul	r3, r24
- 288:	30 01       	movw	r6, r0
- 28a:	39 9e       	mul	r3, r25
- 28c:	70 0c       	add	r7, r0
- 28e:	11 24       	eor	r1, r1
- 290:	8a 89       	ldd	r24, Y+18	; 0x12
- 292:	9b 89       	ldd	r25, Y+19	; 0x13
- 294:	ac 01       	movw	r20, r24
- 296:	44 0f       	add	r20, r20
- 298:	55 1f       	adc	r21, r21
- 29a:	9c 01       	movw	r18, r24
- 29c:	22 0f       	add	r18, r18
- 29e:	33 1f       	adc	r19, r19
- 2a0:	22 0f       	add	r18, r18
- 2a2:	33 1f       	adc	r19, r19
- 2a4:	22 0f       	add	r18, r18
- 2a6:	33 1f       	adc	r19, r19
- 2a8:	ca 01       	movw	r24, r20
- 2aa:	82 0f       	add	r24, r18
- 2ac:	93 1f       	adc	r25, r19
- 2ae:	86 0d       	add	r24, r6
- 2b0:	97 1d       	adc	r25, r7
- 2b2:	6c 88       	ldd	r6, Y+20	; 0x14
- 2b4:	7d 88       	ldd	r7, Y+21	; 0x15
- 2b6:	68 0e       	add	r6, r24
- 2b8:	79 1e       	adc	r7, r25
- 2ba:	7e 01       	movw	r14, r28
- 2bc:	f7 e0       	ldi	r31, 0x07	; 7
- 2be:	ef 0e       	add	r14, r31
- 2c0:	f1 1c       	adc	r15, r1
- 2c2:	8e 01       	movw	r16, r28
- 2c4:	06 5f       	subi	r16, 0xF6	; 246
- 2c6:	1f 4f       	sbci	r17, 0xFF	; 255
-
-				//getting control sum
-				int sum_arr[3];
-				for (int i = 6; i < 9; i++)
-				{
-					sum_arr[i - 6] = HexToInt(receive_arr[i]);
- 2c8:	f7 01       	movw	r30, r14
- 2ca:	21 90       	ld	r2, Z+
- 2cc:	7f 01       	movw	r14, r30
- 2ce:	82 2d       	mov	r24, r2
- 2d0:	0e 94 c7 00 	call	0x18e	; 0x18e <HexToInt>
- 2d4:	f8 01       	movw	r30, r16
- 2d6:	81 93       	st	Z+, r24
- 2d8:	91 93       	st	Z+, r25
- 2da:	8f 01       	movw	r16, r30
-					uartSendChar(receive_arr[i]);
- 2dc:	82 2d       	mov	r24, r2
- 2de:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
-				//calculate frequency
-				frequency = freq_arr[0] * 100 + freq_arr[1] * 10 + freq_arr[2];
-
-				//getting control sum
-				int sum_arr[3];
-				for (int i = 6; i < 9; i++)
- 2e2:	0c 15       	cp	r16, r12
- 2e4:	1d 05       	cpc	r17, r13
- 2e6:	81 f7       	brne	.-32     	; 0x2c8 <main+0x102>
-					sum_arr[i - 6] = HexToInt(receive_arr[i]);
-					uartSendChar(receive_arr[i]);
-				}
-				
-				//calculate receive control sum
-				receive_sum = sum_arr[0] * 100 + sum_arr[1] * 10 + sum_arr[2];
- 2e8:	8a 85       	ldd	r24, Y+10	; 0x0a
- 2ea:	9b 85       	ldd	r25, Y+11	; 0x0b
- 2ec:	38 9e       	mul	r3, r24
- 2ee:	80 01       	movw	r16, r0
- 2f0:	39 9e       	mul	r3, r25
- 2f2:	10 0d       	add	r17, r0
- 2f4:	11 24       	eor	r1, r1
- 2f6:	8c 85       	ldd	r24, Y+12	; 0x0c
- 2f8:	9d 85       	ldd	r25, Y+13	; 0x0d
- 2fa:	ac 01       	movw	r20, r24
- 2fc:	44 0f       	add	r20, r20
- 2fe:	55 1f       	adc	r21, r21
- 300:	9c 01       	movw	r18, r24
- 302:	22 0f       	add	r18, r18
- 304:	33 1f       	adc	r19, r19
- 306:	22 0f       	add	r18, r18
- 308:	33 1f       	adc	r19, r19
- 30a:	22 0f       	add	r18, r18
- 30c:	33 1f       	adc	r19, r19
- 30e:	ca 01       	movw	r24, r20
- 310:	82 0f       	add	r24, r18
- 312:	93 1f       	adc	r25, r19
- 314:	80 0f       	add	r24, r16
- 316:	91 1f       	adc	r25, r17
- 318:	0e 85       	ldd	r16, Y+14	; 0x0e
- 31a:	1f 85       	ldd	r17, Y+15	; 0x0f
- 31c:	08 0f       	add	r16, r24
- 31e:	19 1f       	adc	r17, r25
-				
-				uartSendChar(32);
- 320:	80 e2       	ldi	r24, 0x20	; 32
- 322:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
-				//if local control sum == receive control sum do somthing
-				local_sum = frequency + generatorState;
-				if (local_sum == receive_sum)
- 326:	86 0c       	add	r8, r6
- 328:	97 1c       	adc	r9, r7
- 32a:	08 15       	cp	r16, r8
- 32c:	19 05       	cpc	r17, r9
- 32e:	21 f4       	brne	.+8      	; 0x338 <main+0x172>
-				{
-					uartSendChar('1');
- 330:	81 e3       	ldi	r24, 0x31	; 49
- 332:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
- 336:	03 c0       	rjmp	.+6      	; 0x33e <main+0x178>
-				}
-				else
-				{
-					uartSendChar('0');
- 338:	80 e3       	ldi	r24, 0x30	; 48
- 33a:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
-				}
-
-				//new line
-				uartSendChar(13);
- 33e:	8d e0       	ldi	r24, 0x0D	; 13
- 340:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
+ 22a:	21 2c       	mov	r2, r1
+ 22c:	07 c0       	rjmp	.+14     	; 0x23c <main+0x56>
+ 22e:	01 e0       	ldi	r16, 0x01	; 1
+ 230:	12 2d       	mov	r17, r2
+ 232:	04 c0       	rjmp	.+8      	; 0x23c <main+0x56>
 			count++;
 			//if data count == 9 stop receiving data
 			if (count == 9)
 			{
 				//reset count and title
 				count = 0;
- 344:	e1 2c       	mov	r14, r1
- 346:	f1 2c       	mov	r15, r1
+ 234:	81 2c       	mov	r8, r1
+ 236:	91 2c       	mov	r9, r1
 				title = 0;
- 348:	00 e0       	ldi	r16, 0x00	; 0
- 34a:	10 e0       	ldi	r17, 0x00	; 0
- 34c:	60 cf       	rjmp	.-320    	; 0x20e <main+0x48>
+ 238:	00 e0       	ldi	r16, 0x00	; 0
+ 23a:	10 e0       	ldi	r17, 0x00	; 0
+	
+	//loop
+	while(1)
+	{
+		//waiting for data
+		data = uartReceiveChar();
+ 23c:	0e 94 56 00 	call	0xac	; 0xac <uartReceiveChar>
+		//if address == 100 //replace q to 100
+		if(data == 100) {
+ 240:	84 36       	cpi	r24, 0x64	; 100
+ 242:	a9 f3       	breq	.-22     	; 0x22e <main+0x48>
+			title = 1;
+		}
+		else if(title) {
+ 244:	01 15       	cp	r16, r1
+ 246:	11 05       	cpc	r17, r1
+ 248:	c9 f3       	breq	.-14     	; 0x23c <main+0x56>
+			//saving data to array
+			receive_arr[count] = data;
+ 24a:	e1 e0       	ldi	r30, 0x01	; 1
+ 24c:	f0 e0       	ldi	r31, 0x00	; 0
+ 24e:	ec 0f       	add	r30, r28
+ 250:	fd 1f       	adc	r31, r29
+ 252:	e8 0d       	add	r30, r8
+ 254:	f9 1d       	adc	r31, r9
+ 256:	80 83       	st	Z, r24
+			count++;
+ 258:	8f ef       	ldi	r24, 0xFF	; 255
+ 25a:	88 1a       	sub	r8, r24
+ 25c:	98 0a       	sbc	r9, r24
+			//if data count == 9 stop receiving data
+			if (count == 9)
+ 25e:	e9 e0       	ldi	r30, 0x09	; 9
+ 260:	8e 16       	cp	r8, r30
+ 262:	91 04       	cpc	r9, r1
+ 264:	59 f7       	brne	.-42     	; 0x23c <main+0x56>
+				//reset count and title
+				count = 0;
+				title = 0;
+				
+				//generator state (1|0) == (on|off)
+				generatorState = HexToInt(receive_arr[0]);
+ 266:	89 81       	ldd	r24, Y+1	; 0x01
+ 268:	0e 94 d7 00 	call	0x1ae	; 0x1ae <HexToInt>
+ 26c:	3c 01       	movw	r6, r24
+ 26e:	4e 01       	movw	r8, r28
+ 270:	f3 e0       	ldi	r31, 0x03	; 3
+ 272:	8f 0e       	add	r8, r31
+ 274:	91 1c       	adc	r9, r1
+ 276:	8e 01       	movw	r16, r28
+ 278:	0a 5e       	subi	r16, 0xEA	; 234
+ 27a:	1f 4f       	sbci	r17, 0xFF	; 255
+				
+				//getting frequency
+				for (int i = 2; i < 5; i++)
+				{
+					freq_arr[i - 2] = HexToInt(receive_arr[i]);
+ 27c:	f4 01       	movw	r30, r8
+ 27e:	81 91       	ld	r24, Z+
+ 280:	4f 01       	movw	r8, r30
+ 282:	0e 94 d7 00 	call	0x1ae	; 0x1ae <HexToInt>
+ 286:	f8 01       	movw	r30, r16
+ 288:	81 93       	st	Z+, r24
+ 28a:	91 93       	st	Z+, r25
+ 28c:	8f 01       	movw	r16, r30
+				
+				//generator state (1|0) == (on|off)
+				generatorState = HexToInt(receive_arr[0]);
+				
+				//getting frequency
+				for (int i = 2; i < 5; i++)
+ 28e:	ae 16       	cp	r10, r30
+ 290:	bf 06       	cpc	r11, r31
+ 292:	a1 f7       	brne	.-24     	; 0x27c <main+0x96>
+				{
+					freq_arr[i - 2] = HexToInt(receive_arr[i]);
+				}
+				
+				//calculate frequency
+				frequency = freq_arr[0] * 100 + freq_arr[1] * 10 + freq_arr[2];
+ 294:	8e 89       	ldd	r24, Y+22	; 0x16
+ 296:	9f 89       	ldd	r25, Y+23	; 0x17
+ 298:	38 9e       	mul	r3, r24
+ 29a:	20 01       	movw	r4, r0
+ 29c:	39 9e       	mul	r3, r25
+ 29e:	50 0c       	add	r5, r0
+ 2a0:	11 24       	eor	r1, r1
+ 2a2:	88 8d       	ldd	r24, Y+24	; 0x18
+ 2a4:	99 8d       	ldd	r25, Y+25	; 0x19
+ 2a6:	ac 01       	movw	r20, r24
+ 2a8:	44 0f       	add	r20, r20
+ 2aa:	55 1f       	adc	r21, r21
+ 2ac:	9c 01       	movw	r18, r24
+ 2ae:	22 0f       	add	r18, r18
+ 2b0:	33 1f       	adc	r19, r19
+ 2b2:	22 0f       	add	r18, r18
+ 2b4:	33 1f       	adc	r19, r19
+ 2b6:	22 0f       	add	r18, r18
+ 2b8:	33 1f       	adc	r19, r19
+ 2ba:	ca 01       	movw	r24, r20
+ 2bc:	82 0f       	add	r24, r18
+ 2be:	93 1f       	adc	r25, r19
+ 2c0:	84 0d       	add	r24, r4
+ 2c2:	95 1d       	adc	r25, r5
+ 2c4:	4a 8c       	ldd	r4, Y+26	; 0x1a
+ 2c6:	5b 8c       	ldd	r5, Y+27	; 0x1b
+ 2c8:	48 0e       	add	r4, r24
+ 2ca:	59 1e       	adc	r5, r25
+ 2cc:	4e 01       	movw	r8, r28
+ 2ce:	f7 e0       	ldi	r31, 0x07	; 7
+ 2d0:	8f 0e       	add	r8, r31
+ 2d2:	91 1c       	adc	r9, r1
+ 2d4:	8e 01       	movw	r16, r28
+ 2d6:	04 5e       	subi	r16, 0xE4	; 228
+ 2d8:	1f 4f       	sbci	r17, 0xFF	; 255
 
-0000034e <_exit>:
- 34e:	f8 94       	cli
+				//getting receive control sum				
+				for (int i = 6; i < 9; i++)
+				{
+					sum_arr[i - 6] = HexToInt(receive_arr[i]);
+ 2da:	f4 01       	movw	r30, r8
+ 2dc:	81 91       	ld	r24, Z+
+ 2de:	4f 01       	movw	r8, r30
+ 2e0:	0e 94 d7 00 	call	0x1ae	; 0x1ae <HexToInt>
+ 2e4:	f8 01       	movw	r30, r16
+ 2e6:	81 93       	st	Z+, r24
+ 2e8:	91 93       	st	Z+, r25
+ 2ea:	8f 01       	movw	r16, r30
+				
+				//calculate frequency
+				frequency = freq_arr[0] * 100 + freq_arr[1] * 10 + freq_arr[2];
 
-00000350 <__stop_program>:
- 350:	ff cf       	rjmp	.-2      	; 0x350 <__stop_program>
+				//getting receive control sum				
+				for (int i = 6; i < 9; i++)
+ 2ec:	ce 16       	cp	r12, r30
+ 2ee:	df 06       	cpc	r13, r31
+ 2f0:	a1 f7       	brne	.-24     	; 0x2da <main+0xf4>
+				//calculate receive control sum
+				receive_sum = sum_arr[0] * 100 + sum_arr[1] * 10 + sum_arr[2];
+
+				//if local control sum == receive control sum do somthing
+				local_sum = frequency + generatorState;
+				if (local_sum == receive_sum)
+ 2f2:	8c 8d       	ldd	r24, Y+28	; 0x1c
+ 2f4:	9d 8d       	ldd	r25, Y+29	; 0x1d
+ 2f6:	38 9e       	mul	r3, r24
+ 2f8:	a0 01       	movw	r20, r0
+ 2fa:	39 9e       	mul	r3, r25
+ 2fc:	50 0d       	add	r21, r0
+ 2fe:	11 24       	eor	r1, r1
+ 300:	8e 8d       	ldd	r24, Y+30	; 0x1e
+ 302:	9f 8d       	ldd	r25, Y+31	; 0x1f
+ 304:	bc 01       	movw	r22, r24
+ 306:	66 0f       	add	r22, r22
+ 308:	77 1f       	adc	r23, r23
+ 30a:	9c 01       	movw	r18, r24
+ 30c:	22 0f       	add	r18, r18
+ 30e:	33 1f       	adc	r19, r19
+ 310:	22 0f       	add	r18, r18
+ 312:	33 1f       	adc	r19, r19
+ 314:	22 0f       	add	r18, r18
+ 316:	33 1f       	adc	r19, r19
+ 318:	cb 01       	movw	r24, r22
+ 31a:	82 0f       	add	r24, r18
+ 31c:	93 1f       	adc	r25, r19
+ 31e:	84 0f       	add	r24, r20
+ 320:	95 1f       	adc	r25, r21
+ 322:	28 a1       	ldd	r18, Y+32	; 0x20
+ 324:	39 a1       	ldd	r19, Y+33	; 0x21
+ 326:	82 0f       	add	r24, r18
+ 328:	93 1f       	adc	r25, r19
+ 32a:	93 01       	movw	r18, r6
+ 32c:	24 0d       	add	r18, r4
+ 32e:	35 1d       	adc	r19, r5
+ 330:	82 17       	cp	r24, r18
+ 332:	93 07       	cpc	r25, r19
+ 334:	09 f0       	breq	.+2      	; 0x338 <main+0x152>
+ 336:	7e cf       	rjmp	.-260    	; 0x234 <main+0x4e>
+				{
+					//do something
+					
+					//set frequency
+					lowTime = 10000/frequency;
+ 338:	80 e1       	ldi	r24, 0x10	; 16
+ 33a:	97 e2       	ldi	r25, 0x27	; 39
+ 33c:	b2 01       	movw	r22, r4
+ 33e:	0e 94 ed 01 	call	0x3da	; 0x3da <__udivmodhi4>
+ 342:	70 93 61 00 	sts	0x0061, r23	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 346:	60 93 60 00 	sts	0x0060, r22	; 0x800060 <__DATA_REGION_ORIGIN__>
+					//start generator
+					if(generatorState == 1)
+ 34a:	6a 94       	dec	r6
+ 34c:	67 28       	or	r6, r7
+ 34e:	19 f4       	brne	.+6      	; 0x356 <main+0x170>
+					{
+						generatorStart();
+ 350:	0e 94 74 00 	call	0xe8	; 0xe8 <generatorStart>
+ 354:	02 c0       	rjmp	.+4      	; 0x35a <main+0x174>
+					}
+					//stop generator
+					else
+					{
+						generatorStop();
+ 356:	0e 94 7c 00 	call	0xf8	; 0xf8 <generatorStop>
+					}
+					//build response
+					
+					//address
+					response_arr[0] = 100;
+ 35a:	3a 86       	std	Y+10, r3	; 0x0a
+					//read ADC / vacuum gauge
+					vacuumValue = ADC_Read();
+					itoa(vacuumValue, vacuum_buf, 10);
+ 35c:	4a e0       	ldi	r20, 0x0A	; 10
+ 35e:	50 e0       	ldi	r21, 0x00	; 0
+ 360:	b6 01       	movw	r22, r12
+ 362:	8d ea       	ldi	r24, 0xAD	; 173
+ 364:	90 e0       	ldi	r25, 0x00	; 0
+ 366:	0e 94 01 02 	call	0x402	; 0x402 <itoa>
+					for(int i = 0; i < 3; i++)
+					{
+						response_arr[i + 1] = vacuum_buf[i];
+ 36a:	8a a1       	ldd	r24, Y+34	; 0x22
+ 36c:	8b 87       	std	Y+11, r24	; 0x0b
+ 36e:	8b a1       	ldd	r24, Y+35	; 0x23
+ 370:	8c 87       	std	Y+12, r24	; 0x0c
+ 372:	8c a1       	ldd	r24, Y+36	; 0x24
+ 374:	8d 87       	std	Y+13, r24	; 0x0d
+					}
+					//comma
+					response_arr[4] = ',';
+ 376:	8c e2       	ldi	r24, 0x2C	; 44
+ 378:	8e 87       	std	Y+14, r24	; 0x0e
+					//any byte
+					anyByte = 456;
+					itoa(anyByte, any_buf, 10);
+ 37a:	4a e0       	ldi	r20, 0x0A	; 10
+ 37c:	50 e0       	ldi	r21, 0x00	; 0
+ 37e:	be 01       	movw	r22, r28
+ 380:	6b 5d       	subi	r22, 0xDB	; 219
+ 382:	7f 4f       	sbci	r23, 0xFF	; 255
+ 384:	88 ec       	ldi	r24, 0xC8	; 200
+ 386:	91 e0       	ldi	r25, 0x01	; 1
+ 388:	0e 94 01 02 	call	0x402	; 0x402 <itoa>
+					for (int i = 0; i < 3; i++)
+					{
+						response_arr[i + 5]  =any_buf[i];
+ 38c:	8d a1       	ldd	r24, Y+37	; 0x25
+ 38e:	8f 87       	std	Y+15, r24	; 0x0f
+ 390:	8e a1       	ldd	r24, Y+38	; 0x26
+ 392:	88 8b       	std	Y+16, r24	; 0x10
+ 394:	8f a1       	ldd	r24, Y+39	; 0x27
+ 396:	89 8b       	std	Y+17, r24	; 0x11
+					}
+					//comma
+					response_arr[8] = ',';
+ 398:	ec e2       	ldi	r30, 0x2C	; 44
+ 39a:	ea 8b       	std	Y+18, r30	; 0x12
+					//calculate response control sum
+					resposeControlSum = vacuumValue + anyByte;
+					itoa(resposeControlSum, buf_response_sum, 10);
+ 39c:	4a e0       	ldi	r20, 0x0A	; 10
+ 39e:	50 e0       	ldi	r21, 0x00	; 0
+ 3a0:	be 01       	movw	r22, r28
+ 3a2:	68 5d       	subi	r22, 0xD8	; 216
+ 3a4:	7f 4f       	sbci	r23, 0xFF	; 255
+ 3a6:	85 e7       	ldi	r24, 0x75	; 117
+ 3a8:	92 e0       	ldi	r25, 0x02	; 2
+ 3aa:	0e 94 01 02 	call	0x402	; 0x402 <itoa>
+					for (int i = 0; i <3; i++)
+					{
+						response_arr[i + 9] = buf_response_sum[i];
+ 3ae:	88 a5       	ldd	r24, Y+40	; 0x28
+ 3b0:	8b 8b       	std	Y+19, r24	; 0x13
+ 3b2:	89 a5       	ldd	r24, Y+41	; 0x29
+ 3b4:	8c 8b       	std	Y+20, r24	; 0x14
+ 3b6:	8a a5       	ldd	r24, Y+42	; 0x2a
+ 3b8:	8d 8b       	std	Y+21, r24	; 0x15
+ 3ba:	8e 01       	movw	r16, r28
+ 3bc:	06 5f       	subi	r16, 0xF6	; 246
+ 3be:	1f 4f       	sbci	r17, 0xFF	; 255
+					}
+					//send response
+					for (int i = 0; i < 12; i++)
+					{
+						uartSendChar(response_arr[i]);
+ 3c0:	f8 01       	movw	r30, r16
+ 3c2:	81 91       	ld	r24, Z+
+ 3c4:	8f 01       	movw	r16, r30
+ 3c6:	0e 94 52 00 	call	0xa4	; 0xa4 <uartSendChar>
+					for (int i = 0; i <3; i++)
+					{
+						response_arr[i + 9] = buf_response_sum[i];
+					}
+					//send response
+					for (int i = 0; i < 12; i++)
+ 3ca:	0e 15       	cp	r16, r14
+ 3cc:	1f 05       	cpc	r17, r15
+ 3ce:	c1 f7       	brne	.-16     	; 0x3c0 <main+0x1da>
+			count++;
+			//if data count == 9 stop receiving data
+			if (count == 9)
+			{
+				//reset count and title
+				count = 0;
+ 3d0:	81 2c       	mov	r8, r1
+ 3d2:	91 2c       	mov	r9, r1
+				title = 0;
+ 3d4:	00 e0       	ldi	r16, 0x00	; 0
+ 3d6:	10 e0       	ldi	r17, 0x00	; 0
+ 3d8:	31 cf       	rjmp	.-414    	; 0x23c <main+0x56>
+
+000003da <__udivmodhi4>:
+ 3da:	aa 1b       	sub	r26, r26
+ 3dc:	bb 1b       	sub	r27, r27
+ 3de:	51 e1       	ldi	r21, 0x11	; 17
+ 3e0:	07 c0       	rjmp	.+14     	; 0x3f0 <__udivmodhi4_ep>
+
+000003e2 <__udivmodhi4_loop>:
+ 3e2:	aa 1f       	adc	r26, r26
+ 3e4:	bb 1f       	adc	r27, r27
+ 3e6:	a6 17       	cp	r26, r22
+ 3e8:	b7 07       	cpc	r27, r23
+ 3ea:	10 f0       	brcs	.+4      	; 0x3f0 <__udivmodhi4_ep>
+ 3ec:	a6 1b       	sub	r26, r22
+ 3ee:	b7 0b       	sbc	r27, r23
+
+000003f0 <__udivmodhi4_ep>:
+ 3f0:	88 1f       	adc	r24, r24
+ 3f2:	99 1f       	adc	r25, r25
+ 3f4:	5a 95       	dec	r21
+ 3f6:	a9 f7       	brne	.-22     	; 0x3e2 <__udivmodhi4_loop>
+ 3f8:	80 95       	com	r24
+ 3fa:	90 95       	com	r25
+ 3fc:	bc 01       	movw	r22, r24
+ 3fe:	cd 01       	movw	r24, r26
+ 400:	08 95       	ret
+
+00000402 <itoa>:
+ 402:	45 32       	cpi	r20, 0x25	; 37
+ 404:	51 05       	cpc	r21, r1
+ 406:	20 f4       	brcc	.+8      	; 0x410 <itoa+0xe>
+ 408:	42 30       	cpi	r20, 0x02	; 2
+ 40a:	10 f0       	brcs	.+4      	; 0x410 <itoa+0xe>
+ 40c:	0c 94 0c 02 	jmp	0x418	; 0x418 <__itoa_ncheck>
+ 410:	fb 01       	movw	r30, r22
+ 412:	10 82       	st	Z, r1
+ 414:	cb 01       	movw	r24, r22
+ 416:	08 95       	ret
+
+00000418 <__itoa_ncheck>:
+ 418:	bb 27       	eor	r27, r27
+ 41a:	4a 30       	cpi	r20, 0x0A	; 10
+ 41c:	31 f4       	brne	.+12     	; 0x42a <__itoa_ncheck+0x12>
+ 41e:	99 23       	and	r25, r25
+ 420:	22 f4       	brpl	.+8      	; 0x42a <__itoa_ncheck+0x12>
+ 422:	bd e2       	ldi	r27, 0x2D	; 45
+ 424:	90 95       	com	r25
+ 426:	81 95       	neg	r24
+ 428:	9f 4f       	sbci	r25, 0xFF	; 255
+ 42a:	0c 94 18 02 	jmp	0x430	; 0x430 <__utoa_common>
+
+0000042e <__utoa_ncheck>:
+ 42e:	bb 27       	eor	r27, r27
+
+00000430 <__utoa_common>:
+ 430:	fb 01       	movw	r30, r22
+ 432:	55 27       	eor	r21, r21
+ 434:	aa 27       	eor	r26, r26
+ 436:	88 0f       	add	r24, r24
+ 438:	99 1f       	adc	r25, r25
+ 43a:	aa 1f       	adc	r26, r26
+ 43c:	a4 17       	cp	r26, r20
+ 43e:	10 f0       	brcs	.+4      	; 0x444 <__utoa_common+0x14>
+ 440:	a4 1b       	sub	r26, r20
+ 442:	83 95       	inc	r24
+ 444:	50 51       	subi	r21, 0x10	; 16
+ 446:	b9 f7       	brne	.-18     	; 0x436 <__utoa_common+0x6>
+ 448:	a0 5d       	subi	r26, 0xD0	; 208
+ 44a:	aa 33       	cpi	r26, 0x3A	; 58
+ 44c:	08 f0       	brcs	.+2      	; 0x450 <__utoa_common+0x20>
+ 44e:	a9 5d       	subi	r26, 0xD9	; 217
+ 450:	a1 93       	st	Z+, r26
+ 452:	00 97       	sbiw	r24, 0x00	; 0
+ 454:	79 f7       	brne	.-34     	; 0x434 <__utoa_common+0x4>
+ 456:	b1 11       	cpse	r27, r1
+ 458:	b1 93       	st	Z+, r27
+ 45a:	11 92       	st	Z+, r1
+ 45c:	cb 01       	movw	r24, r22
+ 45e:	0c 94 31 02 	jmp	0x462	; 0x462 <strrev>
+
+00000462 <strrev>:
+ 462:	dc 01       	movw	r26, r24
+ 464:	fc 01       	movw	r30, r24
+ 466:	67 2f       	mov	r22, r23
+ 468:	71 91       	ld	r23, Z+
+ 46a:	77 23       	and	r23, r23
+ 46c:	e1 f7       	brne	.-8      	; 0x466 <strrev+0x4>
+ 46e:	32 97       	sbiw	r30, 0x02	; 2
+ 470:	04 c0       	rjmp	.+8      	; 0x47a <strrev+0x18>
+ 472:	7c 91       	ld	r23, X
+ 474:	6d 93       	st	X+, r22
+ 476:	70 83       	st	Z, r23
+ 478:	62 91       	ld	r22, -Z
+ 47a:	ae 17       	cp	r26, r30
+ 47c:	bf 07       	cpc	r27, r31
+ 47e:	c8 f3       	brcs	.-14     	; 0x472 <strrev+0x10>
+ 480:	08 95       	ret
+
+00000482 <_exit>:
+ 482:	f8 94       	cli
+
+00000484 <__stop_program>:
+ 484:	ff cf       	rjmp	.-2      	; 0x484 <__stop_program>
