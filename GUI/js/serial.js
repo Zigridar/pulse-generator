@@ -74,14 +74,50 @@ function connect(nodevice, errorCallBack, successCallBack) {
               }
             });
             //data event handler
+            let connectMC_1 = false;
+            let connectMC_2 = false;
+
+            let connectionTimer_MC1;
+            let connectionTimer_MC2;
+
             globalPort.on('data', async (data) => {
               // console.log(data);
               //do something
               if(data[0] == 58) {        //MC_2
-                updateMC_2(data)
+
+                updateMC_2(data);
+                clearTimeout(connectionTimer_MC2);
+                connectionTimer_MC2 = setTimeout(function () {
+                  connectMC_2 = false;
+                  $('#shkaf-indication').removeClass('green accent-3');
+                  $('#shkaf-indication').addClass('red');
+                  $('#vip-card').html('ВИП-40 is disconnected');
+                }, 2000);
+
+                if(!connectMC_2) {
+                  connectMC_2 = true;
+                  $('#shkaf-indication').addClass('green accent-3');
+                  $('#shkaf-indication').removeClass('red');
+                  $('#vip-card').html('ВИП-40 is connected');
+                }
               }
               else if(data[0] == 100) {  //MC_1
-                updateMC_1(data)
+
+                updateMC_1(data);
+                clearTimeout(connectionTimer_MC1);
+                connectionTimer_MC1 = setTimeout(function () {
+                  connectMC_1 = false;
+                  $('#generator-indication').removeClass('green accent-3');
+                  $('#generator-indication').addClass('red');
+                  $('#generator-card').html('Generator is disconnected');
+                }, 2000);
+
+                if(!connectMC_1) {
+                  connectMC_1 = true;
+                  $('#generator-indication').addClass('green accent-3');
+                  $('#generator-indication').removeClass('red');
+                  $('#generator-card').html('Generator is connected');
+                }
               }
             });
             ok();
@@ -149,7 +185,7 @@ async function serialWriteMC_1(state, frequency) {
   data.push(44);
   data = data.concat(rankSum);
   globalPort.write(Buffer.from(data));
-  console.log(Buffer.from(data).toString());
+  console.log('Sent to MC_1: ' + Buffer.from(data).toString());
 }
 
 async function serialWriteMC_2(address, state, voltage) {
@@ -164,7 +200,7 @@ async function serialWriteMC_2(address, state, voltage) {
   data = data.concat(rankSum);
   //Don't delete
   // data = [58, 49, 44, 48, 44, 49, 53, 48, 44 , 49, 53, 49];
-  console.log(Buffer.from(data).toString());
+  console.log('Sent to MC_2: ' + Buffer.from(data).toString());
   globalPort.write(Buffer.from(data));
   // console.log(data);
 }
@@ -175,10 +211,11 @@ let averageDots = 1
 let dotStorage = [];
 
 async function updateMC_1(dataArr){
+  console.log('Reseived from MC_1: ' + dataArr.toString());
   //data parsing
   const vacuum = (+dataArr[1] - 48)*100 + +(dataArr[2] - 48)*10 + (+dataArr[3] - 48);
-  const anyByte = '' + (dataArr[5] - 48) + (dataArr[6] - 48) + (dataArr[7] - 48);
-  const controlSum = '' + (dataArr[9] - 48) + (dataArr[10] - 48) + (dataArr[11] - 48);
+  const anyByte = '' + (dataArr[5] - 48)*100 + (dataArr[6] - 48)*10 + (dataArr[7] - 48);
+  const controlSum = '' + (dataArr[9] - 48)*100 + (dataArr[10] - 48)*10 + (dataArr[11] - 48);
 
   if(globalChartState) {
     dotStorage[count] = +vacuum;
@@ -195,13 +232,14 @@ async function updateMC_1(dataArr){
       dotStorage = [];
       count = 0;
     }
-    $('#vacuum-gauge-value').html(vacuum);
+    $('#vacuum-gauge-value').html(vacuum + ' Pa');
   }
 
 }
 
 //data had been received from MC_2
 function updateMC_2(dataArr) {
+  console.log('Reseived from MC_2: ' + dataArr.toString());
   const state_voltage = '' + (dataArr[3] - 48);
   const voltage = (dataArr[5] - 48)*10 + (dataArr[6] - 48) + ',' + (dataArr[7] - 48);
   const current = (dataArr[9] - 48)*100 + (dataArr[10] - 48)*10 + (dataArr[11] - 48);
@@ -212,27 +250,34 @@ function updateMC_2(dataArr) {
   switch (state) {
     case 0:
       error_text = 'Ошибок нет'
-
+      $('#error-card').removeClass('red');
+      $('#error-card').addClass('green accent-3');
       break;
     case 1:
       error_text = 'КЗ в нагрузке'
-
+      $('#error-card').addClass('red');
+      $('#error-card').removeClass('green accent-3');
       break;
     case 2:
       error_text = 'Нет воды'
+      $('#error-card').addClass('red');
+      $('#error-card').removeClass('green accent-3');
 
       break;
     case 3:
       error_text = 'Защита по току'
-
+      $('#error-card').addClass('red');
+      $('#error-card').removeClass('green accent-3');
       break;
     case 4:
       error_text = 'КЗ в баке'
-
+      $('#error-card').addClass('red');
+      $('#error-card').removeClass('green accent-3');
       break;
     case 5:
       error_text = 'Блокировка'
-
+      $('#error-card').addClass('red');
+      $('#error-card').removeClass('green accent-3');
       break;
   }
   //change to real names

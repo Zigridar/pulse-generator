@@ -32,7 +32,7 @@
     <div style="padding-left: 29px;" class="col m4">
       <div id="error-card" class="card red waves-effect waves-light">
         <div class="card-content white-text tooltipped" data-tooltip="device state">
-          <h6 id="error-text" style="width: 250px;">No device</h6>
+          <h6 id="error-text" style="width: 250px;">No connection</h6>
         </div>
       </div>
     </div>
@@ -111,8 +111,7 @@
                   <div class="card-content" style="height: 54px">
                     <h6>
                       Real Voltage
-                      <span class="badge" id="real-voltage"></span>
-                      <!-- <span class="badge">kV</span> -->
+                      <span class="badge black-text" id="real-voltage"></span>
                     </h6>
                   </div>
                 </div>
@@ -120,8 +119,7 @@
                   <div class="card-content" style="height: 54px">
                     <h6>
                       Current
-                      <span class="badge" id="current"></span>
-                      <!-- <span class="badge">mA</span> -->
+                      <span class="badge black-text" id="current"></span>
                     </h6>
                   </div>
                 </div>
@@ -134,7 +132,7 @@
         <li class="active">
           <div class="collapsible-header">
              <i class="material-icons">grain</i>Vacuum gauge
-             <span class="badge"><span id="vacuum-gauge-value"></span> Pa</span>
+             <span id="vacuum-gauge-value" class="badge black-text"></span>
           </div>
           <div class="collapsible-body" style="width: 100%; height: 335px">
             <canvas id="canvas"></canvas>

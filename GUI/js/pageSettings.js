@@ -91,7 +91,7 @@ $('#connect-button').click(async () => {
     $('#seconds-off').attr('disabled', '');
 
     $('#start-timer').attr('disabled', '');
-    $('#switch-chart').attr('disabled');
+    $('#switch-chart').attr('disabled', '');
 
     Swal.fire({
       title: 'Error',
@@ -107,22 +107,13 @@ $('#connect-button').click(async () => {
   function success() {
     $('#connect-button').attr('disabled', '');
     $('#disconnect-button').removeAttr('disabled');
-    // $('#shkaf-indication').addClass('green accent-3');
-    // $('#generator-indication').addClass('green accent-3');
-    // $('#shkaf-indication').removeClass('red');
-    // $('#generator-indication').removeClass('red');
     $('#switch-voltage').removeAttr('disabled');
     $('#switch-frequency').removeAttr('disabled');
     $('#input-voltage').val(0);
     $('#input-frequency').val(1);
-    // $('#generator-card').html('Generator is connected');
-    // $('#vip-card').html('ВИП-40 is connected');
 
     $('#checkbox-turn-on').removeAttr('disabled');
     $('#checkbox-turn-off').removeAttr('disabled');
-
-    $('#error-card').removeClass('red');
-    $('#error-card').addClass('green accent-3');
 
     $('#start-timer').removeAttr('disabled');
 
@@ -197,7 +188,9 @@ $('#disconnect-button').click(() => {
     $('#error-card').addClass('red');
 
     $('#start-timer').attr('disabled', '');
-    $('#switch-chart').attr('disabled');
+    $('#switch-chart').attr('disabled', '');
+
+    $('#error-text').html('No connection');
 
     Swal.fire({
       title: 'Device has been success disconnected',
@@ -276,14 +269,9 @@ $('#average-chart').change(() => {
 $('#checkbox-turn-off').change(() => {
   if($('#checkbox-turn-off').prop('checked') || $('#checkbox-turn-on').prop('checked')) {
     $('#start-timer').removeAttr('disabled');
-    // $('#switch-frequency').attr('disabled', '');
-    // $('#switch-frequency').prop('checked', false);
-    // globalStateGenerator = 0;
   }
   else {
     $('#start-timer').attr('disabled', '');
-    // $('#switch-frequency').removeAttr('disabled');
-    // globalStateGenerator = 0;
   }
   if($('#checkbox-turn-off').prop('checked')) {
     //enable timer off
@@ -302,14 +290,9 @@ $('#checkbox-turn-off').change(() => {
 $('#checkbox-turn-on').change(() => {
   if($('#checkbox-turn-off').prop('checked') || $('#checkbox-turn-on').prop('checked')) {
     $('#start-timer').removeAttr('disabled');
-    // $('#switch-frequency').attr('disabled', '');
-    // $('#switch-frequency').prop('checked', false);
-    // globalStateGenerator = 0;
   }
   else {
     $('#start-timer').attr('disabled', '');
-    // $('#switch-frequency').removeAttr('disabled');
-    // globalStateGenerator = 0;
   }
   if($('#checkbox-turn-on').prop('checked')) {
     //enable timer on
@@ -340,6 +323,16 @@ $('#start-timer').click(() => {
       $('#checkbox-turn-on').attr('disabled', '');
       $('#checkbox-turn-off').attr('disabled', '');
       $('#stop-timer').removeAttr('disabled');
+
+      //disable input
+      $('#hours-on').attr('disabled', '');
+      $('#minutes-on').attr('disabled', '');
+      $('#seconds-on').attr('disabled', '');
+
+      $('#hours-off').attr('disabled', '');
+      $('#minutes-off').attr('disabled', '');
+      $('#seconds-off').attr('disabled', '');
+
 
       let counter_1 = $('#seconds-on').val();
       let counter_2 = $('#minutes-on').val();
@@ -402,6 +395,11 @@ $('#start-timer').click(() => {
       $('#checkbox-turn-off').attr('disabled', '');
       $('#stop-timer').removeAttr('disabled');
 
+      //disable input
+      $('#hours-on').attr('disabled', '');
+      $('#minutes-on').attr('disabled', '');
+      $('#seconds-on').attr('disabled', '');
+
       let counter_1 = $('#seconds-on').val();
       let counter_2 = $('#minutes-on').val();
       let counter_3 = $('#hours-on').val();
@@ -423,11 +421,20 @@ $('#start-timer').click(() => {
         }
 
         if(counter_1 == 0) {
-          offTimer();
+          //offTimer();
           clearInterval(timerOn);
           //start
           $('#switch-frequency').prop('checked', true);
           globalStateGenerator = 1;
+
+          $('#checkbox-turn-on').removeAttr('disabled');
+          $('#checkbox-turn-off').removeAttr('disabled');
+          $('#stop-timer').attr('disabled', '');
+
+          $('#hours-on').removeAttr('disabled');
+          $('#minutes-on').removeAttr('disabled');
+          $('#seconds-on').removeAttr('disabled');
+
           Swal.fire({
             title: 'Start',
             icon: 'warning',
@@ -462,6 +469,12 @@ $('#start-timer').click(() => {
       $('#checkbox-turn-on').attr('disabled', '');
       $('#checkbox-turn-off').attr('disabled', '');
       $('#stop-timer').removeAttr('disabled');
+
+      //disable input
+      $('#hours-off').attr('disabled', '');
+      $('#minutes-off').attr('disabled', '');
+      $('#seconds-off').attr('disabled', '');
+
 
       offTimer();
     }
@@ -517,6 +530,11 @@ $('#start-timer').click(() => {
 
         $('#start-timer').removeAttr('disabled');
         $('#stop-timer').attr('disabled', '');
+
+        $('#hours-off').removeAttr('disabled');
+        $('#minutes-off').removeAttr('disabled');
+        $('#seconds-off').removeAttr('disabled');
+
 
         Swal.fire({
           title: 'Stop',
