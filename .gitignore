@@ -5,3 +5,5 @@ GUI/node_modules/
 # compiled source
 atmega16_project/Debug
 atmega16_project/Debug/
+
+GUI/dist

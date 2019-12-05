@@ -1,11 +1,3 @@
-/* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
-
 .icon-block {
   padding: 0 15px;
 }
@@ -20,13 +12,6 @@ body {
     -webkit-user-select: none;
   }
 
-  main {
-    /* flex: 1 0 auto; */
-  }
-
-/* .container5555 {
-  padding: 10px;
-} */
 div.colapsible-body {
   margin: 0px;
   padding-left: 0px;
@@ -43,4 +28,11 @@ div.colapsible-body {
 
 #drop {
   width: 130px;
+}
+
+#settings {
+  position: absolute;
+  left: 13px;
+  top: 13px;
+  z-index: 50;
 }

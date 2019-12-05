@@ -581,6 +581,12 @@ $('#switch-chart').click(() => {
   }
 });
 
+//install driver
+$('#install-driver').click(() => {
+  ipcRender.send('install-driver');
+  console.log('install');
+});
+
 ipcRender.on('close-app', (event, data) => {
   Swal.fire({
     title: 'Вы действительно хотите выйти?',

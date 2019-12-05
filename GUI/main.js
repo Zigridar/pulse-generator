@@ -6,8 +6,9 @@ if (require('electron-squirrel-startup')) return;
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
-const {app, BrowserWindow, dialog, ipcMain} = require('electron');
-
+const PowerShell = require('powershell');
+const ChildProcess = require('child_process');
+const {app, BrowserWindow, dialog, ipcMain, shell} = require('electron');
 
 /////////
 if (handleSquirrelEvent()) {
@@ -20,13 +21,15 @@ function handleSquirrelEvent() {
     return false;
   }
 
-  const ChildProcess = require('child_process');
-  const path = require('path');
+  // const path = require('path');
 
   const appFolder = path.resolve(process.execPath, '..');
   const rootAtomFolder = path.resolve(appFolder, '..');
-  const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
+  const updateDotExe = path.resolve(path.join(rootAtomFolder, 'pulse_generator_GUI.exe'));
   const exeName = path.basename(process.execPath);
+
+  const driverPath = path.resolve(path.join(rootAtomFolder, 'app-1.0.0\\resources\\app\\driver_CH340\\CH341SER.inf'));
+  const allStr = `start-process -verb runAs pnputil -ArgumentList "-i -a ${driverPath}"`;
 
   const spawn = function(command, args) {
     let spawnedProcess, error;
@@ -46,11 +49,6 @@ function handleSquirrelEvent() {
   switch (squirrelEvent) {
     case '--squirrel-install':
     case '--squirrel-updated':
-      // Optionally do things such as:
-      // - Add your .exe to the PATH
-      // - Write to the registry for things like file associations and
-      //   explorer context menus
-
       // Install desktop and start menu shortcuts
       spawnUpdate(['--createShortcut', exeName]);
 
@@ -65,6 +63,10 @@ function handleSquirrelEvent() {
       spawnUpdate(['--removeShortcut', exeName]);
 
       setTimeout(app.quit, 1000);
+      return true;
+
+    case '--squirrel-firstrun':
+      const ps = new PowerShell(allStr);
       return true;
 
     case '--squirrel-obsolete':
@@ -83,6 +85,7 @@ let window;
 //Window options
 function createWindow() {
   window = new BrowserWindow({
+    icon: __dirname + '/img/flash.png',
     width: 1100,
     height: 750,
     minWidth: 1100,
@@ -105,9 +108,6 @@ function createWindow() {
     slashes: true
   }));
 
-  // window.webContents.openDevTools();   //after debugging
-
-  //window.setAlwaysOnTop(true);
   // window.removeMenu();
 
   window.on('closed', () => {
@@ -115,11 +115,6 @@ function createWindow() {
   });
 
   window.once('close', foo);
-
-  window.on('resize', () => {
-    console.log('resize');
-    // window.setSize(1100, 750);
-  });
 }
 
 function foo(event) {
@@ -144,4 +139,12 @@ ipcMain.on('no-close', (event, data) => {
 ipcMain.on('close-app', () => {
   window.setClosable(true);
   app.quit();
+});
+
+ipcMain.on('install-driver', () => {
+  const appFolder = path.resolve(process.execPath, '..');
+  const rootAtomFolder = path.resolve(appFolder, '..');
+  const driverPath = path.resolve(path.join(rootAtomFolder, 'app-1.0.0\\resources\\app\\driver_CH340\\CH341SER.inf'));
+  const allStr = `start-process -verb runAs pnputil -ArgumentList "-i -a ${driverPath}"`;
+  const ps = new PowerShell(allStr);
 });

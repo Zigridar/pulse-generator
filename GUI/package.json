@@ -1,12 +1,12 @@
 {
-    "name": "pulse_generator_GUI",
+    "name": "Pulse_generator_GUI",
     "version": "1.0.0",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
         "install": "electron-rebuild",
-        "build": "electron-packager . app --platform win32 --arch x64 --out dist/",
-        "setup": "electron-installer-windows --src dist/app-win32-x64/ --dest dist/installers/"
+        "build": "electron-packager . app --out dist/ --icon='./img/flash.ico' --overwrite",
+        "setup": "node build"
     },
     "author": "zigridar",
     "devDependencies": {
@@ -14,11 +14,13 @@
         "electron-installer-windows": "^2.0.0",
         "electron-packager": "14.1.0",
         "electron-rebuild": "1.8.8",
-        "electron-squirrel-startup": "^1.0.0",
         "electron-winstaller": "^4.0.0",
         "node-abi": "2.12.0"
     },
     "dependencies": {
+        "electron-squirrel-startup": "^1.0.0",
+        "powershell": "^2.3.1",
         "serialport": "8.0.5"
-    }
+    },
+    "description": "GUI for pulse generator"
 }
