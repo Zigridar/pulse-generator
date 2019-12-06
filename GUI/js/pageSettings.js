@@ -371,7 +371,7 @@ $('#start-timer').click(() => {
           });
         }
         counter_1--;
-      }, 10);
+      }, 1000);
 
     }
     else {
@@ -547,7 +547,7 @@ $('#start-timer').click(() => {
         });
       }
       counter_4--;
-    }, 10);
+    }, 1000);
   }
 });
 
@@ -585,6 +585,16 @@ $('#switch-chart').click(() => {
 $('#install-driver').click(() => {
   ipcRender.send('install-driver');
   console.log('install');
+});
+
+//open docs
+$('#open-docs').click(() => {
+  ipcRender.send('open-docs');
+});
+
+//close app
+$('#close-app').click(() => {
+  ipcRender.send('close-app');
 });
 
 ipcRender.on('close-app', (event, data) => {

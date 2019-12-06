@@ -5,33 +5,32 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pulse generator</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha256-arMsf+3JJK2LoTGqxfnuJPFTU4hAK57MtIPdFpiHXOU=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/chart-lib.js"></script>
+    <script src="./js/sweetalert.js"></script>
   </head>
   <body>
 
 
 
-     <ul id="slide-out" class="sidenav">
-       <li><div class="user-view">
-         <div class="background">
+     <ul id="slide-out" class="sidenav blue-grey lighten-3">
+       <br>
+       <li><a href="#!" id="side-close"><i class="small material-icons">arrow_back</i></a></li>
+       <li>
+         <div class="user-view">
+          <div class="background">
            <!-- <img src="images/office.jpg"> -->
-         </div>
-         <!-- <a href="#user"><img class="circle" src="images/yuna.jpg"></a> -->
-         <a href="#name"><span class="white-text name">text</span></a>
-         <a href="#email"><span class="white-text email">text</span></a>
-       </div></li>
-       <li><a href="#!"><i class="material-icons">cloud</i>text</a></li>
-       <li><a href="#!">text</a></li>
+          </div>
+        </div>
+       </li>
        <li><div class="divider"></div></li>
-       <li><a class="subheader">Install driver</a></li>
-       <li><a id="install-driver" class="waves-effect" href="#!">install</a></li>
+       <li><a id="install-driver" class="waves-effect" href="#!"><i class="material-icons">dns</i>install driver</a></li>
+       <li><a id="open-docs" class="waves-effect" href="#!"><i class="material-icons">book</i>open docs</a></li>
+       <li><a id="close-app" class="waves-effect bottom" href="#!"><i class="material-icons">exit_to_app</i>close app</a></li>
      </ul>
-     <a id="settings" data-target="slide-out" class="sidenav-trigger btn-floating btn-small waves-effect waves-light red"><i class="small material-icons">settings</i></a>
+     <a id="settings" data-target="slide-out" class="sidenav-trigger white-text"><i class="small material-icons">dehaze</i></a>
 
 
 <nav class="teal lighten-2">
@@ -353,7 +352,7 @@
 </div>
 
     <!-- Don't remove -->
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="./js/jquery.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
     <script src="./js/chart.js"></script>

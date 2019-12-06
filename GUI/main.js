@@ -87,14 +87,15 @@ function createWindow() {
   window = new BrowserWindow({
     icon: __dirname + '/img/flash.png',
     width: 1100,
-    height: 750,
-    minWidth: 1100,
-    minHeight: 750,
-    maxWidth: 1100,
-    maxHeight: 750,
+    height: 730,
+    // minWidth: 1100,
+    // minHeight: 750,
+    // maxWidth: 1100,
+    // maxHeight: 750,
     resizable: false,
     minimizable : false,
     autoHideMenuBar: true,
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true
@@ -115,6 +116,12 @@ function createWindow() {
   });
 
   window.once('close', foo);
+
+  window.once('ready-to-show', () => {
+    setTimeout(function () {
+      window.show();
+    }, 500);
+  });
 }
 
 function foo(event) {
@@ -141,10 +148,33 @@ ipcMain.on('close-app', () => {
   app.quit();
 });
 
+
 ipcMain.on('install-driver', () => {
   const appFolder = path.resolve(process.execPath, '..');
   const rootAtomFolder = path.resolve(appFolder, '..');
   const driverPath = path.resolve(path.join(rootAtomFolder, 'app-1.0.0\\resources\\app\\driver_CH340\\CH341SER.inf'));
   const allStr = `start-process -verb runAs pnputil -ArgumentList "-i -a ${driverPath}"`;
   const ps = new PowerShell(allStr);
+});
+
+
+let docs;
+
+ipcMain.on('open-docs', () => {
+  docs = new BrowserWindow({
+    icon: __dirname + '/img/flash.png',
+    width: 500,
+    height: 500,
+    resizable: false,
+    minimizable : true,
+    autoHideMenuBar: true,
+    show: true,
+    frame: true          //after debugging
+  });
+
+  docs.loadURL(url.format({
+    pathname: path.join(__dirname, 'docs.html'),
+    protocol: 'file',
+    slashes: true
+  }));
 });

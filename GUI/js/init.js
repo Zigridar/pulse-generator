@@ -19,5 +19,11 @@
 
      $('.dropdown-trigger').dropdown();
 
+     $('.sidenav').sidenav();
+
+     $('#side-close').click(() => {
+       $('.sidenav').sidenav('close');
+     });
+
   }); // end of document ready
 })(jQuery); // end of jQuery name space

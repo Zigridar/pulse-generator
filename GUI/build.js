@@ -15,6 +15,7 @@ const path = require('path');
       description: 'pulse generator GUI',
       iconUrl: path.join(__dirname, 'img/flash.ico'),
       setupIcon: path.join(__dirname, 'img/flash.ico')
+      // loadingGif: path.join(__dirname, 'img/installation.gif')
     });
     console.log('Installer has been success created');
   } catch (e) {
