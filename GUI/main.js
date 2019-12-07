@@ -21,8 +21,6 @@ function handleSquirrelEvent() {
     return false;
   }
 
-  // const path = require('path');
-
   const appFolder = path.resolve(process.execPath, '..');
   const rootAtomFolder = path.resolve(appFolder, '..');
   const updateDotExe = path.resolve(path.join(rootAtomFolder, 'pulse_generator_GUI.exe'));
@@ -88,10 +86,6 @@ function createWindow() {
     icon: __dirname + '/img/flash.png',
     width: 1100,
     height: 730,
-    // minWidth: 1100,
-    // minHeight: 750,
-    // maxWidth: 1100,
-    // maxHeight: 750,
     resizable: false,
     minimizable : false,
     autoHideMenuBar: true,
@@ -100,7 +94,7 @@ function createWindow() {
       nodeIntegration: true,
       webviewTag: true
     },
-   frame: true          //after debugging
+   frame: true
   });
 
   window.loadURL(url.format({
@@ -159,22 +153,33 @@ ipcMain.on('install-driver', () => {
 
 
 let docs;
+let isOpen = false;
 
 ipcMain.on('open-docs', () => {
-  docs = new BrowserWindow({
-    icon: __dirname + '/img/flash.png',
-    width: 500,
-    height: 500,
-    resizable: false,
-    minimizable : true,
-    autoHideMenuBar: true,
-    show: true,
-    frame: true          //after debugging
-  });
+  if(!isOpen) {
+    isOpen = true;
+    docs = new BrowserWindow({
+      icon: __dirname + '/img/flash.png',
+      width: 500,
+      height: 500,
+      resizable: false,
+      minimizable : true,
+      autoHideMenuBar: true,
+      show: true,
+      frame: true
+    });
 
-  docs.loadURL(url.format({
-    pathname: path.join(__dirname, 'docs.html'),
-    protocol: 'file',
-    slashes: true
-  }));
+    docs.loadURL(url.format({
+      pathname: path.join(__dirname, 'docs.html'),
+      protocol: 'file',
+      slashes: true
+    }));
+
+    docs.once('closed', () => {
+      isOpen = false;
+    });
+  }
+  else {
+    docs.focus();
+  }
 });

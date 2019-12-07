@@ -33,7 +33,7 @@ div.colapsible-body {
 #settings {
   position: absolute;
   left: 13px;
-  top: 16px;
+  top: 18px;
   z-index: 50;
 }
 
@@ -58,4 +58,49 @@ div.colapsible-body {
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+
+#clear-chart {
+  position: absolute;
+  right:490px;
+  top:234px;
+}
+
+#connect-button {
+  margin-bottom: 15px;
+  margin-top: 11px;
+  padding-right: 0px;
+  padding-left: 0px;
+  width: 110px;
+}
+
+#disconnect-button {
+  margin-bottom: 15px;
+  margin-top: 11px;
+  padding-right: 0px;
+  padding-left: 0px;
+  width: 110px;
+}
+
+#body-voltage {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#vip-card {
+  position: absolute;
+  left:70px;
+  top:16px;
+}
+
+#generator-card {
+  position: absolute;
+  top: 16px;
+  left: 300px;
+}
+
+#error-text {
+  position: absolute;
+  top: 16px;
+  left: 580px;
 }

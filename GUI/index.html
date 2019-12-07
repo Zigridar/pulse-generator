@@ -8,14 +8,14 @@
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script src="./js/jquery.min.js"></script>
-    <script src="./js/chart-lib.js"></script>
-    <script src="./js/sweetalert.js"></script>
+    <script src="./js/chart.js"></script>
+    <script src="./js/sweetalert2.js"></script>
   </head>
   <body>
 
 
 
-     <ul id="slide-out" class="sidenav blue-grey lighten-3">
+     <ul id="slide-out" class="sidenav teal lighten-2">
        <br>
        <li><a href="#!" id="side-close"><i class="small material-icons">arrow_back</i></a></li>
        <li>
@@ -30,47 +30,22 @@
        <li><a id="open-docs" class="waves-effect" href="#!"><i class="material-icons">book</i>open docs</a></li>
        <li><a id="close-app" class="waves-effect bottom" href="#!"><i class="material-icons">exit_to_app</i>close app</a></li>
      </ul>
-     <a id="settings" data-target="slide-out" class="sidenav-trigger white-text"><i class="small material-icons">dehaze</i></a>
 
+     <a id="settings" data-target="slide-out" class="sidenav-trigger white-text"><i class="small material-icons">dehaze</i></a>
 
 <nav class="teal lighten-2">
   <div class="row">
-    <div class="col m9" style="padding-left: 60px;">
-      <div id="shkaf-indication" class="card red waves-effect waves-light">
-        <div class="card-content white-text">
-          <p><h6 id="vip-card" style="width: 200px;">ВИП-40 is disconnected</h6></p>
-        </div>
-      </div>
-
-      <div id="generator-indication" class="card red waves-effect waves-light">
-        <div class="card-content white-text">
-          <p><h6 id="generator-card" style="width: 200px;">Generator is disconnected</h6></p>
-        </div>
-      </div>
-      <div id="error-card" class="card red waves-effect waves-light">
-        <div class="card-content white-text tooltipped" data-tooltip="device state">
-          <h6 id="error-text" style="width: 250px;">No connection</h6>
-        </div>
-      </div>
+    <div id="status-bar" class="col m9">
+      <a id="vip-card" class="btn red darken-4">ВИП-40 is disconnected</a>
+      <a id="generator-card" class="btn red darken-4">Generator is disconnected</a>
+      <a id="error-text" class="btn red darken-4 tooltipped" data-tooltip="device state">No connection</a>
     </div>
-    <!-- <div style="" class="col m4 no-padding">
-    </div> -->
 
     <div style="" class="col m3 no-padding">
-      <span id="connect-button" class="blue-grey darken-1 waves-effect waves-light btn" style="
-        margin-bottom: 15px;
-        margin-top: 11px;
-        padding-right: 0px;
-        padding-left: 0px;
-        width: 110px;">
+      <span id="connect-button" class="blue-grey darken-1 waves-effect waves-light btn">
         connect
       </span>
-      <span id="disconnect-button" disabled class="blue-grey darken-1 waves-effect waves-light btn" style="
-        margin-bottom: 15px;
-        margin-top: 11px;
-        padding-right: 0px;
-        padding-left: 0px;
-        width: 110px;">
+      <span id="disconnect-button" disabled class="blue-grey darken-1 waves-effect waves-light btn">
         disconnect
       </span>
     </div>
@@ -90,9 +65,8 @@
               </h6>
             </div>
           </div>
-          <div class="collapsible-body">
-            <div class="row" style="padding-left: 10px;
-                                    padding-right: 10px;">
+          <div id="body-voltage" class="collapsible-body">
+            <div class="row">
               <div class="col m8">
                 <div class="card">
                   <div class="card-content">
@@ -149,9 +123,10 @@
       </ul>
       <ul class="collapsible expandable z-depth-2">
         <li class="active">
-          <div class="collapsible-header">
-             <i class="material-icons">grain</i>Vacuum gauge
-             <span id="vacuum-gauge-value" class="badge black-text"></span>
+          <div class="collapsible-header" style="padding-top:10px; padding-bottom:10px;">
+             <i class="material-icons" style="padding-top:5px;">grain</i>
+             <h6 id="vacuum-gauge-value" class="badge black-text" style="margin: 0px; padding:0px; padding-top:5px;">Vacuum gauge:</h6>
+             <a id="clear-chart" disabled href="#" class="waves-effect waves-light btn-small red darken-1">clear chart</a>
           </div>
           <div class="collapsible-body" style="width: 100%; height: 335px">
             <canvas id="canvas"></canvas>
@@ -283,12 +258,9 @@
                   </div>
                 </div>
               </div>
-              <!-- Частота карточка -->
             </div>
-
           </div>
         </li>
-        <!-- Регулировка напряжения и частоты -->
       </ul>
 
 
@@ -297,7 +269,7 @@
         <div class="collapsible-header">
           <i class="material-icons">equalizer</i>
           <span>Chart options</span>
-          <div class="switch" style="margin-left: 150px">
+          <div class="switch" style="margin-left:150px;">
             <label>
               Off
               <input disabled id="switch-chart" type="checkbox" checked="true">
@@ -313,7 +285,7 @@
               <div class="card">
                 <div class="card-content">
                   <div class="row">
-                    <div class="col m5">
+                    <div class="col m6">
                       <label>Average</label>
                       <select id="average-chart">
                         <option value="1"selected>No average</option>
@@ -332,8 +304,15 @@
                         <option value="50">50</option>
                         </select>
                     </div>
-                    <div class="col m4">
-
+                    <div class="col m3">
+                      <label>Axis step</label>
+                        <select id="chart-step">
+                        <option value="1">1</option>
+                        <option value="2"selected>2</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        </select>
                     </div>
                   </div>
                 </div>
@@ -341,7 +320,6 @@
             </div>
           </div>
 
-          <!-- Карточка для таймера -->
         </div>
       </li>
       </ul>
@@ -354,8 +332,7 @@
     <!-- Don't remove -->
     <script src="./js/jquery.min.js"></script>
     <script src="js/materialize.js"></script>
-    <script src="js/init.js"></script>
-    <script src="./js/chart.js"></script>
+    <script src="./js/chartSettings.js"></script>
     <script src="./js/serial.js"></script>
     <script src="./js/pageSettings.js"></script>
   </body>

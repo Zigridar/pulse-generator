@@ -7,7 +7,7 @@ let connectionStatus = false;
 let errorStatus = false;
 let globalChartState = true;
 
-//options variables
+//option variables
 //MC_1
 let globalFrequency = 1;
 let globalStateGenerator = 0;
@@ -60,6 +60,8 @@ function connect(nodevice, errorCallBack, successCallBack) {
               if (!errorStatus && !isClosed) {
                 errorStatus = true;
                 connectionStatus = false;
+                clearInterval(timer_1);
+                clearInterval(timer_2);
                 errorCallBack();
               }
             });
@@ -68,8 +70,10 @@ function connect(nodevice, errorCallBack, successCallBack) {
               console.log('port has been closed');
               //do something
               if (!errorStatus && !isClosed) {
-                errorStatus = true;
+                isClosed = true;
                 connectionStatus = false;
+                clearInterval(timer_1);
+                clearInterval(timer_2);
                 errorCallBack();
               }
             });
@@ -81,23 +85,23 @@ function connect(nodevice, errorCallBack, successCallBack) {
             let connectionTimer_MC2;
 
             globalPort.on('data', async (data) => {
-              // console.log(data);
               //do something
               if(data[0] == 58) {        //MC_2
 
                 updateMC_2(data);
                 clearTimeout(connectionTimer_MC2);
+                //if MC_2 doesn't reply
                 connectionTimer_MC2 = setTimeout(function () {
                   connectMC_2 = false;
-                  $('#shkaf-indication').removeClass('green accent-3');
-                  $('#shkaf-indication').addClass('red');
+                  $('#vip-card').removeClass('green');
+                  $('#vip-card').addClass('red');
                   $('#vip-card').html('ВИП-40 is disconnected');
                 }, 2000);
 
                 if(!connectMC_2) {
                   connectMC_2 = true;
-                  $('#shkaf-indication').addClass('green accent-3');
-                  $('#shkaf-indication').removeClass('red');
+                  $('#vip-card').addClass('green');
+                  $('#vip-card').removeClass('red');
                   $('#vip-card').html('ВИП-40 is connected');
                 }
               }
@@ -105,17 +109,18 @@ function connect(nodevice, errorCallBack, successCallBack) {
 
                 updateMC_1(data);
                 clearTimeout(connectionTimer_MC1);
+                //if MC_1 doesn't reply
                 connectionTimer_MC1 = setTimeout(function () {
                   connectMC_1 = false;
-                  $('#generator-indication').removeClass('green accent-3');
-                  $('#generator-indication').addClass('red');
+                  $('#generator-card').removeClass('green');
+                  $('#generator-card').addClass('red');
                   $('#generator-card').html('Generator is disconnected');
                 }, 2000);
 
                 if(!connectMC_1) {
                   connectMC_1 = true;
-                  $('#generator-indication').addClass('green accent-3');
-                  $('#generator-indication').removeClass('red');
+                  $('#generator-card').addClass('green');
+                  $('#generator-card').removeClass('red');
                   $('#generator-card').html('Generator is connected');
                 }
               }
@@ -133,6 +138,10 @@ function connect(nodevice, errorCallBack, successCallBack) {
 
 function disconnect(foo) {
   if (connectionStatus) {
+    //turn on/off generator timers
+    clearInterval(timerOn);
+    clearInterval(timerOff);
+    //data sending timer
     clearInterval(timer_1);
     clearInterval(timer_2);
     isClosed = true;
@@ -142,7 +151,9 @@ function disconnect(foo) {
     globalStateVoltage = 0;
     globalStateGenerator = 0;
     globalPort.close();
-    foo();
+    setTimeout(function () {
+      foo();
+    }, 300);
   }
 }
 
@@ -178,6 +189,7 @@ async function serialWriteMC_1(state, frequency) {
   //calcute control sum
   const controlSum = (+state) + (+frequency);
   //build data array
+  //[addres, state, ',', f1, f2, f3, ',', s1, s2, s3]
   let data = [100, state + 48, 44];
   const rankFrequency = await rankPartition(frequency);
   const rankSum =await rankPartition(controlSum);
@@ -192,17 +204,17 @@ async function serialWriteMC_2(address, state, voltage) {
   //calcute control sum
   const controlSum = (+address) + (+state) + (+voltage);
   //build data array
+  //[address, deviceAddress, ',', state, ',', v1, v2, v3, ',', s1, s2, s3]
   let data = [58, address + 48, 44, state + 48, 44];
   const rankVoltage = await rankPartition(voltage);
   const rankSum = await rankPartition(controlSum);
   data = data.concat(rankVoltage);
   data.push(44);
   data = data.concat(rankSum);
-  //Don't delete
+  //Don't delete example
   // data = [58, 49, 44, 48, 44, 49, 53, 48, 44 , 49, 53, 49];
-  console.log('Sent to MC_2: ' + Buffer.from(data).toString());
   globalPort.write(Buffer.from(data));
-  // console.log(data);
+  console.log('Sent to MC_2: ' + Buffer.from(data).toString());
 }
 
 //data had been received from MC_1
@@ -210,77 +222,79 @@ let count = 0;
 let averageDots = 1
 let dotStorage = [];
 
-async function updateMC_1(dataArr){
+async function updateMC_1(dataArr) {
   console.log('Reseived from MC_1: ' + dataArr.toString());
   //data parsing
   const vacuum = (+dataArr[1] - 48)*100 + +(dataArr[2] - 48)*10 + (+dataArr[3] - 48);
-  const anyByte = '' + (dataArr[5] - 48)*100 + (dataArr[6] - 48)*10 + (dataArr[7] - 48);
-  const controlSum = '' + (dataArr[9] - 48)*100 + (dataArr[10] - 48)*10 + (dataArr[11] - 48);
+  const anyByte = (+dataArr[5] - 48)*100 + (+dataArr[6] - 48)*10 + (+dataArr[7] - 48);
+  const controlSum = (+dataArr[9] - 48)*100 + (+dataArr[10] - 48)*10 + (+dataArr[11] - 48);
 
+  //update chart
   if(globalChartState) {
     dotStorage[count] = +vacuum;
     count++;
 
+    //no average
     if(averageDots == 1) {
       addData(myChart, vacuum, dotCount);
       count = 0;
     }
 
+    //average
     if((count == averageDots) && (averageDots != 1)) {
       const middle = await average(dotStorage);
       addData(myChart, middle, dotCount);
       dotStorage = [];
       count = 0;
     }
-    $('#vacuum-gauge-value').html(vacuum + ' Pa');
+    $('#vacuum-gauge-value').html('Vacuum gauge: ' + vacuum + ' Pa');
   }
-
 }
 
 //data had been received from MC_2
 function updateMC_2(dataArr) {
   console.log('Reseived from MC_2: ' + dataArr.toString());
-  const state_voltage = '' + (dataArr[3] - 48);
-  const voltage = (dataArr[5] - 48)*10 + (dataArr[6] - 48) + ',' + (dataArr[7] - 48);
-  const current = (dataArr[9] - 48)*100 + (dataArr[10] - 48)*10 + (dataArr[11] - 48);
+  //data parsing
+  const state_voltage = (+dataArr[3] - 48);
+  const voltage = (+dataArr[5] - 48)*10 + (+dataArr[6] - 48) + ',' + (+dataArr[7] - 48);
+  const current = (+dataArr[9] - 48)*100 + (+dataArr[10] - 48)*10 + (+dataArr[11] - 48);
   const state = +dataArr[13] - 48;
-  const controlSum = '' + (dataArr[15] - 48)*100 + (dataArr[16] - 48)*10 + (dataArr[17] - 48);
+  const controlSum = (+dataArr[15] - 48)*100 + (+dataArr[16] - 48)*10 + (+dataArr[17] - 48);
 
   let error_text;
   switch (state) {
     case 0:
       error_text = 'Ошибок нет'
-      $('#error-card').removeClass('red');
-      $('#error-card').addClass('green accent-3');
+      $('#error-text').removeClass('red');
+      $('#error-text').addClass('green');
       break;
     case 1:
       error_text = 'КЗ в нагрузке'
-      $('#error-card').addClass('red');
-      $('#error-card').removeClass('green accent-3');
+      $('#error-text').addClass('red');
+      $('#error-text').removeClass('green');
       break;
     case 2:
       error_text = 'Нет воды'
-      $('#error-card').addClass('red');
-      $('#error-card').removeClass('green accent-3');
-
+      $('#error-text').addClass('red');
+      $('#error-text').removeClass('green');
       break;
     case 3:
       error_text = 'Защита по току'
-      $('#error-card').addClass('red');
-      $('#error-card').removeClass('green accent-3');
+      $('#error-text').addClass('red');
+      $('#error-text').removeClass('green');
       break;
     case 4:
       error_text = 'КЗ в баке'
-      $('#error-card').addClass('red');
-      $('#error-card').removeClass('green accent-3');
+      $('#error-text').addClass('red');
+      $('#error-text').removeClass('green');
       break;
     case 5:
       error_text = 'Блокировка'
-      $('#error-card').addClass('red');
-      $('#error-card').removeClass('green accent-3');
+      $('#error-text').addClass('red');
+      $('#error-text').removeClass('green');
       break;
   }
-  //change to real names
+  //update display variables
   $('#real-voltage').html(voltage + ' kV');
   $('#current').html(current + ' mA');
   $('#error-text').html(error_text);
