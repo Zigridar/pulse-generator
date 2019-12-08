@@ -133,9 +133,10 @@ There are several types of notifications:
 Building GU
 --
 Creating app installer requires [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools).
-If you have it you should do follow steps:
+If you have it you should do following steps:
 ```sh
 git clone https://github.com/Zigridar/pulse-generator.git
+cd ./GUI
 npm install
 npm run build
 ```
@@ -143,4 +144,4 @@ After building you will get windows installer ./dist/installer/Pulse-win32-${arc
 
 Installers
 --
-Pretty soon
+For getting installer [click here](https://yadi.sk/d/YT8USqbB1MvabQ)
