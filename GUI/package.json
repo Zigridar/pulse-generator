@@ -5,8 +5,7 @@
     "scripts": {
         "start": "electron .",
         "install": "electron-rebuild",
-        "build": "electron-packager . app --out dist/ --icon='./img/flash.ico' --overwrite",
-        "setup": "node build"
+        "build": "electron-packager . Pulse --out dist/ --icon='./img/flash.ico' --overwrite &&node build-installer"
     },
     "author": "zigridar",
     "devDependencies": {

@@ -1,15 +1,18 @@
 //installer build script
 const electronInstaller = require('electron-winstaller');
 const path = require('path');
+const os = require('os');
+const arch = os.arch();
 
 (async () => {
   try {
+    console.log(`Creating an installer for platform win32 ${arch}`);
     await electronInstaller.createWindowsInstaller({
-      appDirectory: path.join(__dirname, 'dist/pulse-win32-ia32'),
+      appDirectory: path.join(__dirname, `dist/Pulse-win32-${arch}`),
       outputDirectory: path.join(__dirname, 'dist/installer'),
       authors: 'ZIGRIDAR',
-      exe: 'pulse.exe',
-      setupExe: 'pulse_generator_setup1.exe',
+      exe: 'Pulse.exe',
+      setupExe: `pulse-setup-win32-${arch}.exe`,
       noMsi: true,
       owners: 'ZIGRIDAR',
       description: 'pulse generator GUI',
@@ -17,7 +20,9 @@ const path = require('path');
       setupIcon: path.join(__dirname, 'img/flash.ico')
     });
     console.log('Installer has been success created');
-  } catch (e) {
+    console.log(`Installer path: ${path.join(__dirname, `dist/installer/pulse-setup-win32-${arch}.exe`)}`);
+  }
+  catch (e) {
     console.log(`Failed to create installer: ${e.message}`);
   }
 })()

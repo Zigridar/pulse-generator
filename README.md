@@ -83,7 +83,8 @@ This field is for setting pulse frequency (1 - 200Hz), turning on/off generator 
 
 ![pulse-generator](https://github.com/Zigridar/pulse-generator/blob/master/GUI/img/pulse-generator.png)
 
-Vacuum gauge
+**Vacuum gauge**
+
 This field is to display chart of vacuum gauge that is sent from pulse generator (MC_1).
 
 ![vacuum-gauge](https://github.com/Zigridar/pulse-generator/blob/master/GUI/img/chart.png)
@@ -131,7 +132,14 @@ There are several types of notifications:
 
 Building GU
 --
-Pretty soon
+Creating app installer requires [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools).
+If you have it you should do follow steps:
+```sh
+git clone https://github.com/Zigridar/pulse-generator.git
+npm install
+npm run build
+```
+After building you will get windows installer ./dist/installer/Pulse-win32-${arch}-setup.exe
 
 Installers
 --
