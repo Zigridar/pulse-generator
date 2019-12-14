@@ -1,5 +1,4 @@
 const SerialPort = require('serialport');
-//console.log(SerialPort.parsers);
 
 //connect variables
 let globalPort;
@@ -95,14 +94,14 @@ function connect(nodevice, errorCallBack, successCallBack) {
                   connectMC_2 = false;
                   $('#vip-card').removeClass('green');
                   $('#vip-card').addClass('red');
-                  $('#vip-card').html('ВИП-40 is disconnected');
+                  $('#vip-card').html(lang.page.vipDisconnect);
                 }, 2000);
 
                 if(!connectMC_2) {
                   connectMC_2 = true;
                   $('#vip-card').addClass('green');
                   $('#vip-card').removeClass('red');
-                  $('#vip-card').html('ВИП-40 is connected');
+                  $('#vip-card').html(lang.page.vipConnect);
                 }
               }
               else if(data[0] == 100) {  //MC_1
@@ -114,14 +113,14 @@ function connect(nodevice, errorCallBack, successCallBack) {
                   connectMC_1 = false;
                   $('#generator-card').removeClass('green');
                   $('#generator-card').addClass('red');
-                  $('#generator-card').html('Generator is disconnected');
+                  $('#generator-card').html(lang.page.generatorDisconnect);
                 }, 2000);
 
                 if(!connectMC_1) {
                   connectMC_1 = true;
                   $('#generator-card').addClass('green');
                   $('#generator-card').removeClass('red');
-                  $('#generator-card').html('Generator is connected');
+                  $('#generator-card').html(lang.page.generatorConnect);
                 }
               }
             });
@@ -138,22 +137,22 @@ function connect(nodevice, errorCallBack, successCallBack) {
 
 function disconnect(foo) {
   if (connectionStatus) {
-    //turn on/off generator timers
-    clearInterval(timerOn);
-    clearInterval(timerOff);
-    //data sending timer
-    clearInterval(timer_1);
-    clearInterval(timer_2);
-    isClosed = true;
-    connectionStatus = false;
     globalVoltage = 0;
     globalFrequency = 1;
     globalStateVoltage = 0;
     globalStateGenerator = 0;
-    globalPort.close();
     setTimeout(function () {
+      isClosed = true;
+      connectionStatus = false;
+      //turn on/off generator timers
+      clearInterval(timerOn);
+      clearInterval(timerOff);
+      //data sending timer
+      clearInterval(timer_1);
+      clearInterval(timer_2);
+      globalPort.close();
       foo();
-    }, 300);
+    }, 1000);
   }
 }
 
@@ -247,7 +246,7 @@ async function updateMC_1(dataArr) {
       dotStorage = [];
       count = 0;
     }
-    $('#vacuum-gauge-value').html('Vacuum gauge: ' + vacuum + ' Pa');
+    $('#vacuum-gauge-value').html(`${lang.page.vacuumGauge} : ${vacuum} ${lang.page.measures.vacuum}`);
   }
 }
 
@@ -264,38 +263,38 @@ function updateMC_2(dataArr) {
   let error_text;
   switch (state) {
     case 0:
-      error_text = 'Ошибок нет'
+      error_text = lang.page.errors.OK
       $('#error-text').removeClass('red');
       $('#error-text').addClass('green');
       break;
     case 1:
-      error_text = 'КЗ в нагрузке'
+      error_text = lang.page.errors.SCR
       $('#error-text').addClass('red');
       $('#error-text').removeClass('green');
       break;
     case 2:
-      error_text = 'Нет воды'
+      error_text = lang.page.errors.NW
       $('#error-text').addClass('red');
       $('#error-text').removeClass('green');
       break;
     case 3:
-      error_text = 'Защита по току'
+      error_text = lang.page.errors.OC
       $('#error-text').addClass('red');
       $('#error-text').removeClass('green');
       break;
     case 4:
-      error_text = 'КЗ в баке'
+      error_text = lang.page.errors.SCB
       $('#error-text').addClass('red');
       $('#error-text').removeClass('green');
       break;
     case 5:
-      error_text = 'Блокировка'
+      error_text = lang.page.errors.BL
       $('#error-text').addClass('red');
       $('#error-text').removeClass('green');
       break;
   }
   //update display variables
-  $('#real-voltage').html(voltage + ' kV');
-  $('#current').html(current + ' mA');
+  $('#real-voltage').html(`${voltage} ${lang.page.measures.voltage}`);
+  $('#current').html(`${current} ${lang.page.measures.current}`);
   $('#error-text').html(error_text);
 }

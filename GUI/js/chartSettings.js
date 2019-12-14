@@ -38,8 +38,6 @@ const data = {
 		responsive: true,
 		title: {
 			display: false,
-			// text: 'Показания вакууметра',
-      // fontSize: 16
 		},
 		tooltips: {
       enabled: false
@@ -59,7 +57,7 @@ const data = {
 				display: true,
 				scaleLabel: {
 					display: true,
-					labelString: 'Pressure',
+					labelString: lang.chart.pressure,
           fontSize: 14
 				},
 				ticks: {

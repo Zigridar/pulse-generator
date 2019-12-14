@@ -81,7 +81,7 @@ function handleSquirrelEvent() {
 let window;
 
 //Window options
-function createWindow() {
+function createWindow(config) {
   window = new BrowserWindow({
     icon: __dirname + '/img/flash.png',
     width: 1100,
@@ -98,7 +98,7 @@ function createWindow() {
   });
 
   window.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, `index_${config.lang}.html`),
     protocol: 'file',
     slashes: true
   }));
@@ -114,6 +114,7 @@ function createWindow() {
   window.once('ready-to-show', () => {
     setTimeout(function () {
       window.show();
+      window.webContents.send('lang', config.lang);
     }, 500);
   });
 }
@@ -124,8 +125,23 @@ function foo(event) {
   window.setClosable(false);
 }
 
+//read config
+function readConfig() {
+  return new Promise(ok => {
+    fs.readFile('config.json', (err, data) => {
+      ok(JSON.parse(data));
+    });
+  });
+}
+
 //Start application
-app.on('ready', createWindow);
+let lang = 'en';
+app.on('ready', async () => {
+  const config = await readConfig();
+  lang = config.lang;
+  console.log(config.lang);
+  createWindow(config);
+});
 
 //Close application
 app.on('window-all-closed', () => {
@@ -170,7 +186,7 @@ ipcMain.on('open-docs', () => {
     });
 
     docs.loadURL(url.format({
-      pathname: path.join(__dirname, 'docs.html'),
+      pathname: path.join(__dirname, `docs_${lang}.html`),
       protocol: 'file',
       slashes: true
     }));
@@ -182,4 +198,18 @@ ipcMain.on('open-docs', () => {
   else {
     docs.focus();
   }
+});
+
+//change lang
+ipcMain.on('changeLang', (e, lang) => {
+  console.log('change lang: ' + lang);
+  fs.readFile(path.join(__dirname, `config.json`), (err, data) => {
+    let oldConf = JSON.parse(data);
+    oldConf.lang = lang;
+    console.log(oldConf);
+    let newConf = JSON.stringify(oldConf)
+    fs.writeFile(path.join(__dirname, `config.json`), newConf, (err) => {
+      console.log(err);
+    });
+  });
 });

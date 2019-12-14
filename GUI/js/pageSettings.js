@@ -1,7 +1,4 @@
-'use strict'
-
-const electron = require('electron');
-const ipcRender = electron.ipcRenderer;
+'use strict';
 
 //materialize init
 (function($){
@@ -77,7 +74,7 @@ $('#connect-button').click(async () => {
     $('#disconnect-button').attr('disabled', '');
 
     Swal.fire({
-      title: 'There aren`t any available devices',
+      title: lang.alert.nodevice,
       icon: 'error',
       toast: true,
       position: 'bottom-end',
@@ -103,6 +100,7 @@ $('#connect-button').click(async () => {
     $('#input-voltage').val(0);
     $('#input-voltage').attr('disabled', '');
     $('#set_voltage').attr('disabled', '');
+    $('#set_frequency').attr('disabled', '');
     $('#checkbox-turn-on').attr('disabled', '');
     $('#checkbox-turn-off').attr('disabled', '');
     $('#start-timer').attr('disabled', '');
@@ -121,7 +119,7 @@ $('#connect-button').click(async () => {
     $('#switch-chart').attr('disabled', '');
 
     Swal.fire({
-      title: 'Error',
+      title: lang.alert.errorTitle,
       icon: 'error',
       toast: true,
       position: 'bottom-end',
@@ -155,7 +153,7 @@ $('#connect-button').click(async () => {
 
 
     Swal.fire({
-      title: 'Device has been success connected',
+      title: lang.alert.successConnection,
       icon: 'success',
       toast: true,
       position: 'bottom-end',
@@ -187,14 +185,15 @@ $('#disconnect-button').click(() => {
     $('#input-voltage').attr('disabled', '');
     $('#set_voltage').attr('disabled', '');
 
+    $('#set_frequency').attr('disabled', '');
     $('#range-frequency').val(0);
     $('#range-frequency').attr('disabled', '');
     $('#input-frequency').val(0);
     $('#input-frequency').attr('disabled', '');
     $('#frequency').attr('disabled', '');
 
-    $('#generator-card').html('Generator is disconnected');
-    $('#vip-card').html('ВИП-40 is disconnected');
+    $('#generator-card').html(lang.page.generatorDisconnect);
+    $('#vip-card').html(lang.page.vipDisconnect);
 
     $('#checkbox-turn-on').attr('disabled', '');
     $('#checkbox-turn-off').attr('disabled', '');
@@ -217,13 +216,13 @@ $('#disconnect-button').click(() => {
 
     $('#switch-chart').attr('disabled', '');
 
-    $('#error-text').html('No connection');
+    $('#error-text').html(lang.page.errors.NC);
 
-    $('#real-voltage').html(0 + ' kV');
-    $('#current').html(0 + ' mA');
+    $('#real-voltage').html(0 + ` ${lang.page.measures.voltage}`);
+    $('#current').html(0 + ` ${lang.page.measures.current}`);
 
     Swal.fire({
-      title: 'Device has been success disconnected',
+      title: lang.alert.successDisonnection,
       icon: 'success',
       toast: true,
       position: 'bottom-end',
@@ -243,7 +242,7 @@ $('#set_voltage').click(() => {
   }
   else {
     Swal.fire({
-      title: 'Wrong voltage',
+      title: lang.alert.wrongVoltage,
       icon: 'error',
       toast: true,
       position: 'bottom-end',
@@ -262,7 +261,7 @@ $('#set_frequency').click(() => {
   }
   else {
     Swal.fire({
-      title: 'Wrong frequency',
+      title: lang.alert.wrongFrequency,
       icon: 'error',
       toast: true,
       position: 'bottom-end',
@@ -444,7 +443,7 @@ $('#start-timer').click(() => {
           $('#switch-frequency').prop('checked', true);
           globalStateGenerator = 1;
           Swal.fire({
-            title: 'Start',
+            title: lang.alert.startTimer,
             icon: 'warning',
             toast: true,
             position: 'bottom-end',
@@ -459,7 +458,7 @@ $('#start-timer').click(() => {
     }
     else {
       Swal.fire({
-        title: 'Timer is set to zero',
+        title: lang.alert.errorTimer,
         icon: 'error',
         toast: true,
         position: 'bottom-end',
@@ -538,7 +537,7 @@ $('#start-timer').click(() => {
           $('#start-timer').removeAttr('disabled');
 
           Swal.fire({
-            title: 'Start',
+            title: lang.alert.startTimer,
             icon: 'warning',
             toast: true,
             position: 'bottom-end',
@@ -553,7 +552,7 @@ $('#start-timer').click(() => {
     }
     else {
       Swal.fire({
-        title: 'Timer is set to zero',
+        title: lang.alert.errorTimer,
         icon: 'error',
         toast: true,
         position: 'bottom-end',
@@ -589,7 +588,7 @@ $('#start-timer').click(() => {
     }
     else {
       Swal.fire({
-        title: 'Timer is set to zero',
+        title: lang.alert.errorTimer,
         icon: 'error',
         toast: true,
         position: 'bottom-end',
@@ -649,7 +648,7 @@ $('#start-timer').click(() => {
 
 
         Swal.fire({
-          title: 'Stop',
+          title: lang.alert.stopTimer,
           icon: 'warning',
           toast: true,
           position: 'bottom-end',
@@ -709,14 +708,18 @@ $('#open-docs').click(() => {
   ipcRender.send('open-docs');
 });
 
-//close app
-$('#close-app').click(() => {
-  ipcRender.send('close-app');
-});
+//change lang
+$('#change-lang').click(() => {
+  console.log('change');
+  if (lang.alert.errorTitle == 'Error') {
+    ipcRender.send('changeLang', 'rus');
+  }
+  else {
+    ipcRender.send('changeLang', 'en');
+  }
 
-ipcRender.on('close-app', (event, data) => {
   Swal.fire({
-    title: 'Вы действительно хотите выйти?',
+    title: lang.alert.changeLang,
     icon: 'question',
     confirmButtonText: 'Cool',
     timerProgressBar: true,
@@ -724,8 +727,32 @@ ipcRender.on('close-app', (event, data) => {
     allowEscapeKey: false,
     showConfirmButton: true,
     showCancelButton: true,
-    confirmButtonText: 'да',
-    cancelButtonText: 'нет',
+    confirmButtonText: lang.alert.confirmExit,
+    cancelButtonText: lang.alert.dismissExit,
+    focusConfirm: false,
+    focusCancel: true,
+    // onClose: closeCancel,
+    // preConfirm: closeConfirm
+  });
+});
+
+//close app
+$('#close-app').click(() => {
+  ipcRender.send('close-app');
+});
+
+ipcRender.on('close-app', (event, data) => {
+  Swal.fire({
+    title: lang.alert.exitQuestion,
+    icon: 'question',
+    confirmButtonText: 'Cool',
+    timerProgressBar: true,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showConfirmButton: true,
+    showCancelButton: true,
+    confirmButtonText: lang.alert.confirmExit,
+    cancelButtonText: lang.alert.dismissExit,
     focusConfirm: false,
     focusCancel: true,
     onClose: closeCancel,
