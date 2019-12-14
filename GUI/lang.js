@@ -16,7 +16,8 @@ let lang = {
         exitQuestion: 'Do you really want to close app?',
         confirmExit: 'Yes',
         dismissExit: 'No',
-        changeLang: 'Please, relaunch app to change language'
+        changeLang: 'Please, relaunch app to change language',
+        wrongCheckSum: 'Wrong checksum'
       },
       page: {
         vipConnect: 'ВИП-40 is connected',
@@ -61,7 +62,8 @@ ipcRender.on('lang', (e, language) => {
         exitQuestion: 'Вы действительно хотите выйти',
         confirmExit: 'Да',
         dismissExit: 'Нет',
-        changeLang: 'Пожалуйста, перезагрузите приложение чтобы изменить язык'
+        changeLang: 'Пожалуйста, перезагрузите приложение чтобы изменить язык',
+        wrongCheckSum: 'Контрольная сумма не совпала'
       },
       page: {
         vipConnect: 'ВИП-40 подключен',

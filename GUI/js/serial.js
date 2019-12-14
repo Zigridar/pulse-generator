@@ -196,7 +196,7 @@ async function serialWriteMC_1(state, frequency) {
   data.push(44);
   data = data.concat(rankSum);
   globalPort.write(Buffer.from(data));
-  console.log('Sent to MC_1: ' + Buffer.from(data).toString());
+  //console.log('Sent to MC_1: ' + Buffer.from(data).toString());
 }
 
 async function serialWriteMC_2(address, state, voltage) {
@@ -213,7 +213,7 @@ async function serialWriteMC_2(address, state, voltage) {
   //Don't delete example
   // data = [58, 49, 44, 48, 44, 49, 53, 48, 44 , 49, 53, 49];
   globalPort.write(Buffer.from(data));
-  console.log('Sent to MC_2: ' + Buffer.from(data).toString());
+  //console.log('Sent to MC_2: ' + Buffer.from(data).toString());
 }
 
 //data had been received from MC_1
@@ -222,11 +222,23 @@ let averageDots = 1
 let dotStorage = [];
 
 async function updateMC_1(dataArr) {
-  console.log('Reseived from MC_1: ' + dataArr.toString());
+  //console.log('Reseived from MC_1: ' + dataArr.toString());
   //data parsing
   const vacuum = (+dataArr[1] - 48)*100 + +(dataArr[2] - 48)*10 + (+dataArr[3] - 48);
   const anyByte = (+dataArr[5] - 48)*100 + (+dataArr[6] - 48)*10 + (+dataArr[7] - 48);
   const controlSum = (+dataArr[9] - 48)*100 + (+dataArr[10] - 48)*10 + (+dataArr[11] - 48);
+
+  if(controlSum != (vacuum + anyByte)) {
+    Swal.fire({
+      title: `${lang.alert.wrongCheckSum} (ГИ)`,
+      icon: 'error',
+      toast: true,
+      position: 'bottom-end',
+      timer: 4000,
+      showConfirmButton: false,
+      background: '#c1f7f0'
+    });
+  }
 
   //update chart
   if(globalChartState) {
@@ -252,13 +264,26 @@ async function updateMC_1(dataArr) {
 
 //data had been received from MC_2
 function updateMC_2(dataArr) {
-  console.log('Reseived from MC_2: ' + dataArr.toString());
+  //console.log('Reseived from MC_2: ' + dataArr.toString());
   //data parsing
+  const address = +dataArr[1] - 48;
   const state_voltage = (+dataArr[3] - 48);
-  const voltage = (+dataArr[5] - 48)*10 + (+dataArr[6] - 48) + ',' + (+dataArr[7] - 48);
+  const voltage = (+dataArr[5] - 48)*100 + (+dataArr[6] - 48)*10 + (+dataArr[7] - 48);
   const current = (+dataArr[9] - 48)*100 + (+dataArr[10] - 48)*10 + (+dataArr[11] - 48);
   const state = +dataArr[13] - 48;
   const controlSum = (+dataArr[15] - 48)*100 + (+dataArr[16] - 48)*10 + (+dataArr[17] - 48);
+
+  if(controlSum != (address + state_voltage + voltage + current + state)) {
+    Swal.fire({
+      title: `${lang.alert.wrongCheckSum} (ВИП-40)`,
+      icon: 'error',
+      toast: true,
+      position: 'bottom-end',
+      timer: 4000,
+      showConfirmButton: false,
+      background: '#c1f7f0'
+    });
+  }
 
   let error_text;
   switch (state) {
@@ -294,7 +319,7 @@ function updateMC_2(dataArr) {
       break;
   }
   //update display variables
-  $('#real-voltage').html(`${voltage} ${lang.page.measures.voltage}`);
+  $('#real-voltage').html(`${voltage/10} ${lang.page.measures.voltage}`);
   $('#current').html(`${current} ${lang.page.measures.current}`);
   $('#error-text').html(error_text);
 }
