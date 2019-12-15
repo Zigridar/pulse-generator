@@ -234,11 +234,48 @@ $('#disconnect-button').click(() => {
   disconnect(foo);
 });
 
+//delay function
+function delay(ms) {
+  return new Promise(ok => {
+    setTimeout(ok, ms);
+  });
+}
+
 //set voltage button
-$('#set_voltage').click(() => {
+$('#set_voltage').click(async () => {
   if($('#input-voltage').val() >= 0 && $('#input-voltage').val() <= 40) {
-    globalVoltage = $('#input-voltage').val() * 10;
     $('#set_voltage').attr('disabled', '');
+
+    if(Math.abs($('#input-voltage').val() * 10 - globalVoltage) < 10) {
+      globalVoltage = $('#input-voltage').val() * 10;
+    }
+    else {
+      const difference = $('#input-voltage').val() * 10 - globalVoltage;
+
+      console.log(difference);
+      if(difference > 0) {
+        const count = Math.floor(difference/voltageStep);
+        const reminder = difference%voltageStep;
+        for(let i = 0; i < count; i++) {
+          globalVoltage += voltageStep;
+          console.log(globalVoltage);
+          await delay(500);
+        }
+        globalVoltage += reminder;
+        console.log(globalVoltage);
+      }
+      else {
+        const count =  Math.floor(-difference/voltageStep);
+        const reminder = (-difference)%voltageStep;
+        for(let i = 0; i < count; i++) {
+          globalVoltage -= voltageStep;
+          console.log(globalVoltage);
+          await delay(500);
+        }
+        globalVoltage -= reminder;
+        console.log(globalVoltage);
+      }
+    }
   }
   else {
     Swal.fire({

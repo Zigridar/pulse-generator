@@ -5,6 +5,8 @@ let globalPort;
 let connectionStatus = false;
 let errorStatus = false;
 let globalChartState = true;
+const messageInterval = 500;
+const voltageStep = 5;
 
 //option variables
 //MC_1
@@ -42,13 +44,13 @@ function connect(nodevice, errorCallBack, successCallBack) {
               setTimeout(function () {
                 timer_2 = setInterval(function () {
                   serialWriteMC_2(globalDeviceAddress, globalStateVoltage, globalVoltage);
-                }, 500);
+                }, messageInterval);
                 setTimeout(function () {
                   isClosed = false;
                   successCallBack();
                   timer_1 = setInterval(function () {
                     serialWriteMC_1(globalStateGenerator, globalFrequency);
-                  }, 500);
+                  }, messageInterval);
                 }, 100);
               }, 2000);
             });
@@ -222,7 +224,7 @@ let averageDots = 1
 let dotStorage = [];
 
 async function updateMC_1(dataArr) {
-  //console.log('Reseived from MC_1: ' + dataArr.toString());
+  // console.log('Reseived from MC_1: ' + dataArr.toString());
   //data parsing
   const vacuum = (+dataArr[1] - 48)*100 + +(dataArr[2] - 48)*10 + (+dataArr[3] - 48);
   const anyByte = (+dataArr[5] - 48)*100 + (+dataArr[6] - 48)*10 + (+dataArr[7] - 48);
@@ -264,7 +266,7 @@ async function updateMC_1(dataArr) {
 
 //data had been received from MC_2
 function updateMC_2(dataArr) {
-  //console.log('Reseived from MC_2: ' + dataArr.toString());
+  // console.log('Reseived from MC_2: ' + dataArr.toString());
   //data parsing
   const address = +dataArr[1] - 48;
   const state_voltage = (+dataArr[3] - 48);
