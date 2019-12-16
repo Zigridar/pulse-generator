@@ -27,9 +27,22 @@
        </li>
        <li><div class="divider"></div></li>
        <!-- <li><a id="install-driver" class="waves-effect" href="#!"><i class="material-icons">dns</i>install driver</a></li> -->
-       <li><a id="change-lang" class="waves-effect" href="#!"><i class="material-icons">dns</i>Язык</a></li>
+       <!-- <li><a id="change-lang" class="waves-effect" href="#!"><i class="material-icons">dns</i>Язык</a></li> -->
        <li><a id="open-docs" class="waves-effect" href="#!"><i class="material-icons">book</i>Документация</a></li>
        <li><a id="close-app" class="waves-effect bottom" href="#!"><i class="material-icons">exit_to_app</i>Закрыть приложение</a></li>
+       <li><a class="subheader">Язык</a></li>
+       <li>
+         <div class="row">
+           <div class="col m1">
+           </div>
+           <div class="col m8">
+             <select id="change-lang">
+               <option id="en" value="en">Английский</option>
+               <option id="rus" value="rus" disabled selected>Русский</option>
+             </select>
+           </div>
+         </div>
+       </li>
      </ul>
 
      <a id="settings" data-target="slide-out" class="sidenav-trigger white-text"><i class="small material-icons">dehaze</i></a>
@@ -283,7 +296,7 @@
                     <div class="col m6">
                       <label>Усреднение</label>
                       <select id="average-chart">
-                        <option value="1"selected>Не усреднять</option>
+                        <option value="1"selected>Без усреднения</option>
                         <option value="2">Усреднить 2 точки</option>
                         <option value="3">Усреднить 3 точки</option>
                         <option value="4">Усреднить 4 точки</option>

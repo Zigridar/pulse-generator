@@ -746,31 +746,8 @@ $('#open-docs').click(() => {
 });
 
 //change lang
-$('#change-lang').click(() => {
-  console.log('change');
-  if (lang.alert.errorTitle == 'Error') {
-    ipcRender.send('changeLang', 'rus');
-  }
-  else {
-    ipcRender.send('changeLang', 'en');
-  }
-
-  Swal.fire({
-    title: lang.alert.changeLang,
-    icon: 'question',
-    confirmButtonText: 'Cool',
-    timerProgressBar: true,
-    allowOutsideClick: false,
-    allowEscapeKey: false,
-    showConfirmButton: true,
-    showCancelButton: true,
-    confirmButtonText: lang.alert.confirmExit,
-    cancelButtonText: lang.alert.dismissExit,
-    focusConfirm: false,
-    focusCancel: true,
-    // onClose: closeCancel,
-    // preConfirm: closeConfirm
-  });
+$('#change-lang').change(() => {
+  ipcRender.send('changeLang', $('#change-lang').val());
 });
 
 //close app

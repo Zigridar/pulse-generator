@@ -6,6 +6,7 @@ if (require('electron-squirrel-startup')) return;
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
+const process = require('process');
 const PowerShell = require('powershell');
 const ChildProcess = require('child_process');
 const {app, BrowserWindow, dialog, ipcMain, shell} = require('electron');
@@ -128,17 +129,23 @@ function foo(event) {
 //read config
 function readConfig() {
   return new Promise(ok => {
-    fs.readFile('config.json', (err, data) => {
+
+    const appFolder = path.resolve(process.execPath, '..');
+    const configPath = path.resolve(appFolder, 'resources\\app\\config.json');
+
+    // fs.readFile(configPath, (err, data) => {
+    fs.readFile(path.resolve(__dirname, 'config.json'), (err, data) => {
+    // fs.readFile(path.resolve(appPath, './resources/app/config.json'), (err, data) => {
       ok(JSON.parse(data));
     });
   });
 }
 
 //Start application
-let lang = 'en';
+let language = 'en';
 app.on('ready', async () => {
   const config = await readConfig();
-  lang = config.lang;
+  language = config.lang;
   console.log(config.lang);
   createWindow(config);
 });
@@ -161,8 +168,7 @@ ipcMain.on('close-app', () => {
 
 ipcMain.on('install-driver', () => {
   const appFolder = path.resolve(process.execPath, '..');
-  const rootAtomFolder = path.resolve(appFolder, '..');
-  const driverPath = path.resolve(path.join(rootAtomFolder, 'app-1.0.0\\resources\\app\\driver_CH340\\CH341SER.inf'));
+  const driverPath = path.resolve(appFolder, 'resources\\app\\driver_CH340\\CH341SER.inf');
   const allStr = `start-process -verb runAs pnputil -ArgumentList "-i -a ${driverPath}"`;
   const ps = new PowerShell(allStr);
 });
@@ -176,8 +182,8 @@ ipcMain.on('open-docs', () => {
     isOpen = true;
     docs = new BrowserWindow({
       icon: __dirname + '/img/flash.png',
-      width: 500,
-      height: 500,
+      width: 1000,
+      height: 700,
       resizable: false,
       minimizable : true,
       autoHideMenuBar: true,
@@ -186,7 +192,7 @@ ipcMain.on('open-docs', () => {
     });
 
     docs.loadURL(url.format({
-      pathname: path.join(__dirname, `docs_${lang}.html`),
+      pathname: path.join(__dirname, `docs_${language}.html`),
       protocol: 'file',
       slashes: true
     }));
@@ -203,13 +209,26 @@ ipcMain.on('open-docs', () => {
 //change lang
 ipcMain.on('changeLang', (e, lang) => {
   console.log('change lang: ' + lang);
-  fs.readFile(path.join(__dirname, `config.json`), (err, data) => {
+  const appPath = path.resolve(process.execPath, `..`);
+  // fs.readFile(path.join(appPath, `./resources/app/config.json`), (err, data) => {
+  fs.readFile(path.resolve(__dirname, `config.json`), (err, data) => {
+    console.log(err);
     let oldConf = JSON.parse(data);
     oldConf.lang = lang;
+    language = lang;
     console.log(oldConf);
     let newConf = JSON.stringify(oldConf)
-    fs.writeFile(path.join(__dirname, `config.json`), newConf, (err) => {
-      console.log(err);
+    // fs.writeFile(path.join(appPath, `./resources/app/config.json`), newConf, (err) => {
+    fs.writeFile(path.resolve(__dirname, `config.json`), newConf, (err) => {
+      // console.log(err);
+      window.loadURL(url.format({
+        pathname: path.join(__dirname, `index_${lang}.html`),
+        protocol: 'file',
+        slashes: true
+      }));
+      setTimeout(function () {
+        window.webContents.send('lang', lang);
+      }, 2000);
     });
   });
 });
