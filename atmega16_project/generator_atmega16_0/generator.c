@@ -8,17 +8,23 @@ unsigned long counter = 0;
 unsigned int lowTime = 125; //lowTime = 10000 / frequency
 //on or off generator
 unsigned int OnOff = 0;
+//data counter
+unsigned int dataScore = 0;
 
 //function to initialize generator(initialize timer/counter 0)
 void generatorInit(void)
 {
 	//enable interrupt
-	TIMSK |= (1<<0);
+	TIMSK |= (1<<0) | (1<<2);
 	sei();
 	
 	//prescaling 8
 	TCCR0 = 0b00000010;
 	TCNT0 = 0;
+	
+	//prescaling 64 == 0.52 s
+	TCCR1B = 0b00000011;
+	TCNT1 = 0;
 	
 	//initialize port //PC0
 	DDRC |= (1<<0);
@@ -26,7 +32,6 @@ void generatorInit(void)
 	//initialize port PD2 (indicator)
 	DDRD |= (1<<2);
 	PORTD &= ~(1<<2);
-
 }
 
 //one pulse
@@ -49,14 +54,14 @@ void generatorStart()
 	PORTD |=(1<<2);
 }
 
-//sta
+//stop generator
 void generatorStop(void)
 {
 	OnOff = 0;
 	PORTD &= ~(1<<2);
 }
 
-//interrupt function
+//timer0 interrupt function
 ISR(TIMER0_OVF_vect)
 {
 	counter++;
@@ -69,6 +74,34 @@ ISR(TIMER0_OVF_vect)
 	}
 	else {
 		TCNT0 = 167;
+	}
+}
+
+//timer1 interrupt function
+ISR(TIMER1_OVF_vect)
+{	
+	//generator blink
+	if(OnOff)
+	{
+		PORTD ^= (1<<2);
+	}
+	else
+	{
+		PORTD &= ~(1<<2);
+	}
+	
+	//data exchange checking
+	if(dataScore == 0)
+	{
+		OnOff = 0;
+	}
+	else
+	{
+		OnOff = 1;
+	}
+	if(dataScore > 0)
+	{
+		dataScore--;			
 	}
 }
 

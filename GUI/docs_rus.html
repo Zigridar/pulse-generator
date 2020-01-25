@@ -2,9 +2,213 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Docs</title>
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/sweetalert2.js"></script>
+    <link href="css/style-docs.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   </head>
   <body>
-    docs window
+
+    <nav class="teal lighten-2">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">
+          <img src="./img/flash.png" width="50px" height="50px">
+        </a>
+        <h5 id="docheader">
+          Документация
+        </h5>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        </ul>
+      </div>
+    </nav>
+
+    <div class="row">
+      <div class="col m1">
+
+      </div>
+      <div class="col m10">
+
+        <h4 class="header">Установка драйвера</h4>
+        <div class="card">
+            <div class="card-content">
+              <li class="flow-text">
+                Соеднение с устройством осуществляется через преобразователь инерфейса UART &lt;-&gt; USB, реалиованного на микросхеме CH340G.
+              </li>
+              <p class="flow-text">
+                Для того чтобы устройство могло быть опознано, на ПК необходима установка драйвера для CH340G.
+              </p>
+              <br>
+              <li class="flow-text">
+                При установке программы этот драйвер устанавливатся автоматически.
+              </li>
+              <p class="flow-text">
+                Но если по какой-то причине на ПК нет драйвера, его можно установить, нажав на "УСТАНОВИТЬ ДРАЙВЕР" ниже
+              </p>
+              <br>
+              <li class="flow-text">
+                Проверить наличие драйвера можно вызвав диспетчер устройв Windows, непосредственно подключив устройство перед этим.
+              </li>
+              <p class="flow-text">
+                Если драйвера нет, то в пункте "Другие устройства(Other devices)" будет отображаться "USB2.0-Serial"
+              </p>
+              <br>
+              <img src="./img/other-devices.png" width="250px">
+              <br>
+              <p class="flow-text">
+                Если драйвер установлен, то в пункте "Порты (COM &LPT)" будет отображаться "USB-SERIAL CH340"
+              </p>
+              <br>
+              <img src="./img/CH340.png" width="250px">
+            </div>
+            <div class="card-action">
+              <a class="btn" href="#!">Установить драйвер</a>
+            </div>
+        </div>
+
+        <h4 class="header">Подключение</h4>
+        <div class="card">
+          <div class="card-content">
+            <li class="flow-text">
+              До установления соединения все элементы управления заблокированы.
+            </li>
+            <p class="flow-text">
+              Для начала обмена пакетами данным с ГИ и ВИП-40 необходимо нажать на кнопку "ПОДКЛЮЧИТЬ", которая находится в статус-баре
+            </p>
+            <img src="./img/bar1-rus.png" width="100%">
+            <li class="flow-text">
+              После установления соединения элементы управления становятся доступными, а в статус-бар изменит состояние:
+            </li>
+            <img src="./img/bar2-rus.png" width="100%">
+            <p class="flow-text">
+              По умолчанию: <br>
+              - Напряжения ВИП-40: 0 В<br>
+              - Состояние ВИП-40: ВЫКЛ<br>
+              - Частота ГИ: 1 Гц<br>
+              - Состояние ГИ: ВЫКЛ<br>
+            </p>
+            <li class="flow-text">
+              Для разрыва соединения и прекращения обмена пакетами данных с ВИП-40 и ГИ необходимо нажать на кнопку "ОТКЛЮЧИТЬ".
+            </li>
+          </div>
+        </div>
+
+        <h4 class="header">ВИП-40</h4>
+        <div class="card horizontal">
+          <div class="card-image">
+            <img src="./img/proteus.png">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p class="flow-text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+              </p>
+            </div>
+            <!-- <div class="card-action">
+              <a href="#!">Установить</a>
+            </div> -->
+          </div>
+        </div>
+
+        <h4 class="header">Генератор импульсов (ГИ)</h4>
+        <div class="card horizontal">
+          <div class="card-image">
+            <img src="./img/proteus.png">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p class="flow-text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+              </p>
+            </div>
+            <!-- <div class="card-action">
+              <a href="#!">Установить</a>
+            </div> -->
+          </div>
+        </div>
+
+        <h4 class="header">Таймеры</h4>
+        <div class="card horizontal">
+          <div class="card-image">
+            <img src="./img/proteus.png">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p class="flow-text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+              </p>
+            </div>
+            <!-- <div class="card-action">
+              <a href="#!">Установить</a>
+            </div> -->
+          </div>
+        </div>
+
+        <h4 class="header">Вакууметр</h4>
+        <div class="card horizontal">
+          <div class="card-image">
+            <img src="./img/proteus.png">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p class="flow-text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+              </p>
+            </div>
+            <!-- <div class="card-action">
+              <a href="#!">Установить</a>
+            </div> -->
+          </div>
+        </div>
+
+        <h4 class="header">Протокол обмена данными</h4>
+        <div class="card horizontal">
+          <div class="card-image">
+            <img src="./img/proteus.png">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p class="flow-text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+              </p>
+            </div>
+            <!-- <div class="card-action">
+              <a href="#!">Установить</a>
+            </div> -->
+          </div>
+        </div>
+
+        <h4 class="header">Что-то еще</h4>
+        <div class="card horizontal">
+          <div class="card-image">
+            <img src="./img/proteus.png">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p class="flow-text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+              </p>
+            </div>
+            <!-- <div class="card-action">
+              <a href="#!">Установить</a>
+            </div> -->
+          </div>
+        </div>
+
+      </div>
+      <div class="col m1">
+
+      </div>
+    </div>
+
+
+
+
   </body>
+  <script src="./js/jquery.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/docsSettings.js"></script>
 </html>

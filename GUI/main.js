@@ -210,8 +210,8 @@ ipcMain.on('open-docs', () => {
 ipcMain.on('changeLang', (e, lang) => {
   console.log('change lang: ' + lang);
   const appPath = path.resolve(process.execPath, `..`);
-  // fs.readFile(path.join(appPath, `./resources/app/config.json`), (err, data) => {
-  fs.readFile(path.resolve(__dirname, `config.json`), (err, data) => {
+  fs.readFile(path.join(appPath, `./resources/app/config.json`), (err, data) => {
+  // fs.readFile(path.resolve(__dirname, `config.json`), (err, data) => {
     console.log(err);
     let oldConf = JSON.parse(data);
     oldConf.lang = lang;

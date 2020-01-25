@@ -109,6 +109,11 @@ int main(void)
 				{
 					//do something
 					
+					//data has been received
+					if(dataScore < 3)
+					{
+						dataScore++;	
+					}
 					//set frequency
 					lowTime = 10000/frequency;
 					//start generator
