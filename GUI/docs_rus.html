@@ -13,6 +13,7 @@
   </head>
   <body>
 
+<!--  navbar-->
     <nav class="teal lighten-2">
       <div class="nav-wrapper">
         <a href="#" class="brand-logo">
@@ -26,14 +27,31 @@
       </div>
     </nav>
 
+<!--  page-->
     <div class="row">
       <div class="col m1">
-
+<!--        left padding-->
       </div>
       <div class="col m10">
 
-        <h4 class="header">Установка драйвера</h4>
-        <div class="card">
+<!--          contents-->
+          <ul class="collection with-header">
+              <li class="collection-header"><h4>Содержание</h4></li>
+              <a class="collection-item flow-text driver" href="#driver-header">Установка драйвера</a>
+              <a class="collection-item flow-text" href="#connecting-header">Подключение</a>
+              <a class="collection-item flow-text" href="#vip-40-card-header">ВИП-40 (карточка)</a>
+              <a class="collection-item flow-text" href="#pulse-generator-card-header">Генератор импульсов (карточка)</a>
+              <a class="collection-item flow-text" href="#chart-header">Параметры графика</a>
+              <a class="collection-item flow-text" href="#navbar-header">Статус-бар</a>
+              <a class="collection-item flow-text" href="#usb-uart-header">USB-UART преобразователь</a>
+              <a class="collection-item flow-text" href="#data-exchange-protocol-header">Протокол обмена данными</a>
+              <a class="collection-item flow-text" href="#pulse-generator-header">Генератор импульсов</a>
+              <a class="collection-item flow-text" href="#vip-40-header">Источник высокого напряжения</a>
+          </ul>
+
+<!--        install driver-->
+        <h4 id="driver-header" class="header driver">Установка драйвера</h4>
+        <div class="card driver">
             <div class="card-content">
               <li class="flow-text">
                 Соеднение с устройством осуществляется через преобразователь инерфейса UART &lt;-&gt; USB, реалиованного на микросхеме CH340G.
@@ -69,7 +87,8 @@
             </div>
         </div>
 
-        <h4 class="header">Подключение</h4>
+<!--        connecting-->
+        <h4 id="connecting-header" class="header">Подключение</h4>
         <div class="card">
           <div class="card-content">
             <li class="flow-text">
@@ -96,115 +115,408 @@
           </div>
         </div>
 
-        <h4 class="header">ВИП-40</h4>
+<!--        vip-40-->
+        <h4 id="vip-40-card-header" class="header">ВИП-40</h4>
         <div class="card horizontal">
-          <div class="card-image">
-            <img src="./img/proteus.png">
-          </div>
           <div class="card-stacked">
             <div class="card-content">
               <p class="flow-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+                В карточке «ВИП-40» устанавливается значение напряжения источника, переключатель «Off-On» позволяет изменять состояние между выключен/включен. В ячейках «Real Voltage» и «Current» отображаются значения, присылаемые с МК_1. По умолчанию источник выключен, установленное напряжение: 0 В.
               </p>
+              <img src="img/vip-40.png" alt="">
             </div>
-            <!-- <div class="card-action">
-              <a href="#!">Установить</a>
-            </div> -->
           </div>
         </div>
 
-        <h4 class="header">Генератор импульсов (ГИ)</h4>
+<!--        ГИ-->
+        <h4 id="pulse-generator-card-header" class="header">Генератор импульсов (ГИ)</h4>
         <div class="card horizontal">
-          <div class="card-image">
-            <img src="./img/proteus.png">
-          </div>
           <div class="card-stacked">
             <div class="card-content">
               <p class="flow-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+                <li class="flow-text">
+                Карточка «Pulse generator» (Рис. 6) помимо переключателя «Off-On» и слайдера установки частоты (0 – 200 Hz) содержит два таймера «Turn on after» и «Turn off after», которыми можно задавать время включения и выключения генератора импульсов (ГИ). По умолчанию генератор выключен, частота установлена 1 Hz, оба таймера отключены.
+                </li>
+                <li class="flow-text">
+                    Для активации таймера необходимо установить флажок перед нужным таймером.
+                </li>
               </p>
+                <img src="img/pulse-generator.png" alt="">
             </div>
-            <!-- <div class="card-action">
-              <a href="#!">Установить</a>
-            </div> -->
           </div>
         </div>
 
-        <h4 class="header">Таймеры</h4>
+<!--          chart options-->
+        <h4 id="chart-header" class="header">Параметры графика</h4>
         <div class="card horizontal">
-          <div class="card-image">
-            <img src="./img/proteus.png">
-          </div>
-          <div class="card-stacked">
-            <div class="card-content">
-              <p class="flow-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
-              </p>
+            <div class="card-stacked">
+              <div class="card-content">
+                <p class="flow-text">
+                  <li class="flow-text">
+                    По данным вакуумметра, присылаемых с МК_1 строится график, по которому можно отслеживать состояния вакуума и динамику его изменения.
+                  </li>
+                  <img src="img/chart.png" alt="">
+                  <li class="flow-text">
+                      В «Chart options» ("Параметры графика") можно устанавливать параметры отрисовки графика.
+                  </li>
+                  <img src="img/chart-options.png" alt="">
+                  <li class="flow-text">
+                      По умолчанию отрисовка графика включена, усреднение (Average): No average (Без усреднения), количество отображаемых точек (Point count): 20, шаг оси (Axis step): 2
+                  </li>
+                </p>
             </div>
-            <!-- <div class="card-action">
-              <a href="#!">Установить</a>
-            </div> -->
           </div>
         </div>
 
-        <h4 class="header">Вакууметр</h4>
+<!--          navbar-->
+        <h4 id="navbar-header" class="header">Статус-бар</h4>
         <div class="card horizontal">
-          <div class="card-image">
-            <img src="./img/proteus.png">
-          </div>
           <div class="card-stacked">
             <div class="card-content">
               <p class="flow-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+                <li class="flow-text">
+                    В статус-баре располагается информация о состояниях подключенного оборудования.
+                </li>
+                <img src="img/navbar.png" alt="" width="100%">
+                <li class="flow-text">
+                    Иконка 1 открывает панель дополнительных параметров.
+                </li>
+                <li class="flow-text">
+                    В ячейках 2 и 3 отображается статус (подключен/отключен) для ИВН и ГИ соответственно.
+                </li>
+                <li class="flow-text">
+                    В ячейке 4 отображается состояние «ВИП-40», может быть одно из:
+                    <ol>
+                        <li class="flow-text">Ошибок нет</li>
+                        <li class="flow-text">КЗ в нагрузке</li>
+                        <li class="flow-text">Нет воды</li>
+                        <li class="flow-text">Защита по току</li>
+                        <li class="flow-text">КЗ в баке</li>
+                        <li class="flow-text">Блокировка</li>
+                    </ol>
+                </li>
+                <li class="flow-text">
+                    Кнопки 5 и 6 соответственно устанавливаю/разрывают соединение с устройством.
+                </li>
               </p>
             </div>
-            <!-- <div class="card-action">
-              <a href="#!">Установить</a>
-            </div> -->
           </div>
         </div>
 
-        <h4 class="header">Протокол обмена данными</h4>
+<!--          usb-uart-->
+        <h4 id="usb-uart-header" class="header">USB-UART преобразователь</h4>
         <div class="card horizontal">
-          <div class="card-image">
-            <img src="./img/proteus.png">
-          </div>
           <div class="card-stacked">
             <div class="card-content">
               <p class="flow-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+                 <li class="flow-text">
+                    Микроконтроллеры Atmega16 имеют возможность обмениваться данными с другими устройствами посредством интерфейса UART (Universal Asynchronous Receiver-Transmitter), что не очень удобно для соединения ПК <=> МК, поскольку большинство ПК не имеют внешнего UART порта.
+                 </li>
+                <li class="flow-text">
+                    Однако, все ПК имеют USB порты, позволяющие осуществлять обмен данными с внешними устройствами. На этом основании было принято решение сделать USB-UART преобразователь, с помощью которого можно осуществлять обмен данными с UART – устройствами посредством USB.
+                </li>
+                <li class="flow-text">
+                    Преобразователь выполнен на микросхеме CH340G, позволяющей двухсторонне конвертировать USB и UART передачу. USB – коннектор J1 непосредственно подключается к ПК, его выходы D+, D– подключаются к соответствующим выходам микросхемы U3. Выходы TXD, RXD микросхемы U3 отвечают за UART передачу, т.е. к ним подкючаются UART устройства. К выходам XI, XO подключается кварцевый резонатор X2, задающий тактовую частоту работы микросхемы 12 MHz.
+                </li>
+                <img src="img/usb-uart.png" alt="">
               </p>
             </div>
-            <!-- <div class="card-action">
-              <a href="#!">Установить</a>
-            </div> -->
           </div>
         </div>
 
-        <h4 class="header">Что-то еще</h4>
+<!--          data-exchange protocol-->
+        <h4 id="data-exchange-protocol-header" class="header">Протокол обмена данными</h4>
         <div class="card horizontal">
-          <div class="card-image">
-            <img src="./img/proteus.png">
-          </div>
           <div class="card-stacked">
             <div class="card-content">
               <p class="flow-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.I am a very simple card. I am good at containing small bits of information.
+                <li class="flow-text">
+                Для обеспечения целостности сообщений, передаваемых между узлами системы, используется особый протокол обмена данными. Этот протокол ограничивается 13 символами (из 256 возможных) и защищен контрольной суммой для каждого сообщения, что в свою очередь исключает возможность передачи «испорченных помехами» данных.
+                </li>
+                <li class="flow-text">
+                    Если нужно отправить несколько целых чисел, например, 123 и 456 с ПК на МК (или наоборот), то эти числа разбиваются на части и отправляются посимвольно с использованием ASCII-символов, более того в качестве разделителя между этими символами ставится запятая, т.е. два целых числа 123 и 456 превращаются в массив символов:
+                    <div class="chip flow-text">['1', '2', '3', ',', '4', '5', '6']</div>
+                </li>
+                <li class="flow-text">
+                    Для большей безопасности каждая передача защищена контрольной суммой. Третьим целым числом отправляется сумма предыдущих чисел, т.е. в итоге будет отправлен массив:
+                    <div class="chip flow-text">['1', '2', '3', ',', '4', '5', '6', ',', '5', '7', '9']</div>
+                </li>
               </p>
             </div>
-            <!-- <div class="card-action">
-              <a href="#!">Установить</a>
-            </div> -->
           </div>
         </div>
+
+<!--          pulse-generator-->
+       <h4 id="pulse-generator-header" class="header">Генератор импульсов</h4>
+       <div class="card horizontal">
+          <div class="card-stacked">
+              <div class="card-content">
+                  <img src="img/pulse-generator-board.png" alt="">
+                  <p class="flow-text">
+                  <li class="flow-text">
+                    Выходы MISO, MOSI, SCK, RESET объединены коннектором PROGRAMMER, который подключается к программатору для загрузки прошивки в микроконтроллер.
+                  </li>
+                  <li class="flow-text">
+                      На выход RESET подключена тактовая кнопка, которая замыкается на землю, которая при нажатии перезапустит выполнении программы на микроконтроллере.
+                  </li>
+                  <li class="flow-text">
+                      Через RXD, TXD осуществляется UART – соединение с USB-UART преобразователем через оптоволокно.
+                  </li>
+                  <li class="flow-text">
+                      К выходам XTAL1, XTAL2 подключен кварцевый резонатор X1, задающий тактовую частоту микроконтроллера 8 MHz. Конденсаторы C1, C2 предохраняют резонатор от сбоя в частоте.
+                  </li>
+                  <li class="flow-text">
+                      На порту C0 выходят прямоугольные импульсы, идущие к ИВН.
+                  </li>
+                  <li class="flow-text">
+                      Порт A1 настроен на АЦП (аналого-цифровой преобразователь) для снятия показаний вакуумметра.
+                  </li>
+                  <li class="flow-text">
+                      С помощью выходов AREF и AVCC устанавливается опорное напряжение для АЦП, равное 5 В.
+                  </li>
+                  <li class="flow-text">
+                      К портам D4, D7 подключены индикационные светодиоды, сигнализирующие о работе генератора и обмене данными.
+                  </li>
+                  <li class="flow-text">
+                      Частота импульсов изменяется в пределах от 1 до 200 Hz, длительность импульса 5 мкс.
+                  </li>
+                  <li class="flow-text">
+                      Протокол обмена данными представлен в таблицах:
+                  </li>
+                  <h3 class="flow-text" align="center">Запрос ПК к МК</h3>
+                  <table class="highlight centered">
+                      <thead>
+                      <tr>
+                          <th>№ байта</th>
+                          <th>Назначение</th>
+                          <th>Величина</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                      <tr>
+                          <td>0</td>
+                          <td>Адрес МК</td>
+                          <td>100</td>
+                      </tr>
+                      <tr>
+                          <td>1</td>
+                          <td>ВКЛ/ВЫКЛ</td>
+                          <td>1/0</td>
+                      </tr>
+                      <tr>
+                          <td>2</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>3, 4, 5</td>
+                          <td>Частота</td>
+                          <td>0..200</td>
+                      </tr>
+                      <tr>
+                          <td>6</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>7, 8, 9</td>
+                          <td>Контрольная сумма</td>
+                          <td>0..201</td>
+                      </tr>
+                      </tbody>
+                  </table>
+
+                  <h3 class="flow-text" align="center">Ответ МК</h3>
+                  <table class="highlight centered">
+                      <thead>
+                      <tr>
+                          <th>№ байта</th>
+                          <th>Назначение</th>
+                          <th>Величина</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                      <tr>
+                          <td>0</td>
+                          <td>Адрес МК</td>
+                          <td>100</td>
+                      </tr>
+                      <tr>
+                          <td>1, 2, 3</td>
+                          <td>Вакууметр</td>
+                          <td>0..999</td>
+                      </tr>
+                      <tr>
+                          <td>4</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>5, 6, 7</td>
+                          <td>Контрольная сумма</td>
+                          <td>0..201</td>
+                      </tr>
+                      </tbody>
+                  </table>
+
+                  </p>
+              </div>
+          </div>
+      </div>
+
+<!--          vip-40-->
+       <h4 id="vip-40-header" class="header">Источник высокого напряжения</h4>
+       <div class="card horizontal">
+          <div class="card-stacked">
+              <div class="card-content">
+                  <p class="flow-text">
+                  <li class="flow-text">
+                    Источник высокого напряжения (ВИП-40) позволяет получать постоянное напряжение до 40 кВ. На нем установлен микроконтроллер Atmega16 (МК_2), с помощью которого происходит установка напряжения, включение/выключение источника, измерение действующих значений напряжения и тока источника, обмен данными с ПК.
+                  </li>
+                  <li class="flow-text">
+                      Протокол обмена данными представлен в таблицах:
+                  </li>
+
+                  <h3 class="flow-text" align="center">Запрос ПК к МК</h3>
+                  <table class="highlight centered">
+                      <thead>
+                      <tr>
+                          <th>№ байта</th>
+                          <th>Назначение</th>
+                          <th>Величина</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                      <tr>
+                          <td>0</td>
+                          <td>Адрес МК</td>
+                          <td>100</td>
+                      </tr>
+                      <tr>
+                          <td>1</td>
+                          <td>№ устройства</td>
+                          <td>1/0</td>
+                      </tr>
+                      <tr>
+                          <td>2</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>3</td>
+                          <td>ВКЛ/ВЫКЛ</td>
+                          <td>0/1</td>
+                      </tr>
+                      <tr>
+                          <td>4</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>5, 6, 7</td>
+                          <td>Напряжение</td>
+                          <td>0..400</td>
+                      </tr>
+                      <tr>
+                          <td>8</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>9, 10, 11</td>
+                          <td>Контрольная сумма</td>
+                          <td>0..402</td>
+                      </tr>
+                      </tbody>
+                  </table>
+
+                  <h3 class="flow-text" align="center">Ответ МК</h3>
+                  <table class="highlight centered">
+                      <thead>
+                      <tr>
+                          <th>№ байта</th>
+                          <th>Назначение</th>
+                          <th>Величина</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                      <tr>
+                          <td>0</td>
+                          <td>Адрес МК</td>
+                          <td>100</td>
+                      </tr>
+                      <tr>
+                          <td>1</td>
+                          <td>№ устройства</td>
+                          <td>1</td>
+                      </tr>
+                      <tr>
+                          <td>2</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>3</td>
+                          <td>ВКЛ/ВЫКЛ</td>
+                          <td>0/1</td>
+                      </tr>
+                      <tr>
+                          <td>4</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>5, 6, 7</td>
+                          <td>Напряжение</td>
+                          <td>0..400</td>
+                      </tr>
+                      <tr>
+                          <td>8</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>9, 10, 11</td>
+                          <td>Ток</td>
+                          <td>0..125</td>
+                      </tr>
+                      <tr>
+                          <td>12</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>13</td>
+                          <td>Состояние</td>
+                          <td>0..5</td>
+                      </tr>
+                      <tr>
+                          <td>14</td>
+                          <td>Разделитель</td>
+                          <td>','</td>
+                      </tr>
+                      <tr>
+                          <td>15, 16, 17</td>
+                          <td>Контрольная сумма</td>
+                          <td>','</td>
+                      </tr>
+                      </tbody>
+                  </table>
+
+                  </p>
+              </div>
+          </div>
+      </div>
 
       </div>
       <div class="col m1">
-
+<!--        right padding-->
       </div>
     </div>
-
-
 
 
   </body>

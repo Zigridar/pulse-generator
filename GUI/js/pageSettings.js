@@ -759,7 +759,6 @@ ipcRender.on('close-app', (event, data) => {
   Swal.fire({
     title: lang.alert.exitQuestion,
     icon: 'question',
-    confirmButtonText: 'Cool',
     timerProgressBar: true,
     allowOutsideClick: false,
     allowEscapeKey: false,

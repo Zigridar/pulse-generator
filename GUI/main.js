@@ -142,7 +142,9 @@ function readConfig() {
 }
 
 //Start application
-let language = 'en';
+let language = ''
+let os = ''
+
 app.on('ready', async () => {
   const config = await readConfig();
   language = config.lang;
@@ -177,7 +179,7 @@ ipcMain.on('install-driver', () => {
 let docs;
 let isOpen = false;
 
-ipcMain.on('open-docs', () => {
+ipcMain.on('open-docs', async () => {
   if(!isOpen) {
     isOpen = true;
     docs = new BrowserWindow({
@@ -188,6 +190,10 @@ ipcMain.on('open-docs', () => {
       minimizable : true,
       autoHideMenuBar: true,
       show: true,
+      webPreferences: {
+        nodeIntegration: true,
+        webviewTag: true
+      },
       frame: true
     });
 
@@ -210,8 +216,8 @@ ipcMain.on('open-docs', () => {
 ipcMain.on('changeLang', (e, lang) => {
   console.log('change lang: ' + lang);
   const appPath = path.resolve(process.execPath, `..`);
-  fs.readFile(path.join(appPath, `./resources/app/config.json`), (err, data) => {
-  // fs.readFile(path.resolve(__dirname, `config.json`), (err, data) => {
+  // fs.readFile(path.join(appPath, `./resources/app/config.json`), (err, data) => {
+  fs.readFile(path.resolve(__dirname, `config.json`), (err, data) => {
     console.log(err);
     let oldConf = JSON.parse(data);
     oldConf.lang = lang;
