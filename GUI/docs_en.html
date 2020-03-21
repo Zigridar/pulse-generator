@@ -1,10 +1,553 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Docs</title>
-  </head>
-  <body>
-    docs window
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs</title>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/sweetalert2.js"></script>
+  <link href="css/style-docs.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+
+<!--  navbar-->
+<nav class="teal lighten-2">
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo">
+      <img src="./img/flash.png" width="50px" height="50px">
+    </a>
+    <h5 id="docheader">
+      Документация
+    </h5>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+    </ul>
+  </div>
+</nav>
+
+<!--  page-->
+<div class="row">
+  <div class="col m1">
+    <!--        left padding-->
+  </div>
+  <div class="col m10">
+
+    <!--          contents-->
+    <ul class="collection with-header">
+      <li class="collection-header"><h4>Содержание</h4></li>
+      <a class="collection-item flow-text driver" href="#driver-header">Driver installation</a>
+      <a class="collection-item flow-text" href="#connecting-header">Connecting</a>
+      <a class="collection-item flow-text" href="#vip-40-card-header">ВИП-40 (card)</a>
+      <a class="collection-item flow-text" href="#pulse-generator-card-header">Pulse generator (card)</a>
+      <a class="collection-item flow-text" href="#chart-header">Chart options</a>
+      <a class="collection-item flow-text" href="#navbar-header">Status-bar</a>
+      <a class="collection-item flow-text" href="#usb-uart-header">USB-UART converter</a>
+      <a class="collection-item flow-text" href="#data-exchange-protocol-header">Data exchange protocol</a>
+      <a class="collection-item flow-text" href="#pulse-generator-header">Pulse generator</a>
+      <a class="collection-item flow-text" href="#vip-40-header">High voltage source</a>
+    </ul>
+
+    <!--        install driver-->
+    <h4 id="driver-header" class="header driver">Driver installation</h4>
+    <div class="card driver">
+      <div class="card-content">
+        <li class="flow-text">
+          Connecting to the device is carried out using the UART <-> USB converter implemented on the CH340G chip
+        </li>
+        <p class="flow-text">
+          It's necessary to install driver for CH340G to device will been found with your computer
+        </p>
+        <br>
+        <li class="flow-text">
+          In installation time driver installed automatically
+        </li>
+        <p class="flow-text">
+          But if even any reason there isn't the driver on your PC, it can be installed using "INSTALL DRIVER" below
+        </p>
+        <br>
+        <li class="flow-text">
+          To check driver you can open device manager on Windows, after device has to be connected
+        </li>
+        <p class="flow-text">
+          If there isn't the driver "USB2.0-Serial" will be shown in "Other devices"
+        </p>
+        <br>
+        <img src="./img/other-devices.png" width="250px">
+        <br>
+        <p class="flow-text">
+          If there is the driver "USB-SERIAL CH340" will be shown in "Ports (COM &LPT)"
+        </p>
+        <br>
+        <img src="./img/CH340.png" width="250px">
+      </div>
+      <div class="card-action">
+        <a class="btn" href="#!">INSTALL DRIVER</a>
+      </div>
+    </div>
+
+    <!--        connecting-->
+    <h4 id="connecting-header" class="header">Connecting</h4>
+    <div class="card">
+      <div class="card-content">
+        <li class="flow-text">
+          Before connecting all control elements are disabled
+        </li>
+        <p class="flow-text">
+          To begin data exchange between PC and device it's necessary to press "CONNECT" button in status-bar
+        </p>
+        <img src="./img/bar1-rus.png" width="100%">
+        <li class="flow-text">
+          After device has been connected all elements will be enabled and status-bar will change its state:
+        </li>
+        <img src="./img/bar2-rus.png" width="100%">
+        <p class="flow-text">
+          Dafault: <br>
+          - Voltage ВИП-40: 0 V<br>
+          - State ВИП-40: OFF<br>
+          - Frequency PG: 1 Hz<br>
+          - State PG: OFF<br>
+        </p>
+        <li class="flow-text">
+          To stop data exchange between PC and device it's necessary to presss "DISCONNECT" button
+        </li>
+      </div>
+    </div>
+
+    <!--        vip-40-->
+    <h4 id="vip-40-card-header" class="header">ВИП-40</h4>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p class="flow-text">
+            In the "ВИП-40" card you can set voltage value.
+            Using switch "Off-On" you can change state between OFF/ON.
+            Cells «Real Voltage» and «Current» show values coming from MC_1.
+            Default high voltage source state is "OFF", voltage value: 0 V.
+          </p>
+          <img src="img/vip-40.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!--        ГИ-->
+    <h4 id="pulse-generator-card-header" class="header">Pulse generator (PG)</h4>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p class="flow-text">
+          <li class="flow-text">
+            In the «Pulse generator» card has switch «Off-On», frequency slider (0 – 200 Hz) and two timers «Turn on after» and «Turn off after»,
+            using them you may set off/on-time of the generator.
+            Default the generator is turn off, frequency is set to 1 Hz, both timers is turn off.
+          </li>
+          <li class="flow-text">
+            To set active any timer it's necessary to set checkbox near the timer.
+          </li>
+          </p>
+          <img src="img/pulse-generator.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <!--          chart options-->
+    <h4 id="chart-header" class="header">Chart options</h4>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p class="flow-text">
+          <li class="flow-text">
+            The chart is plotted according the vacuum gauge data coming from MC_1.
+            Using it you can check vacuum state and its dynamic in any time of process.
+          </li>
+          <img src="img/chart.png" alt="">
+          <li class="flow-text">
+            In the «Chart options» card you can set plotting options of chart.
+          </li>
+          <img src="img/chart-options.png" alt="">
+          <li class="flow-text">
+            Default chart is plotting, average is set to "No average",
+            Point count: 20,
+            Axis step: 2
+          </li>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!--          navbar-->
+    <h4 id="navbar-header" class="header">Статус-бар</h4>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p class="flow-text">
+          <li class="flow-text">
+            There is information about the states of devices in the status-bar.
+          </li>
+          <img src="img/navbar.png" alt="" width="100%">
+          <li class="flow-text">
+            Using icon 1 you can open the tools side-panel.
+          </li>
+          <li class="flow-text">
+            The 2 and 3 cell show you states (CONNECTED/DISCONNECTED) of high voltage source and pulse generator respectively.
+          </li>
+          <li class="flow-text">
+            The 4 cell shows you «ВИП-40» state, it may be one of them:
+            <ol>
+              <li class="flow-text">No mistakes</li>
+              <li class="flow-text">Short resist circuit</li>
+              <li class="flow-text">No water</li>
+              <li class="flow-text">Overcurrent</li>
+              <li class="flow-text">Short circuit in box</li>
+              <li class="flow-text">Lock</li>
+            </ol>
+          </li>
+          <li class="flow-text">
+            The 5 and 6 buttons establish/break the connection to device.
+          </li>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!--          usb-uart-->
+    <h4 id="usb-uart-header" class="header">USB-UART converter</h4>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p class="flow-text">
+          <li class="flow-text">
+            Microcontrollers Atmega16 can exchange data with other devices using UART (Universal Asynchronous Receiver-Transmitter) interface.
+            It isn't too convenient to connect PC to MC, because majority of PC don't have the external UART port.
+          </li>
+          <li class="flow-text">
+            However,  all PC have USB ports allowing data exchange between external devices.
+            On this basis it was decided to make USB-UART converter
+            using it you can data exchange between UART-devices with USB port
+          </li>
+          <li class="flow-text">
+            Converter implements CH340G chip
+            which allows to send and receive data both forward and reverse
+            USB connector J1 has to be connected to PC
+            its outputs D+, D- connect to U3 chip.
+            Outputs TXD, RXD (U3 chip) are for UART transmission, they have to connect to UART devices
+            Quartz resonator is connected to X0, XI outputs, it set clock frequency of chip U3 (12 MHz).
+          </li>
+          <img src="img/usb-uart.png" alt="">
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!--          data-exchange protocol-->
+    <h4 id="data-exchange-protocol-header" class="header">Data exchange protocol</h4>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p class="flow-text">
+          <li class="flow-text">
+            For more data safety sending between devices it's using special data exchange protocol.
+            This protocol is limited 13 characters (out of 256 available) and protected by checksum for each message,
+            it excludes the possibility to send broken data
+          </li>
+          <li class="flow-text">
+            If you need to send several integers like 123 and 456 from PC to the microcontroller (or backwards)
+            you have to send them using ASCII characters, moreover divider between them is a comma,
+            i.e. you have to send array of characters:
+            <div class="chip flow-text">['1', '2', '3', ',', '4', '5', '6']</div>
+          </li>
+          <li class="flow-text">
+            For more safety, you should use a checksum that is a sum of sent integers. Checksum is sent last:
+            <div class="chip flow-text">['1', '2', '3', ',', '4', '5', '6', ',', '5', '7', '9']</div>
+          </li>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!--          pulse-generator-->
+    <h4 id="pulse-generator-header" class="header">Pulse generator</h4>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <img src="img/pulse-generator-board.png" alt="">
+          <p class="flow-text">
+          <li class="flow-text">
+            Outputs MISO, MOSI, SCK, RESET are united common connector PROGRAMMER
+            It can be connect to programmer to download sketch
+          </li>
+          <li class="flow-text">
+            Output RESET is connected to pin button
+            which is connected to ground.
+            If this button will be pressed program on MC begin again
+          </li>
+          <li class="flow-text">
+            Outputs RXD, TXD are allowed UART connection to USB-UART converter through fiber optic.
+          </li>
+          <li class="flow-text">
+            Quartz resonator X1 is connected to XTAL1, XTAL2 outputs
+            it set clock frequency MC 8MHz.
+            Capacitors C1, C2 protect the resonator.
+          </li>
+          <li class="flow-text">
+            There are rectangle pulses on the port C0.
+          </li>
+          <li class="flow-text">
+            Port A1 is ADC (analog to digit converter) to read value of vacuum gauge.
+          </li>
+          <li class="flow-text">
+            The reference voltage for the ADC is set to 5 V using AREF and AVCC outputs.
+          </li>
+          <li class="flow-text">
+            LEDs indicating generator operation and data exchange are connected to ports D4, D7
+          </li>
+          <li class="flow-text">
+            Pulse frequency varies from 1 to 200 Hz, pulse duration is 5 mcs.
+          </li>
+          <li class="flow-text">
+            Data exchange protocol below:
+          </li>
+          <h3 class="flow-text" align="center">Request PC to MC</h3>
+          <table class="highlight centered">
+            <thead>
+            <tr>
+              <th>№ byte</th>
+              <th>Purpose</th>
+              <th>Value</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+              <td>0</td>
+              <td>Address MC</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>ON/OFF</td>
+              <td>1/0</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>3, 4, 5</td>
+              <td>Frequency</td>
+              <td>0..200</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>7, 8, 9</td>
+              <td>Checksum</td>
+              <td>0..201</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <h3 class="flow-text" align="center">Response MC</h3>
+          <table class="highlight centered">
+            <thead>
+            <tr>
+              <th>№ byte</th>
+              <th>Purpose</th>
+              <th>Value</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+              <td>0</td>
+              <td>Address MC</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>1, 2, 3</td>
+              <td>Vacuum gauge</td>
+              <td>0..999</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>5, 6, 7</td>
+              <td>Checksum</td>
+              <td>0..201</td>
+            </tr>
+            </tbody>
+          </table>
+
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!--          vip-40-->
+    <h4 id="vip-40-header" class="header">High voltage source</h4>
+    <div class="card horizontal">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p class="flow-text">
+          <li class="flow-text">
+            High voltage source allows to get a constant voltage of up to 40 kV.
+            The Atmega16 microcontroller (MK_2) is installed on it, with which the voltage is set,
+            turning on / off the source, measuring the effective values of the voltage and current of the source, exchanging data with a PC.
+          </li>
+          <li class="flow-text">
+            Data exchange protocol below:
+          </li>
+
+          <h3 class="flow-text" align="center">Request PC to MC</h3>
+          <table class="highlight centered">
+            <thead>
+            <tr>
+              <th>№ byte</th>
+              <th>Purpose</th>
+              <th>Value</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+              <td>0</td>
+              <td>Address MC</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Device number</td>
+              <td>1/0</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>ON/OFF</td>
+              <td>0/1</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>5, 6, 7</td>
+              <td>Voltage</td>
+              <td>0..400</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>9, 10, 11</td>
+              <td>Checksum</td>
+              <td>0..402</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <h3 class="flow-text" align="center">Response MC</h3>
+          <table class="highlight centered">
+            <thead>
+            <tr>
+              <th>№ byte</th>
+              <th>Purpose</th>
+              <th>Value</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+              <td>0</td>
+              <td>Address MC</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Device number</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>ON/OFF</td>
+              <td>0/1</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>5, 6, 7</td>
+              <td>Voltage</td>
+              <td>0..400</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>9, 10, 11</td>
+              <td>Current</td>
+              <td>0..125</td>
+            </tr>
+            <tr>
+              <td>12</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>State</td>
+              <td>0..5</td>
+            </tr>
+            <tr>
+              <td>14</td>
+              <td>Divider</td>
+              <td>','</td>
+            </tr>
+            <tr>
+              <td>15, 16, 17</td>
+              <td>Checksum</td>
+              <td>','</td>
+            </tr>
+            </tbody>
+          </table>
+
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col m1">
+    <!--        right padding-->
+  </div>
+</div>
+
+
+</body>
+<script src="./js/jquery.min.js"></script>
+<script src="js/materialize.js"></script>
+<script src="js/docsSettings.js"></script>
 </html>
